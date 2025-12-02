@@ -1,6 +1,0 @@
-// <Anyrun config dir>/translate.ron
-Config(
-  prefix: "*",
-  language_delimiter: ">",
-  max_entries: 3,
-)
