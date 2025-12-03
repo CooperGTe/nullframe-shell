@@ -153,7 +153,7 @@ Item {
                         state: "resman"
                         Image {
                             anchors.fill: parent
-                            source: "../../../assets/asset1.png"
+                            source: Quickshell.shellDir + "/assets/asset1.png"
                             fillMode: Image.PreserveAspectCrop
                             smooth:true
                             visible: resman.state == "resman"
@@ -185,7 +185,7 @@ Item {
                                     radius: 12
                                 }
                                 onClicked: Quickshell.execDetached([
-                                    Quickshell.env("HOME") + "/Dotfiles/nullframeshell/scripts/dropCache.sh"
+                                    Quickshell.shellDir + "/scripts/dropCache.sh"
                                 ])
                             }
                             Button {

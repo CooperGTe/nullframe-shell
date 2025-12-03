@@ -8,9 +8,7 @@ MouseArea {
     implicitHeight: 70
     Layout.topMargin: -40
     implicitWidth: 40
-    onClicked: {
-        Globals.sidePanelVisible = Globals.sidePanelVisible ? false : true
-    }
+    
     Rectangle {
         anchors.bottom:parent.bottom
         anchors.horizontalCenter:parent.horizontalCenter

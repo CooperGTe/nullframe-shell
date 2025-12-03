@@ -11,8 +11,9 @@ Singleton {
     //property real activeWorkspace: root.monitor?.activeWorkspace?.id ?? -1
     property real activeWorkspace: Hyprland.focusedWorkspace?.id ?? -1
     property bool occupiedWorkspace: (Hyprland.focusedWorkspace.toplevels?.values || []).length
-    property bool hasMaximize: Hyprland.focusedWorkspace.hasFullscreen ?? false
+    property bool hasMaximize: Hyprland.focusedMonitor.activeWorkspace.hasFullscreen ?? false
     property real hasTiling: (Hyprland.focusedWorkspace.toplevels?.values || []).filter(toplevel => !toplevel.lastIpcObject.floating).length
+    property string focusedMonitor: Hyprland.focusedMonitor.name
     property var topLevel: (Hyprland.toplevels?.values || [])
     property var dispatch: function(arg) {
         return Hyprland.dispatch(arg)
