@@ -138,28 +138,7 @@ GridLayout {
         // Bind the pipewire node so its volume will be tracked
         PwObjectTracker {
             objects: [ Pipewire.defaultAudioSink ]
-        }/*
-        RowLayout {
-            Layout.fillWidth:true
-            Text {
-                text: "Volume"
-                color: "#dfdfff"
-                font.bold: true
-                font.pixelSize:12
-                Layout.leftMargin: 5
-                Layout.bottomMargin: -5
-            }
-            Text {
-                text: `${Math.floor(Pipewire.defaultAudioSink?.audio.volume * 100) ?? 0}%`
-                horizontalAlignment: Text.AlignRight
-                Layout.fillWidth: true
-                color: "#dfdfff"
-                font.bold: true
-                font.pixelSize:12
-                Layout.rightMargin: 5
-                Layout.bottomMargin: -5
-            }
-        }*/
+        }
         Slider { 
             id:volumeSlider
             implicitHeight: 30; 
@@ -232,38 +211,22 @@ GridLayout {
     ColumnLayout {
         Layout.columnSpan: 4
         Layout.fillWidth:true
-        /*
-        RowLayout {
-            Layout.fillWidth:true
-            Text {
-                text: "Brightness"
-                color: "#dfdfff"
-                font.bold: true
-                font.pixelSize:12
-                Layout.leftMargin: 5
-                Layout.bottomMargin: -5
-            }
-            Text {
-                text: `20%`
-                horizontalAlignment: Text.AlignRight
-                Layout.fillWidth: true
-                color: "#dfdfff"
-                font.bold: true
-                font.pixelSize:12
-                Layout.rightMargin: 5
-                Layout.bottomMargin: -5
-            }
-        }*/
         Slider { 
             id:brightnessSlider
             implicitHeight: 30; 
             Layout.fillWidth:true
+            Component.onCompleted: {
+                Brightness.init();
+            }
 
             from: 0
             to: 100
             snapMode: Slider.SnapAlways
             stepSize: 1
-            value: 20
+            value: Brightness.value * 100
+            onMoved: {
+                Brightness.set(this.value / 100)
+            }
             background: Item {
                 width: parent.width
                 height: 30
@@ -274,6 +237,16 @@ GridLayout {
                     width: parent.width * (1 - brightnessSlider.position -0.024)
                     color: "#12131F"
                     radius: 10
+                    Text {
+                        text: `${Math.floor(Brightness.value*100)}%`
+                        horizontalAlignment: Text.AlignRight
+                        color: "#DFDFFF"
+                        font.bold: true
+                        anchors.rightMargin:10
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right:parent.right
+                        font.pixelSize:12
+                    }
                 }
                 Rectangle {     // foreground (filled)
                     height: parent.height - 5
@@ -303,9 +276,9 @@ GridLayout {
                 acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
                 onWheel: (event) => {
                     if (event.angleDelta.y < 0)
-                    Pipewire.defaultAudioSink.audio.volume = Pipewire.defaultAudioSink?.audio.volume - 0.01
+                    Brightness.set(Brightness.value - 0.01)
                     else if (event.angleDelta.y > 0)
-                    Pipewire.defaultAudioSink.audio.volume = Pipewire.defaultAudioSink?.audio.volume + 0.01
+                    Brightness.set(Brightness.value + 0.01)
                 }
             }
         }
