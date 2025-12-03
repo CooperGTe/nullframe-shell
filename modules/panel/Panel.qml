@@ -18,7 +18,7 @@ Variants {
         property real cornerRadius: 15
         property bool sidePanelVisible: false
         property bool internalSidePanelVisible: bar.sidePanelVisible
-        property bool barHug: scope.sidePanelVisible
+        property bool barHug:  Hyprland.hasMaximize || scope.sidePanelVisible
 
         Hypr.GlobalShortcut {
             name: "sidepanel"
