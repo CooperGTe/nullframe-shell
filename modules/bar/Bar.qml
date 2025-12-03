@@ -52,6 +52,9 @@ PanelWindow {
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: root.barHug ? 10 : 20
+            Behavior on anchors.topMargin {
+                NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+            }
             PanelButton{
                 id:panelbtn
                 onClicked: {
@@ -71,6 +74,9 @@ PanelWindow {
             anchors.bottom: parent.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottomMargin: root.barHug ? 10 : 20
+            Behavior on anchors.bottomMargin {
+                NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+            }
             Rectangle {
                 color: "#12131F"
                 //color: "#8c1322"
