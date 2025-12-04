@@ -238,7 +238,7 @@ GridLayout {
                     color: "#12131F"
                     radius: 10
                     Text {
-                        text: `${Math.floor(Brightness.value*100)}%`
+                        text: `${Math.round(Brightness.value*100)}%`
                         horizontalAlignment: Text.AlignRight
                         color: "#DFDFFF"
                         font.bold: true

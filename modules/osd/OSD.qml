@@ -127,10 +127,10 @@ Scope {
                     Text {
                         Layout.alignment:Qt.AlignHCenter
                         text: root.mode === "volume" ? 
-                            `${Math.floor(Pipewire.defaultAudioSink?.audio.volume * 100) ?? 0}%` : 
+                            `${Math.round(Pipewire.defaultAudioSink?.audio.volume * 100) ?? 0}%` : 
                             root.mode === "mpris" ?
-                            `${Math.floor(activePlayer.volume * 100) ?? 0}%` :
-                            `${Math.floor(brightnessFile.text()/maxBrightness.text.split("\n")[0] * 100) ?? 0}%`
+                            `${Math.round(activePlayer.volume * 100) ?? 0}%` :
+                            `${Math.round(brightnessFile.text()/maxBrightness.text.split("\n")[0] * 100) ?? 0}%`
                         color: "#DFDFFF"
                         font.pixelSize: 10
                         font.bold: true
