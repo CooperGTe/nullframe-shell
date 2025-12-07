@@ -7,6 +7,7 @@ import qs.modules.common
 
 Rectangle {
     id:root
+    property var scope
 
     color: "transparent"
     radius:30
@@ -94,7 +95,7 @@ Rectangle {
                 }
                 MouseArea {
                     anchors.fill:parent
-                    onClicked: console.log("teste")
+                    onClicked: scope.powerMenuVisible = !scope.powerMenuVisible, console.log(scope.powerMenuVisible)
                 }
             }
         }

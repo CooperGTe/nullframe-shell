@@ -3,16 +3,18 @@
 
 import Quickshell
 import qs.modules.bar
+import qs.modules.panel
 import qs.modules.lyricsEngine
 import qs.modules.osd
 import qs.modules.desktopWidget
 import qs.modules.notificationPopup
 import qs.modules.sidepanel
 import qs.modules.lockscreen
+import qs.modules.powerMenu
 
 ShellRoot {
     SidePanel{}
-    Bar {}
+    Panel {}
     LyricsEngine {}
     OSD {}
     OSDKeyboard {}
@@ -20,4 +22,3 @@ ShellRoot {
     Notification{}
     //LockScreen{}
 }
-

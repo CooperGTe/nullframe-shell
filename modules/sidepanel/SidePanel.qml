@@ -27,7 +27,7 @@ PanelWindow {
     }
     property real wsch: Hyprland.activeWorkspace
     onWschChanged: {
-        scope.sidePanelVisible = false
+        if (scope) root.scope.sidePanelVisible = false
     }
 
     WlrLayershell.layer: WlrLayer.Top
@@ -114,7 +114,10 @@ PanelWindow {
                 width: parent.width - 20
                 anchors.margins:10
                 spacing:10
-                Profile{}
+                Profile{
+                    id:profile
+                    scope:root.scope
+                }
                 QuickControls{}
                 Mpris{}
                 //filler

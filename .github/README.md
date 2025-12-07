@@ -14,10 +14,10 @@ A *Modern Desktop* shell built using Quickshell for **Hyprland** Compositor
 - [x] Desktop Widget
 - [x] Notification Popups
 - [x] Lyrics Display
+- [x] Power Menu
 
 ### Planned
 - [ ] GUI Setting
-- [ ] Power Menu
 - [ ] Lockscreen
 
 ## Dependency

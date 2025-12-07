@@ -5,6 +5,7 @@ import QtQuick.Shapes
 
 import qs.modules.bar
 import qs.modules.sidepanel
+import qs.modules.powerMenu
 import qs.modules
 import qs.services
 import Quickshell.Hyprland as Hypr
@@ -17,6 +18,16 @@ Variants {
         required property var modelData
         property real cornerRadius: 15
         property bool sidePanelVisible: false
+        property bool powerMenuVisible: false
+        onPowerMenuVisibleChanged: {
+            if (!scope.powerMenuVisible) {
+                powerMenuHide.restart()
+                powermenu.item.visibility = false
+                console.log("hidepls" + scope.powerMenuVisible)
+            }
+            else powermenu.active = true
+        }
+        
         property bool internalSidePanelVisible: bar.sidePanelVisible
         property bool barHug:  Hyprland.hasMaximize || scope.sidePanelVisible
 
@@ -27,6 +38,14 @@ Variants {
                 scope.sidePanelVisible = !scope.sidePanelVisible
             }
         }
+        Hypr.GlobalShortcut {
+            name: "powermenu"
+            onPressed: {
+                if (scope.modelData.name === Hyprland.focusedMonitor)
+                scope.powerMenuVisible = !scope.powerMenuVisible
+            }
+        }
+
 
         SidePanel {
             id: sidepanel
@@ -42,6 +61,25 @@ Variants {
             scope: scope
         }
 
+        Timer {
+            id: powerMenuHide
+            interval: 300
+            running: false
+            repeat: false
+            onTriggered: powermenu.active = false
+        }
+
+        LazyLoader {
+            id: powermenu
+            component: PowerMenu { }
+            onActiveChanged: {
+                if (active && item && scope) {
+                    item.scope = scope
+                    item.screen = scope.modelData
+                    item.visibility = true
+                }
+            }
+        }
 
         // panel corner border
         //top left corner

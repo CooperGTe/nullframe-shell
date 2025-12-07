@@ -1,100 +1,164 @@
 pragma ComponentBehavior: Bound
 import QtQuick
+import QtQuick.Shapes
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Hyprland
 import Quickshell.Wayland
 import qs.modules.common
 
-Variants {
-    model: Quickshell.screens
+PanelWindow {
+    id:root
 
-    Scope {
-        id:scope
-        required property var modelData
-        LazyLoader {
-            active:false
-            PanelWindow {
-                id:root
-                screen: scope.modelData
-                WlrLayershell.layer: WlrLayer.Overlay
-                exclusiveZone:0
-                
-                implicitWidth: 60*4
-                implicitHeight:60
-                color: "transparent"
-                anchors {
-                    top: true
+    property var scope
+    WlrLayershell.namespace: "powermenu"
+    property bool visibility
+    onVisibilityChanged: if (root.visibility) grab.active = true
+    exclusiveZone:0
+
+    WlrLayershell.layer: WlrLayer.Overlay
+
+    implicitWidth: 50*5+30+40 //????
+    implicitHeight: 60
+    margins.top: root.visibility ? 0 : -60
+    Behavior on margins.top {
+        SequentialAnimation {
+            NumberAnimation { 
+                duration: 400
+                easing.type: Easing.BezierSpline
+                easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
+            }
+        }
+    }
+
+    color: "transparent"
+
+    anchors {
+        top: true
+    }
+    HyprlandFocusGrab {
+        id: grab
+        windows: [ root ]
+        onActiveChanged: {
+            if (!grab.active) {
+                root.scope.powerMenuVisible = false 
+                console.log(root.visibility + " hide")
+            }
+        }
+    }
+    Shape {
+        id:shape
+        implicitWidth: 50*5+30+40 //????
+
+        anchors.bottom:parent.bottom
+        height: root.visibility ? 60 : 0
+        property real radius:20
+        property bool flatten: height < shape.radius * 2
+        property real radiusRounding: shape.flatten ? shape.height / 2 : shape.radius
+        Behavior on height {
+            NumberAnimation { 
+                duration: 400
+                easing.type: Easing.BezierSpline
+                easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
+            }
+        }
+        //onHeightChanged:console.log(height)
+        onFlattenChanged: console.log("yoink")
+
+
+        preferredRendererType: Shape.CurveRenderer
+        ShapePath {
+            strokeWidth: 0
+            fillColor:"#080812"
+            PathLine { 
+                relativeX: width
+                relativeY: 0 
+            }
+            PathArc { 
+                relativeX: -shape.radius
+                relativeY:shape.radiusRounding
+                radiusX: shape.radius
+                radiusY: Math.min(shape.radius, shape.height)
+                direction: PathArc.Counterclockwise
+            }
+            PathLine { 
+                relativeX: 0
+                relativeY: shape.height - shape.radiusRounding * 2
+            }
+            PathArc { 
+                relativeX: -shape.radius
+                relativeY: shape.radiusRounding
+                radiusX: shape.radius
+                radiusY: Math.min(shape.radius, shape.height)
+            }
+            PathLine { 
+                relativeX: -(width - shape.radius * 4)
+                relativeY: 0
+            }
+            PathArc { 
+                relativeX: -shape.radius
+                relativeY: -shape.radiusRounding
+                radiusX: shape.radius
+                radiusY: Math.min(shape.radius, shape.height)
+            }
+            PathLine { 
+                relativeX: 0
+                relativeY: -(shape.height - shape.radiusRounding * 2)
+            }
+            PathArc { 
+                relativeX: -shape.radius
+                relativeY: -shape.radiusRounding
+                radiusX: shape.radius
+                radiusY: Math.min(shape.radius, shape.height)
+                direction: PathArc.Counterclockwise 
+            }
+        }
+        RowLayout {
+            anchors.bottom:parent.bottom
+            anchors.horizontalCenter:parent.horizontalCenter
+            anchors.margins:5
+            anchors.rightMargin:5+shape.radius
+            anchors.leftMargin:5+shape.radius
+            Behavior on anchors.topMargin {
+                NumberAnimation { 
+                    duration: 400
+                    easing.type: Easing.BezierSpline
+                    easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
                 }
-
-                Rectangle {
-                    anchors.fill:parent
-                    color:"#080812"
-                    bottomRightRadius:20
-                    bottomLeftRadius:20
-                    RowLayout {
-                        anchors.fill:parent
-                        anchors.margins:5
-                        spacing:5
-                        Button {
-                            implicitWidth:50
-                            implicitHeight:50
-                            background: Rectangle {
-                                color: "#12131F"
-                                radius: 15
-                            }
-                            MaterialIcon {
-                                icon: "power_settings_new"
-                                color: "#dfdfff"
-                                font.pixelSize:32
-                                anchors.centerIn:parent
-                            }
-                        }
-                        Button {
-                            implicitWidth:50
-                            implicitHeight:50
-                            background: Rectangle {
-                                color: "#12131F"
-                                radius: 15
-                            }
-                            MaterialIcon {
-                                icon: "cached"
-                                color: "#dfdfff"
-                                font.pixelSize:32
-                                anchors.centerIn:parent
-                            }
-                        }
-                        Button {
-                            implicitWidth:50
-                            implicitHeight:50
-                            background: Rectangle {
-                                color: "#12131F"
-                                radius: 15
-                            }
-                            MaterialIcon {
-                                icon: "lock"
-                                color: "#dfdfff"
-                                font.pixelSize:32
-                                anchors.centerIn:parent
-                            }
-                        }
-                        Button {
-                            implicitWidth:50
-                            implicitHeight:50
-                            background: Rectangle {
-                                color: "#12131F"
-                                radius: 15
-                            }
-                            MaterialIcon {
-                                icon: "logout"
-                                color: "#dfdfff"
-                                font.pixelSize:32
-                                anchors.centerIn:parent
-                            }
-                        }
+            }
+            spacing:5
+            component HoverButton: Button {
+                property alias iconName: icon.icon
+                implicitWidth:50
+                implicitHeight:50
+                background: Rectangle {
+                    color: parent.hovered ? "#dfdfff" : "#12131F"
+                    radius: parent.hovered ? 30 : 15
+                    Behavior on color {
+                        ColorAnimation { duration: 100 }
+                    }
+                    Behavior on radius {
+                        NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+                    }
+                }
+                MaterialIcon {
+                    id:icon
+                    color: !parent.hovered ? "#dfdfff" : "#12131F"
+                    fill: !parent.hovered ? 0 : 1
+                    font.pixelSize:32
+                    anchors.centerIn:parent
+                    Behavior on color {
+                        ColorAnimation { duration: 200 }
                     }
                 }
             }
+            HoverButton {iconName: "power_settings_new"}
+            HoverButton {iconName: "refresh"}
+            HoverButton {iconName: "mode_night"}
+            HoverButton {iconName: "lock"}
+            HoverButton {iconName: "logout"}
         }
+
     }
 }
