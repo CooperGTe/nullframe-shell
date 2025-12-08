@@ -19,13 +19,19 @@ Variants {
         property real cornerRadius: 15
         property bool sidePanelVisible: false
         property bool powerMenuVisible: false
+        property real powerAlert: 2
         onPowerMenuVisibleChanged: {
             if (!scope.powerMenuVisible) {
                 powerMenuHide.restart()
                 powermenu.item.visibility = false
-                console.log("hidepls" + scope.powerMenuVisible)
             }
             else powermenu.active = true
+        }
+        onPowerAlertChanged: {
+            console.log(scope.powerAlert)
+            if (powerAlert !== 0) {
+                poweralert.active = true
+            } else poweralert.active = false
         }
         
         property bool internalSidePanelVisible: bar.sidePanelVisible
@@ -77,6 +83,17 @@ Variants {
                     item.scope = scope
                     item.screen = scope.modelData
                     item.visibility = true
+                }
+            }
+        }
+        LazyLoader {
+            id: poweralert
+            component: PowerAlert { }
+            onActiveChanged: {
+                if (active && item && scope) {
+                    item.scope = scope
+                    item.screen = scope.modelData
+                    item.visibility = (scope.PowerAlert !== 0)
                 }
             }
         }

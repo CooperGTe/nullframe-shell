@@ -43,7 +43,6 @@ PanelWindow {
         onActiveChanged: {
             if (!grab.active) {
                 root.scope.powerMenuVisible = false 
-                console.log(root.visibility + " hide")
             }
         }
     }
@@ -64,7 +63,6 @@ PanelWindow {
             }
         }
         //onHeightChanged:console.log(height)
-        onFlattenChanged: console.log("yoink")
 
 
         preferredRendererType: Shape.CurveRenderer
@@ -130,6 +128,7 @@ PanelWindow {
             spacing:5
             component HoverButton: Button {
                 property alias iconName: icon.icon
+                property real alert: 0
                 implicitWidth:50
                 implicitHeight:50
                 background: Rectangle {
@@ -142,6 +141,7 @@ PanelWindow {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
                 }
+                onClicked: scope.powerAlert = this.alert
                 MaterialIcon {
                     id:icon
                     color: !parent.hovered ? "#dfdfff" : "#12131F"
@@ -153,11 +153,11 @@ PanelWindow {
                     }
                 }
             }
-            HoverButton {iconName: "power_settings_new"}
-            HoverButton {iconName: "refresh"}
+            HoverButton {iconName: "power_settings_new"; alert: 1}
+            HoverButton {iconName: "refresh"; alert: 2}
             HoverButton {iconName: "mode_night"}
             HoverButton {iconName: "lock"}
-            HoverButton {iconName: "logout"}
+            HoverButton {iconName: "logout"; alert: 3}
         }
 
     }
