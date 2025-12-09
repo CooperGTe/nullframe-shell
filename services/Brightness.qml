@@ -57,7 +57,6 @@ Singleton {
                 if (!isNaN(max) && max > 0) {
                     root.maxValue = max
                     root.initialized = true
-                    console.log("worky")
                     brightnessFile.path = root.filePath
                 }
             }
