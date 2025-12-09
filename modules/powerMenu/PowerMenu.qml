@@ -129,6 +129,7 @@ PanelWindow {
             component HoverButton: Button {
                 property alias iconName: icon.icon
                 property real alert: 0
+                property real actions: 0
                 implicitWidth:50
                 implicitHeight:50
                 background: Rectangle {
@@ -141,7 +142,22 @@ PanelWindow {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
                 }
-                onClicked: scope.powerAlert = this.alert
+                onClicked: {
+                    root.scope.powerAlert = this.alert
+                    switch (this.actions) {
+                        case 1: {
+                            Quickshell.execDetached(["bash", "-c", "systemctl suspend"]); 
+                            root.scope.powerMenuVisible = false
+                            break;
+                        }
+                        case 2: {
+                            Quickshell.execDetached(["bash", "-c", "qs ipc call lockscreen lock"])
+                            root.scope.powerMenuVisible = false
+                            break;
+                        }
+                        default: break;
+                    }
+                }
                 MaterialIcon {
                     id:icon
                     color: !parent.hovered ? "#dfdfff" : "#12131F"
@@ -155,8 +171,8 @@ PanelWindow {
             }
             HoverButton {iconName: "power_settings_new"; alert: 1}
             HoverButton {iconName: "refresh"; alert: 2}
-            HoverButton {iconName: "mode_night"}
-            HoverButton {iconName: "lock"}
+            HoverButton {iconName: "mode_night"; actions: 1}
+            HoverButton {iconName: "lock"; actions: 2}
             HoverButton {iconName: "logout"; alert: 3}
         }
 

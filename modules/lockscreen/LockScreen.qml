@@ -1,3 +1,4 @@
+import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
@@ -9,32 +10,35 @@ ShellRoot {
         function lock() {
 			if (lock.locked) 
 				return;
-            lock.locked = true
+            delay.start()
         }
+    }
+    Timer {
+        id:delay
+        interval: 400
+        running: false
+        repeat:false
+        onTriggered: lock.locked = true
     }
 	LockContext {
 		id: lockContext
 
-		onUnlocked: {
-			// Unlock the screen before exiting, or the compositor will display a
-			// fallback lock you can't interact with.
-			lock.locked = false;
+        property Timer delayedUnlock: Timer {
+			interval: 1000
+			repeat: false
+			onTriggered: lock.locked = false
+		}
 
-			Qt.quit();
+		onUnlocked: {
+			delayedUnlock.start();
 		}
 	}
 
 	WlSessionLock {
-		id: lock
+        id: lock
 
-		// Lock the session immediately when quickshell starts.
-		locked: true
-
-		WlSessionLockSurface {
-			LockSurface {
-				anchors.fill: parent
-				context: lockContext
-			}
-		}
+        LockSurface {
+            context: lockContext
+        }
 	}
 }

@@ -15,6 +15,12 @@ PanelWindow {
     exclusiveZone:0
 
     WlrLayershell.layer: WlrLayer.Overlay
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
+    function close() {
+        root.scope.powerAlert = 0
+        grab.active = false
+    }
+
 
     implicitWidth: 270+40
     implicitHeight: 120+40
@@ -98,6 +104,8 @@ PanelWindow {
                     background: Rectangle {
                         color: parent.hovered ? "#dfdfff" : "#12131F"
                         radius: parent.hovered ? 20 : 10
+                        border.width: parent.activeFocus ? 2 : 0
+                        border.color: "#dfdfff"
                         Behavior on color {
                             ColorAnimation { duration: 100 }
                         }
@@ -105,8 +113,10 @@ PanelWindow {
                             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                         }
                     }
-                    focus: true
-                    onClicked: root.scope.powerAlert = 0, grab.active = false
+                    Keys.onReturnPressed: close()
+                    Keys.onEnterPressed: close()
+                    onClicked: close()
+                    Keys.onEscapePressed: close()
 
                     KeyNavigation.right: powerBtn
                     KeyNavigation.tab: powerBtn
@@ -134,6 +144,8 @@ PanelWindow {
                     background: Rectangle {
                         color: parent.hovered ? "#dfdfff" : "#12131F"
                         radius: parent.hovered ? 20 : 10
+                        border.width: parent.activeFocus ? 2 : 0
+                        border.color: "#dfdfff"
                         Behavior on color {
                             ColorAnimation { duration: 100 }
                         }
@@ -144,6 +156,7 @@ PanelWindow {
 
                     KeyNavigation.left: cancelBtn
                     KeyNavigation.backtab: cancelBtn
+                    Keys.onEscapePressed: close()
                 }
             }
         }
