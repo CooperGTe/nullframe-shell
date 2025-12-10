@@ -37,12 +37,15 @@ PanelWindow {
     anchors {
         top: true
     }
+    function close() {
+        root.scope.powerMenuVisible = false 
+    }
     HyprlandFocusGrab {
         id: grab
         windows: [ root ]
         onActiveChanged: {
             if (!grab.active) {
-                root.scope.powerMenuVisible = false 
+                root.close()
             }
         }
     }
@@ -130,11 +133,14 @@ PanelWindow {
                 property alias iconName: icon.icon
                 property real alert: 0
                 property real actions: 0
+                property var nbtn
                 implicitWidth:50
                 implicitHeight:50
                 background: Rectangle {
                     color: parent.hovered ? "#dfdfff" : "#12131F"
                     radius: parent.hovered ? 30 : 15
+                    border.width: parent.activeFocus ? 2 : 0
+                    border.color: "#dfdfff"
                     Behavior on color {
                         ColorAnimation { duration: 100 }
                     }
@@ -142,7 +148,7 @@ PanelWindow {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
                 }
-                onClicked: {
+                function clickAction() {
                     root.scope.powerAlert = this.alert
                     switch (this.actions) {
                         case 1: {
@@ -158,6 +164,9 @@ PanelWindow {
                         default: break;
                     }
                 }
+                onClicked: clickAction()
+                Keys.onReturnPressed: clickAction()
+                Keys.onEnterPressed: clickAction()
                 MaterialIcon {
                     id:icon
                     color: !parent.hovered ? "#dfdfff" : "#12131F"
@@ -169,11 +178,47 @@ PanelWindow {
                     }
                 }
             }
-            HoverButton {iconName: "power_settings_new"; alert: 1}
-            HoverButton {iconName: "refresh"; alert: 2}
-            HoverButton {iconName: "mode_night"; actions: 1}
-            HoverButton {iconName: "lock"; actions: 2}
-            HoverButton {iconName: "logout"; alert: 3}
+            HoverButton {
+                iconName: "power_settings_new"
+                alert: 1
+                focus:true
+                id:poweroff
+                KeyNavigation.right: reboot
+                KeyNavigation.tab: reboot
+                Keys.onEscapePressed: root.close()
+            }
+            HoverButton {
+                iconName: "refresh"
+                alert: 2
+                id:reboot
+                KeyNavigation.right: sleep
+                KeyNavigation.tab: sleep
+                Keys.onEscapePressed: root.close()
+            }
+            HoverButton {
+                iconName: "mode_night"
+                actions: 1
+                id:sleep
+                KeyNavigation.right: lock
+                KeyNavigation.tab: lock
+                Keys.onEscapePressed: root.close()
+            }
+            HoverButton {
+                iconName: "lock"
+                actions: 2
+                id:lock
+                KeyNavigation.right: logout
+                KeyNavigation.tab: logout
+                Keys.onEscapePressed: root.close()
+            }
+            HoverButton {
+                iconName: "logout"
+                alert: 3
+                id:logout
+                KeyNavigation.right: poweroff
+                KeyNavigation.tab: poweroff
+                Keys.onEscapePressed: root.close()
+            }
         }
 
     }

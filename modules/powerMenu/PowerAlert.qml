@@ -15,10 +15,32 @@ PanelWindow {
     exclusiveZone:0
 
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
     function close() {
         root.scope.powerAlert = 0
         grab.active = false
+        action.stop()
+        actionTimer.running = false
+        actionTimer.stop()
+    }
+    function actionExec() {
+        actionTimer.running = false
+        switch (root.scope.powerAlert) {
+            case 1: {
+                Quickshell.execDetached(["bash", "-c", "systemctl poweroff"]) 
+                break
+            }
+            case 2: {
+                Quickshell.execDetached(["bash", "-c", "systemctl reboot"]) 
+                break
+            }
+            case 3: {
+                Quickshell.execDetached(["bash", "-c", "hyprctl dispatch exit"]) 
+                break
+            }
+            default: ""; break;
+        }
+        root.close()
     }
 
 
@@ -51,6 +73,28 @@ PanelWindow {
             }
         }
     }
+    Component.onCompleted: {
+        root.timelapse = 60
+        action.start()
+        actionTimer.running = true
+    }
+    Timer {
+        id:action
+        interval:60000
+        repeat:false
+        running:false
+        onTriggered: {
+            root.actionExec()
+        }
+    }
+    property real timelapse
+    Timer {
+        id:actionTimer
+        interval:1000
+        repeat:true
+        running:false
+        onTriggered: root.timelapse -= 1
+    }
     Rectangle {
         anchors.fill: parent
         anchors.margins: 20
@@ -75,9 +119,9 @@ PanelWindow {
                 Layout.alignment: Qt.AlignTop
                 Layout.preferredWidth: 250
                 text: switch (root.scope.powerAlert) {
-                    case 1: "The system will power off automatically in 60 seconds."; break;
-                    case 2: "The system will reboot automatically in 60 seconds."; break;
-                    case 3: "The system will logout automatically in 60 seconds."; break;
+                    case 1: "The system will power off automatically in " + root.timelapse + " seconds."; break;
+                    case 2: "The system will reboot automatically in " + root.timelapse + " seconds."; break;
+                    case 3: "The system will logout automatically in " + root.timelapse + " seconds."; break;
                     default: ""; break;
                 }
                 wrapMode:Text.Wrap
@@ -113,10 +157,11 @@ PanelWindow {
                             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                         }
                     }
-                    Keys.onReturnPressed: close()
-                    Keys.onEnterPressed: close()
-                    onClicked: close()
-                    Keys.onEscapePressed: close()
+                    focus:true
+                    Keys.onReturnPressed: root.close()
+                    Keys.onEnterPressed: root.close()
+                    onClicked: root.close()
+                    Keys.onEscapePressed: root.close()
 
                     KeyNavigation.right: powerBtn
                     KeyNavigation.tab: powerBtn
@@ -142,7 +187,7 @@ PanelWindow {
                         }
                     }
                     background: Rectangle {
-                        color: parent.hovered ? "#dfdfff" : "#12131F"
+                        color: parent.hovered ? "#dfdfff" : "#5F1213"
                         radius: parent.hovered ? 20 : 10
                         border.width: parent.activeFocus ? 2 : 0
                         border.color: "#dfdfff"
@@ -156,7 +201,10 @@ PanelWindow {
 
                     KeyNavigation.left: cancelBtn
                     KeyNavigation.backtab: cancelBtn
-                    Keys.onEscapePressed: close()
+                    Keys.onReturnPressed: root.actionExec()
+                    Keys.onEnterPressed: root.actionExec()
+                    onClicked: root.actionExec()
+                    Keys.onEscapePressed: root.close()
                 }
             }
         }
