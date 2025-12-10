@@ -23,6 +23,11 @@ WlSessionLockSurface {
 
         return ("0" + min).slice(-2) + "." + ("0" + sec).slice(-2);
     }
+    function time(sec) {
+        var h = Math.floor(sec / 3600);
+        var m = Math.floor((sec % 3600) / 60);
+        return h > 0 ? h + "h " + m + "m" : m + "m";
+    }
 
     property bool startAnim: false
     property bool exiting: false
@@ -40,6 +45,37 @@ WlSessionLockSurface {
         //passwordBox.forceActiveFocus();
     }
 
+    Image { //image fallback
+        anchors.fill: parent
+        source: Quickshell.shellDir + "assets/bg-placeholder.png"
+        sourceSize.width: 1366
+        sourceSize.height: 768
+        fillMode: Image.PreserveAspectCrop
+        mipmap:true
+        smooth:true
+        cache:true
+        layer.effect: MultiEffect {
+            contrast: 0.05
+            brightness: -0.2
+            saturation: 0.1
+        }
+        scale: root.startAnim ? 1.1 : 1
+        Behavior on scale {
+            NumberAnimation {
+                duration: 1000
+                easing.type: Easing.BezierSpline
+                easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
+            }
+        }
+        opacity: root.startAnim ? 1 : 0
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 1000
+                easing.type: Easing.BezierSpline
+                easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
+            }
+        }
+    }
     ScreencopyView {
         id: background
         anchors.fill: parent
@@ -87,37 +123,6 @@ WlSessionLockSurface {
             }
         }
     }
-    /*Image {
-        anchors.fill: parent
-        source: Quickshell.env("HOME") + "/Shared Storages/Drawing Database/Krita/Katsuro/bg.png"
-        sourceSize.width: 1366
-        sourceSize.height: 768
-        fillMode: Image.PreserveAspectCrop
-        mipmap:true
-        smooth:true
-        cache:true
-        layer.effect: MultiEffect {
-            contrast: 0.05
-            brightness: -0.2
-            saturation: 0.1
-        }
-        scale: root.startAnim ? 1.1 : 1
-        Behavior on scale {
-            NumberAnimation {
-                duration: 1000
-                easing.type: Easing.BezierSpline
-                easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
-            }
-        }
-        opacity: root.startAnim ? 1 : 0
-        Behavior on opacity {
-            NumberAnimation {
-                duration: 1000
-                easing.type: Easing.BezierSpline
-                easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
-            }
-        }
-    }*/
     Item {
         anchors.fill: parent
         opacity: root.startAnim ? 1 : 0
@@ -140,17 +145,167 @@ WlSessionLockSurface {
                 rightMargin:60
             }
             Rectangle {
-                implicitHeight:80
+                implicitHeight:100
                 implicitWidth: 300
                 color: "#080812"
                 radius: 20
-                Text {
-                    id:clock
-                    text: Time.format("hh:mm")
-                    color: "#dfdfff"
-                    font.pixelSize:50
-                    font.bold:true
+                ColumnLayout {
                     anchors.centerIn:parent
+                    spacing:-20
+                    Text {
+                        text: Time.format("hh:mm:ss")
+                        color: "#dfdfff"
+                        font.pixelSize:50
+                        font.family: "monospace"
+                        font.bold:true
+                    }
+                    Text {
+                        text: Time.format("yyyy年MM月dd日")
+                        color: "#afafbf"
+                        font.pixelSize:12
+                        font.family: "monospace"
+                        Layout.margins:5
+                    }
+                }
+            }
+            RowLayout{
+                Rectangle {
+                    Layout.fillWidth:true
+                    implicitHeight:60
+                    color:"#080812"
+                    radius:20
+                    RowLayout {
+                        anchors.fill:parent
+                        ClippingRectangle {
+                            implicitWidth:50
+                            implicitHeight:50
+                            Layout.alignment:Qt.AlignVCenter
+                            Layout.margins:5
+                            radius:15
+                            clip: true
+                            color: "#12131F"
+                            Image {
+                                anchors.fill: parent
+                                source: Quickshell.shellDir + "/assets/profile.png"
+                                fillMode: Image.PreserveAspectCrop
+                                sourceSize.width: 256
+                                sourceSize.height: 256
+                                asynchronous: true
+                                mipmap:true
+                                smooth:true
+                                cache: true
+                            }
+                        }
+                        ColumnLayout {
+                            Layout.alignment:Qt.AlignLeft
+                            spacing:0
+
+                            Text {
+                                Layout.alignment: Qt.AlignLeft
+                                text: Quickshell.env('USER')
+                                color: "#dfdfff"
+                                font.bold:true
+                                font.family:"monospace"
+                                font.pixelSize:16
+                            }
+                            Text {
+                                Layout.fillWidth:true
+                                Layout.alignment: Qt.AlignLeft
+                                text: "Uptime: " + root.time(System.uptime)
+                                color: "#dfdfff"
+                                font.pixelSize:10
+                            }
+                        }            
+                    }
+                }
+                Rectangle {
+                    color:"#080812"
+                    radius:20
+                    implicitHeight:60
+                    implicitWidth:60
+                    ClippedFilledCircularProgress {
+                        size: 50
+                        anchors.centerIn:parent
+                        value: Battery.percentage
+                        colPrimary: "#DFDFFF"
+                        colSecondary: "#12131F"
+                        lineWidth: 5
+                        Item {
+                            anchors.fill: parent
+                            MaterialIcon {
+                                anchors.centerIn: parent
+                                fill: 1
+                                icon: Battery.isCharging ? "bolt" : "battery_android_5"
+
+                                font.pixelSize: 24
+                                color: "#DFDFFF"
+                            }
+                        }
+                    }
+                }
+            }
+            Rectangle {
+                implicitWidth: 300
+                implicitHeight:45
+                color: "#080812"
+                radius:20
+                RowLayout {
+                    anchors.verticalCenter:parent.verticalCenter
+                    anchors.fill:parent
+                    TextField {
+                        id: passwordBox
+
+                        Layout.leftMargin:5
+                        Layout.fillWidth:true
+                        padding: 10
+                        background: Rectangle{
+                            color: "#12131F"
+                            radius:15
+                        }
+                        placeholderText: qsTr("Enter Password")
+
+                        focus: true
+                        enabled: !root.context.unlockInProgress
+                        echoMode: TextInput.Password
+                        inputMethodHints: Qt.ImhSensitiveData
+
+                        // Update the text in the context when the text in the box changes.
+                        onTextChanged: root.context.currentText = this.text;
+
+                        // Try to unlock when enter is pressed.
+                        onAccepted: root.context.tryUnlock();
+
+                        // Update the text in the box to match the text in the context.
+                        // This makes sure multiple monitors have the same text.
+                        Connections {
+                            target: root.context
+
+                            function onCurrentTextChanged() {
+                                passwordBox.text = root.context.currentText;
+                            }
+                        }
+                    }
+
+                    Button {
+                        text: "Unlock"
+                        padding: 10
+                        Layout.rightMargin:5
+
+                        // don't steal focus from the text box
+                        focusPolicy: Qt.NoFocus
+
+                        enabled: !root.context.unlockInProgress && root.context.currentText !== "";
+                        onClicked: root.context.tryUnlock();
+                        background: Rectangle{
+                            color: "#12131F"
+                            radius:15
+                        }
+                    }
+                }
+
+                Label {
+                    visible: root.context.showFailure
+                    text: "Incorrect password"
                 }
             }
             ClippingRectangle {
@@ -158,22 +313,6 @@ WlSessionLockSurface {
                 radius:20
                 implicitHeight: 90
                 Layout.fillWidth: true
-                Image {
-                    id:bgimg
-                    anchors.fill: parent
-                    source: root.activePlayer?.trackArtUrl ?? ""
-                    fillMode: Image.PreserveAspectCrop
-                    cache: true
-                    layer.enabled: true
-                    layer.effect: MultiEffect {
-                        brightness: -0.3
-                        saturation:-0.2
-                        contrast: -0.5
-                        blurEnabled: true
-                        blurMax: 64
-                        blur: 1.0
-                    }
-                }
                 RowLayout {
                     anchors.fill: parent
                     ClippingRectangle {
@@ -220,7 +359,6 @@ WlSessionLockSurface {
                                 background: Rectangle { 
                                     color: "#12131F" 
                                     radius:10
-                                    opacity:0.5
                                 }
                                 onClicked: activePlayer.previous()
                                 contentItem: Item {
@@ -245,7 +383,6 @@ WlSessionLockSurface {
                                 background: Rectangle { 
                                     color: "#12131F" 
                                     radius:10
-                                    opacity:0.5
                                 }
                                 contentItem: Item {
                                     anchors.fill: parent
@@ -312,7 +449,6 @@ WlSessionLockSurface {
                                 background: Rectangle { 
                                     color: "#12131F" 
                                     radius:10
-                                    opacity:0.5
                                 }
                                 padding: 0
 
@@ -346,7 +482,6 @@ WlSessionLockSurface {
                                 background: Rectangle { 
                                     color: "#12131F" 
                                     radius:10
-                                    opacity:0.5
                                 }
                                 onClicked: activePlayer.previous()
                                 contentItem: Item {
@@ -363,6 +498,7 @@ WlSessionLockSurface {
                         }
                         RowLayout {
                             Layout.fillWidth: true
+                            Layout.topMargin:-5
                             spacing:5
                             Text {
                                 text: root.formatTime(root.position)
@@ -400,8 +536,7 @@ WlSessionLockSurface {
                                             bottom: parent.bottom
                                             right: parent.right
                                         }
-                                        color: "#02030F"
-                                        opacity:0.5
+                                        color: "#12131F"
 
                                         implicitWidth: parent.width * (1 - (root.position / activePlayer.length)) - 1
                                         radius: 20
@@ -428,69 +563,6 @@ WlSessionLockSurface {
                             }
                         }
                     }
-                }
-            }
-            Rectangle {
-                implicitWidth: 300
-                implicitHeight:45
-                color: "#080812"
-                radius:20
-                RowLayout {
-                    anchors.verticalCenter:parent.verticalCenter
-                    anchors.fill:parent
-                    TextField {
-                        id: passwordBox
-
-                        Layout.leftMargin:5
-                        Layout.fillWidth:true
-                        padding: 10
-                        background: Rectangle{
-                            color: "#12131F"
-                            radius:15
-                        }
-
-                        focus: true
-                        enabled: !root.context.unlockInProgress
-                        echoMode: TextInput.Password
-                        inputMethodHints: Qt.ImhSensitiveData
-
-                        // Update the text in the context when the text in the box changes.
-                        onTextChanged: root.context.currentText = this.text;
-
-                        // Try to unlock when enter is pressed.
-                        onAccepted: root.context.tryUnlock();
-
-                        // Update the text in the box to match the text in the context.
-                        // This makes sure multiple monitors have the same text.
-                        Connections {
-                            target: root.context
-
-                            function onCurrentTextChanged() {
-                                passwordBox.text = root.context.currentText;
-                            }
-                        }
-                    }
-
-                    Button {
-                        text: "Unlock"
-                        padding: 10
-                        Layout.rightMargin:5
-
-                        // don't steal focus from the text box
-                        focusPolicy: Qt.NoFocus
-
-                        enabled: !root.context.unlockInProgress && root.context.currentText !== "";
-                        onClicked: root.context.tryUnlock();
-                        background: Rectangle{
-                            color: "#12131F"
-                            radius:15
-                        }
-                    }
-                }
-
-                Label {
-                    visible: root.context.showFailure
-                    text: "Incorrect password"
                 }
             }
         }
