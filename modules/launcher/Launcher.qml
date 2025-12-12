@@ -100,7 +100,7 @@ PanelWindow {
         border.color: "#12131F"
         radius: 20
         implicitWidth:root.implicitWidth-40
-        implicitHeight: search.text !== "" ? root.implicitHeight-40 : 50
+        implicitHeight: search.text !== "" ? root.implicitHeight-40 : 75
         Behavior on implicitHeight { Anim {} }
         anchors.margins:20
 
@@ -264,10 +264,18 @@ PanelWindow {
                     }
                 }
             }
-            Item {
-                clip:true
+            Rectangle {
                 Layout.fillWidth:true
-                implicitHeight:search.text !== "" ? 20 : 0
+                Layout.topMargin:search.text !== "" ? 0 : -30
+                implicitHeight:1
+                color: "#12131F"
+            }
+
+            Item {
+                Layout.fillWidth:true
+                implicitHeight:20
+                Layout.topMargin:search.text !== "" ? 0 : -15
+                Behavior on Layout.topMargin { Anim {} }
                 RowLayout {
                     Rectangle {
                         color: "#12131F"
