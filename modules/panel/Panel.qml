@@ -61,7 +61,13 @@ Variants {
                 scope.powerMenuVisible = !scope.powerMenuVisible
             }
         }
-
+        Hypr.GlobalShortcut {
+            name: "launcher"
+            onPressed: {
+                if (scope.modelData.name === Hyprland.focusedMonitor)
+                scope.launcherVisible = !scope.launcherVisible
+            }
+        }
 
 
         SidePanel {
