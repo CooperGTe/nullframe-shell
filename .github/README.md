@@ -1,7 +1,10 @@
 # NullFrameShell
-A *Modern Desktop* shell built using Quickshell for **Hyprland** Compositor
-----
 ![Desktop Clean](./images/desktop_only.png)
+![Launcher](./images/launcher.png)
+![Lockscreen](./images/lockscreen.png)
+----
+A *Modern Desktop* shell built using Quickshell for **Hyprland** Compositor
+
 > [!WARNING]
 > Status: indev (Unfinished)
 >
@@ -16,10 +19,10 @@ A *Modern Desktop* shell built using Quickshell for **Hyprland** Compositor
 - [x] Lyrics Display
 - [x] Power Menu
 - [x] Lockscreen
+- [x] Launcher
 
 ### Planned
 - [ ] GUI Setting
-- [ ] Launcher
 
 ## Dependency
 - Quickshell
