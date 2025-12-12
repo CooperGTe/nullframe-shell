@@ -40,6 +40,7 @@ Variants {
         onLauncherVisibleChanged: {
             launcher.active = !launcher.active
             if (!scope.launcherVisible) {
+                launcherHide.restart()
                 launcher.item.visibility = false
             }
         }
@@ -64,7 +65,7 @@ Variants {
         Hypr.GlobalShortcut {
             name: "launcher"
             onPressed: {
-                if (scope.modelData.name === Hyprland.focusedMonitor)
+                if (scope.modelData.name === Hyprland.focusedMonitor && !scope.launcherVisible)
                 scope.launcherVisible = !scope.launcherVisible
             }
         }
@@ -91,6 +92,14 @@ Variants {
             repeat: false
             onTriggered: powermenu.active = false
         }
+        Timer {
+            id: launcherHide
+            interval: 300
+            running: false
+            repeat: false
+            onTriggered: launcher.active = false
+        }
+
 
         LazyLoader {
             id: powermenu

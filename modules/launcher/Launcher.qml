@@ -46,9 +46,8 @@ PanelWindow {
 
 
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: WlrKeyboardFocus.onDemand
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
     color: "transparent"
-
 
     implicitWidth: 450
     implicitHeight: 400
@@ -67,6 +66,14 @@ PanelWindow {
         easing.bezierCurve: [0.2, 0, 0, 1, 1, 1]
     }
 
+    GlobalShortcut {
+        name: "launcher"
+        onPressed: {
+            root.WlrLayershell.keyboardFocus= WlrKeyboardFocus.None
+            grab.active=false
+            root.scope.launcherVisible = false
+        }
+    }
     Item {
         Component.onCompleted: {
             parent.layer.enabled = true;
@@ -89,6 +96,7 @@ PanelWindow {
         windows: [ root ]
         onActiveChanged: {
             if (!grab.active) {
+                root.visibility = false
                 scope.launcherVisible = false
             }
         }
