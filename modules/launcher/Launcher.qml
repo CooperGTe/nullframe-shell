@@ -16,16 +16,23 @@ PanelWindow {
     property var scope
     property bool visibility
     property real selectedIndex: 0
+    onVisibilityChanged: {
+        if (root.visibility) grab.active = true
+        if (!root.visibility) grab.active=false
+    }
     onSelectedIndexChanged: {
         list.positionViewAtIndex(selectedIndex, ListView.Center)
     }
 
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
     color: "transparent"
+
 
     implicitWidth: 400
     implicitHeight: 400
+
+    mask: Region { item:windowbox }
 
     //cool shit
     component Anim: NumberAnimation {
@@ -50,15 +57,17 @@ PanelWindow {
             }
         }
     }
-    GlobalShortcut {
-        name: "launcher"
-        onPressed: {
-            if (scope.modelData.name === Hyprland.focusedMonitor)
-            root.scope.launcherVisible = !root.scope.launcherVisible
+    HyprlandFocusGrab {
+        id: grab
+        windows: [ root ]
+        onActiveChanged: {
+            if (!grab.active) {
+                scope.launcherVisible = false
+            }
         }
     }
     Rectangle { 
-        id: container
+        id: windowbox
         color: "#080812"
         radius: 20
         implicitWidth:root.implicitWidth-40
