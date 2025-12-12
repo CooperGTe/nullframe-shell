@@ -26,12 +26,31 @@ PanelWindow {
         list.positionViewAtIndex(selectedIndex, ListView.Center)
     }
 
+    
+    function webSearch(q) {
+        const url = q.trim()
+
+        const domainRegex = /^[a-z0-9.-]+\.[a-z]{2,}(\/.*)?$/i
+
+        if (domainRegex.test(url)) {
+            // direct navigation
+            Qt.openUrlExternally("https://" + url)
+        } else {
+            // search query
+            Qt.openUrlExternally(
+                "https://duckduckgo.com/?q=" + encodeURIComponent(q)
+            )
+        }
+        Quickshell.execDetached({ command: ["bash","-c","hyprctl dispatch focuswindow 'class:^(zen)$'"] }); 
+    }
+
+
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.onDemand
     color: "transparent"
 
 
-    implicitWidth: 400
+    implicitWidth: 450
     implicitHeight: 400
 
     mask: Region { item:windowbox }
@@ -42,6 +61,12 @@ PanelWindow {
         easing.type: Easing.BezierSpline
         easing.bezierCurve: [0.2, 0, 0, 1, 1, 1]
     }
+    component CAnim: ColorAnimation { 
+        duration: 400
+        easing.type: Easing.BezierSpline
+        easing.bezierCurve: [0.2, 0, 0, 1, 1, 1]
+    }
+
     Item {
         Component.onCompleted: {
             parent.layer.enabled = true;
@@ -71,6 +96,8 @@ PanelWindow {
     Rectangle { 
         id: windowbox
         color: "#080812"
+        border.width:1
+        border.color: "#12131F"
         radius: 20
         implicitWidth:root.implicitWidth-40
         implicitHeight: search.text !== "" ? root.implicitHeight-40 : 50
@@ -91,6 +118,15 @@ PanelWindow {
                 event.accepted = true;
                 if (list.count > 0) {
                     root.selectedIndex = (root.selectedIndex - 1 + list.count) % list.count;
+                }
+            }  else if ((event.key === Qt.Key_Return || event.key === Qt.Key_Enter)
+            && event.modifiers & Qt.ControlModifier) {
+
+                event.accepted = true
+
+                if (search.text !== "") {
+                    root.webSearch(search.text)
+                    root.scope.launcherVisible = false
                 }
             } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
                 event.accepted = true;
@@ -115,6 +151,11 @@ PanelWindow {
                 background: Rectangle {
                     color: search.text !== "" ? "#12131F" : "transparent"
                     radius:10
+                    border.width:1
+                    border.color: search.text !== "" ? "#22232F" : "transparent"
+                    Behavior on border.color { CAnim {} }
+                    Behavior on color { CAnim {} }
+
                 }
 
                 placeholderText: "Type to search"
@@ -213,6 +254,7 @@ PanelWindow {
                             }
                             Text {
                                 Layout.fillWidth: true
+                                visible: itemList.modelData.comment === ""?false:true
                                 text: itemList.modelData.comment
                                 horizontalAlignment: Text.AlignLeft
                                 font.pixelSize:8
@@ -220,6 +262,55 @@ PanelWindow {
                             }
                         }
                     }
+                }
+            }
+            Item {
+                clip:true
+                Layout.fillWidth:true
+                implicitHeight:search.text !== "" ? 20 : 0
+                RowLayout {
+                    Rectangle {
+                        color: "#12131F"
+                        implicitWidth:20
+                        implicitHeight:20
+                        radius:5
+                        Text {
+                            anchors.centerIn:parent
+                            text: "↩"
+                            color: "#dfdfff"
+                        }
+                    }
+                    Text {
+                        text: "Action"
+                        color: "#dfdfff"
+                    }
+                    Rectangle {
+                        color: "#12131F"
+                        implicitWidth:20
+                        implicitHeight:20
+                        radius:5
+                        Text {
+                            anchors.centerIn:parent
+                            text: "⌃"
+                            color: "#dfdfff"
+                        }
+                    }
+                    Rectangle {
+                        color: "#12131F"
+                        implicitWidth:20
+                        implicitHeight:20
+                        radius:5
+                        Text {
+                            anchors.centerIn:parent
+                            text: "↩"
+                            color: "#dfdfff"
+                        }
+                    }
+                    Text {
+                        text: "Search/Open In Browser"
+                        color: "#dfdfff"
+                    }
+
                 }
             }
         }
