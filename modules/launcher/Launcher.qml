@@ -1,5 +1,5 @@
 pragma ComponentBehavior: Bound
-//@ pragma IconTheme Papirus
+//@ pragma IconTheme Papirus-Dark
 
 import QtQuick
 import QtQuick.Effects
@@ -15,7 +15,9 @@ PanelWindow {
 
     property var scope
     property bool visibility
+    property bool calc: false
     property real selectedIndex: 0
+
     onVisibilityChanged: {
         if (root.visibility) grab.active = true
         if (!root.visibility) grab.active=false
@@ -25,7 +27,7 @@ PanelWindow {
     }
 
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
+    WlrLayershell.keyboardFocus: WlrKeyboardFocus.Exclusive
     color: "transparent"
 
 
@@ -118,6 +120,29 @@ PanelWindow {
                 placeholderText: "Type to search"
             }
             
+            Item {
+                implicitHeight: (root.calc && search.text !== "") ? 30 : 0
+                Behavior on implicitHeight { Anim {} }
+                Layout.fillWidth: true
+                clip:true
+                Text {
+                    function calc(expr) {
+                        try {
+                            if (expr !=="")root.calc = true
+                            return eval(expr)
+                        } catch (e) {
+                            root.calc = false
+                            return ""
+                        }
+                    }
+                    text: "Result: " + calc(search.text)
+                    color: "#dfdfff"
+                    font.pixelSize:12
+                    anchors.verticalCenter:parent.verticalCenter
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                }
+            }
             ListView {
                 id:list
                 Layout.fillHeight: true
