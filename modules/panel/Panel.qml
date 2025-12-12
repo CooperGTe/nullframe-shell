@@ -6,8 +6,11 @@ import QtQuick.Shapes
 import qs.modules.bar
 import qs.modules.sidepanel
 import qs.modules.powerMenu
+import qs.modules.launcher
 import qs.modules
 import qs.services
+import qs.configs
+
 import Quickshell.Hyprland as Hypr
 
 Variants {
@@ -19,6 +22,7 @@ Variants {
         property real cornerRadius: 15
         property bool sidePanelVisible: false
         property bool powerMenuVisible: false
+        property bool launcherVisible: false
         property real powerAlert: 2
         onPowerMenuVisibleChanged: {
             if (!scope.powerMenuVisible) {
@@ -33,9 +37,15 @@ Variants {
                 poweralert.active = true
             } else poweralert.active = false
         }
+        onLauncherVisibleChanged: {
+            launcher.active = !launcher.active
+            if (!scope.launcherVisible) {
+                launcher.item.visibility = false
+            }
+        }
         
         property bool internalSidePanelVisible: bar.sidePanelVisible
-        property bool barHug:  Hyprland.hasMaximize || scope.sidePanelVisible
+        property bool barHug:  Hyprland.hasMaximize || scope.sidePanelVisible || Configs.barHug
 
         Hypr.GlobalShortcut {
             name: "sidepanel"
@@ -51,6 +61,7 @@ Variants {
                 scope.powerMenuVisible = !scope.powerMenuVisible
             }
         }
+
 
 
         SidePanel {
@@ -94,6 +105,17 @@ Variants {
                     item.scope = scope
                     item.screen = scope.modelData
                     item.visibility = (scope.PowerAlert !== 0)
+                }
+            }
+        }
+        LazyLoader {
+            id: launcher
+            component: Launcher { }
+            onActiveChanged: {
+                if (active && item && scope) {
+                    item.scope = scope
+                    item.screen = scope.modelData
+                    item.visibility = true
                 }
             }
         }

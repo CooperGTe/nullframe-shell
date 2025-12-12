@@ -21,7 +21,7 @@ Item {
         vertical:true
         anchors.centerIn: parent
         value: percentage
-        valueBarWidth: 26
+        valueBarWidth: 24
         valueBarHeight: 40
         highlightColor: (isLow && !isCharging) ? "#aa4a5a" : "#DFDFFF"
 

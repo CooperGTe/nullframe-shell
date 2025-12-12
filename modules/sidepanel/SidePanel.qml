@@ -8,6 +8,7 @@ import Quickshell.Wayland
 import qs.modules
 import qs.modules.panel
 import qs.services
+import qs.configs
 
 import "components"
 
@@ -46,7 +47,7 @@ PanelWindow {
         SequentialAnimation {
             PauseAnimation { 
                 id:pause
-                duration: (scope.sidePanelVisible && !Hyprland.hasMaximize) ? 200 : 0
+                duration: (scope.sidePanelVisible && !Hyprland.hasMaximize && !Configs.barHug) ? 200 : 0
             }
             NumberAnimation { 
                 duration: 150; 

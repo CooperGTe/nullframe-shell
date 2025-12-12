@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import qs.services
-
+import qs.configs
 
 Item {
     id:root
@@ -11,7 +11,7 @@ Item {
     implicitWidth: 40
 
     //conf
-    property int workspaceLength: 6
+    property int workspaceLength: Configs.workspacesShowed
     property bool kanji: true
 
     WheelHandler {

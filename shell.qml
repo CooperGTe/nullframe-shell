@@ -13,12 +13,11 @@ import qs.modules.lockscreen
 import qs.modules.powerMenu
 
 ShellRoot {
-    SidePanel{}
     Panel {}
     LyricsEngine {}
     OSD {}
     OSDKeyboard {}
     DesktopWidget {}
     Notification{}
-    //LockScreen{}
+    LockScreen{}
 }

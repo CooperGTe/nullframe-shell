@@ -6,13 +6,13 @@ import Quickshell.Widgets
 import QtQuick.Layouts
 import Quickshell.Wayland
 import qs.services
+import qs.configs
 import Quickshell.Services.Mpris
 
 Scope {
     id: root
     readonly property MprisPlayer activePlayer: MprisController.activePlayer
     readonly property real position: MprisController.visualPosition
-    property bool dark: false
     Variants {
         model: Quickshell.screens
         LazyLoader {
@@ -41,7 +41,7 @@ Scope {
                         Layout.alignment: Qt.AlignRight
                         MouseArea {
                             anchors.fill:parent
-                            onClicked: root.dark = !root.dark
+                            onClicked: Configs.darkClock = !Configs.darkClock
                         }
                         ColumnLayout {
                             id:clock
@@ -49,16 +49,16 @@ Scope {
                             Text {
                                 text: Time.format("hh:mm")
                                 Layout.alignment: Qt.AlignRight
-                                color: root.dark ? "#080812" : "#DFDFFF"
+                                color: Configs.darkClock ? "#080812" : "#DFDFFF"
                                 font.pixelSize: 50
-                                font.bold: true
+                                font.bold:true
                                 font.family: "monospace"
                             }
                             Text {
                                 text: Time.format("yyyy年MM月dd日")
                                 Layout.alignment: Qt.AlignRight
                                 Layout.topMargin: -10
-                                color: root.dark ? "#080812" : "#DFDFFF"
+                                color: Configs.darkClock ? "#080812" : "#DFDFFF"
                                 font.pixelSize: 15
                                 font.bold: false
                             }

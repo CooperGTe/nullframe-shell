@@ -42,8 +42,8 @@ Item {
                 centerY: root.centerY
                 radiusX: root.arcRadius
                 radiusY: root.arcRadius
-                startAngle: -90
-                sweepAngle: 360
+                startAngle: -120
+                sweepAngle: -(360 / 1-(degree+60))
             }
         }
     }

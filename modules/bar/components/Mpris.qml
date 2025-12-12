@@ -70,8 +70,8 @@ Item {
                         size: 28
                         value: root.position / activePlayer?.length
                         colPrimary: "#DFDFFF"
-                        colSecondary: "#080812"
-                        lineWidth: 2
+                        colSecondary: "#22232F"
+                        lineWidth: 3
                         Item {
                             anchors.fill: parent
                             MaterialIcon {

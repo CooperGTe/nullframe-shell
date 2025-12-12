@@ -1,10 +1,9 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Quickshell
-import Quickshell.Hyprland
-import Quickshell.Wayland
 import QtQuick.Layouts
+import Quickshell
+import Quickshell.Wayland
 import qs.modules
 import qs.modules.panel
 
@@ -59,7 +58,6 @@ PanelWindow {
                 id:panelbtn
                 onClicked: {
                     scope.sidePanelVisible = !scope.sidePanelVisible
-                    console.log(sidePanelVisible)
                 }
             }
             Tray{}
@@ -78,10 +76,10 @@ PanelWindow {
                 NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
             }
             Rectangle {
-                color: "#12131F"
-                //color: "#8c1322"
+                //color: "#12131F"
+                color: "#7F1223"
                 radius: 30
-                border.width: 2
+                border.width: 0
                 border.color: "#22232F"
                 implicitHeight: ctlctl.implicitHeight + 10
                 implicitWidth: 30
