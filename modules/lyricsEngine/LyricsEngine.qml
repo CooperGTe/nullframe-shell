@@ -163,7 +163,7 @@ Variants {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: root.currentLine
                         font.family: "monospace"
-                        color: "white"
+                        color: Color.surface
                         wrapMode: Text.Wrap
                         horizontalAlignment: Text.AlignHCenter
                         font.pixelSize: 20
