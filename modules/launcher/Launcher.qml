@@ -19,6 +19,7 @@ PanelWindow {
     property real selectedIndex: 0
 
     onVisibilityChanged: {
+        console.log(visibility)
         if (root.visibility) grab.active = true
         if (!root.visibility) grab.active=false
     }
@@ -96,7 +97,6 @@ PanelWindow {
         windows: [ root ]
         onActiveChanged: {
             if (!grab.active) {
-                root.visibility = false
                 scope.launcherVisible = false
             }
         }
