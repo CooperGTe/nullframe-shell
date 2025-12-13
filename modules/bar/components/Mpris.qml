@@ -3,10 +3,9 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Services.Mpris
 import Quickshell
-import Quickshell.Io
 import qs.services
 import qs.modules.common
-import qs.modules
+import qs.config
 
 Item {
     id:root
@@ -22,7 +21,7 @@ Item {
         spacing: 0
 
         Rectangle {
-            color: "#12131f"
+            color: Color.container
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignHCenter
             radius: 20
@@ -46,7 +45,7 @@ Item {
                             anchors.centerIn: parent
                             icon: "skip_previous"
                             font.pixelSize: 20
-                            color: "#DFDFFF"
+                            color: Color.surface
                             fill: parent.hovered ? 1 : 0
                         }
                         property bool hovered: false
@@ -69,8 +68,8 @@ Item {
                     contentItem: ClippedFilledCircularProgress {
                         size: 28
                         value: root.position / activePlayer?.length
-                        colPrimary: "#DFDFFF"
-                        colSecondary: "#22232F"
+                        colPrimary: Color.surface
+                        colSecondary: Color.container_high
                         lineWidth: 3
                         Item {
                             anchors.fill: parent
@@ -79,7 +78,7 @@ Item {
                                 fill: 1
                                 icon: activePlayer && activePlayer.isPlaying ? "pause" : "play_arrow"
                                 font.pixelSize: activePlayer && activePlayer.isPlaying ? 15 : 18 //size patch
-                                color: "#DFDFFF"
+                                color: Color.surface
                             }
                         }
                     }
@@ -113,7 +112,7 @@ Item {
                             icon: "skip_next"
                             font.pixelSize: 20
                             fill: parent.hovered ? 1 : 0
-                            color: "#DFDFFF"
+                            color: Color.surface
                         }
                         property bool hovered: false
                         MouseArea {
@@ -135,7 +134,7 @@ Item {
                 icon: "music_note"
                 font.pixelSize: 20
                 fill: 1
-                color: "#DFDFFF"
+                color: Color.surface
             }
             Layout.alignment: Qt.AlignHCenter
             WheelHandler {

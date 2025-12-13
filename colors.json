@@ -1,0 +1,9 @@
+{
+    "base": "#080812",
+    "container": "#12131F",
+    "container_high": "#22232F",
+    "primary": "#DFDFFF",
+    "secondary": "#7F1223",
+    "surface": "#DFDFFF",
+    "surface_high": "#DFDFFF"
+}

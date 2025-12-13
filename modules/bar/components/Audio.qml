@@ -3,6 +3,7 @@ import Quickshell.Services.Pipewire
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
+import qs.config
 
 Item {
     id:root
@@ -29,6 +30,6 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: 16
         fill:1
-        color: "#DFDFFF"
+        color: Color.surface
     }
 }

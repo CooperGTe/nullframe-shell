@@ -8,6 +8,8 @@ import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Services.Mpris
 
+import qs.config
+
 import qs.services
 
 Variants {
@@ -143,7 +145,7 @@ Variants {
                         horizontalCenter: parent.horizontalCenter
                     }
 
-                    color: Hyprland.hasMaximize ? Qt.rgba(0.031,0.031,0.070,0.3) : "#080812"
+                    color: Hyprland.hasMaximize ? Qt.rgba(0.031,0.031,0.070,0.3) : Color.base
                     radius: 10
                     MouseArea {
                         anchors.fill: parent

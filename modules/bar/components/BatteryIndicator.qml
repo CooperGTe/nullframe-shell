@@ -2,6 +2,7 @@ import qs.services
 import qs.modules.common
 import QtQuick
 import QtQuick.Layouts
+import qs.config
 
 Item {
     id: root
@@ -23,7 +24,8 @@ Item {
         value: percentage
         valueBarWidth: 24
         valueBarHeight: 40
-        highlightColor: (isLow && !isCharging) ? "#aa4a5a" : "#DFDFFF"
+        highlightColor: (isLow && !isCharging) ? "#aa4a5a" : Color.surface
+        trackColor: Color.container
 
         Item {
             anchors.centerIn: parent

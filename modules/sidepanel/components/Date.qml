@@ -3,13 +3,14 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import qs.modules.common
 import qs.services
+import qs.config
 
 Rectangle {
     id:root
     property int currentMonth: Number(Time.format("MM")) - 1
     property int currentYear:  Number(Time.format("yyyy"))
     Layout.fillWidth:true
-    color: "#12131F"
+    color: Color.container
     radius:20
     implicitHeight:220
     implicitWidth:230
@@ -39,7 +40,7 @@ Rectangle {
                         text: model.narrowName
                         anchors.centerIn: parent
                         horizontalAlignment: Text.AlignHCenter
-                        color: "#dfdfff"
+                        color: Color.surface
                         font.pixelSize: 12
                     }
                 }
@@ -75,11 +76,11 @@ Rectangle {
 
                             radius: 12
 
-                            color: model.today ? "#dfdfff" : "transparent"
+                            color: model.today ? Color.surface : "transparent"
                             border.width: model.today ? 0 : 2
                             // border.color: hover.hovered ? Theme.colors.bg_light : "transparent"
                             border.color: {
-                                if (hover.hovered) return "#22232F"
+                                if (hover.hovered) return Color.container_high
                                 return "transparent"
                             }
 
@@ -96,12 +97,12 @@ Rectangle {
                             text: grid.locale.toString(dayItem.model.day)
 
                             color: {
-                                if (model.today) return "#080812"
+                                if (model.today) return Color.base
 
                                 const dayOfWeek = dayItem.model.date.getUTCDay()
                                 if (dayOfWeek === 5 || dayOfWeek === 6)
                                 return "#ffafaf"
-                                return "#dfdfff"
+                                return Color.surface
                             }
                             opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : 0.3
                             font.pixelSize: 12
@@ -147,7 +148,7 @@ Rectangle {
 
                     color: "transparent"
                     border.width: 2
-                    border.color: "#dfdfff"
+                    border.color: Color.surface
 
                     Behavior on x {
                         NumberAnimation {
@@ -178,7 +179,7 @@ Rectangle {
                         color:  "transparent"
                         radius:5
                         border.width:2
-                        border.color: "#22232F"
+                        border.color: Color.container_high
                         anchors.fill:parent
                     }
                     onClicked: {
@@ -192,7 +193,7 @@ Rectangle {
                         anchors.centerIn: parent
                         icon: "keyboard_arrow_left"
                         font.pixelSize: 24
-                        color: "#dfdfff"
+                        color: Color.surface
                     }
                 }
 
@@ -205,7 +206,7 @@ Rectangle {
                         color:  "transparent"
                         radius:5
                         border.width:2
-                        border.color: "#22232F"
+                        border.color: Color.container_high
                         anchors.fill:parent
                     }
                     onClicked: {
@@ -220,7 +221,7 @@ Rectangle {
                         anchors.centerIn: parent
                         icon: "keyboard_arrow_right"
                         font.pixelSize: 24
-                        color: "#dfdfff"
+                        color: Color.surface
                     }
                 }
 
@@ -233,7 +234,7 @@ Rectangle {
                     text:root.currentYear + "年 " + Qt.locale("ja_JP").monthName(root.currentMonth)
 
                     font.pointSize: 10
-                    color: "#dfdfff"
+                    color: Color.surface
                 }
             }
         }
@@ -242,7 +243,7 @@ Rectangle {
             Layout.leftMargin:10
             spacing:10
             Rectangle {
-                color: "#dfdfff"
+                color: Color.surface
                 Layout.bottomMargin:-40
                 radius:15
                 implicitWidth:50
@@ -260,11 +261,11 @@ Rectangle {
                     anchors.horizontalCenter:parent.horizontalCenter
                     anchors.top:parent.top
                     fill:1
-                    color: "#12131F"
+                    color: Color.container
                 }
                 Text {
                     text:"Calendar"
-                    color: "#dfdfff"
+                    color: Color.surface
                     font.bold: true
                     anchors.horizontalCenter:parent.horizontalCenter
                     anchors.bottom:parent.bottom
@@ -283,12 +284,12 @@ Rectangle {
                     anchors.horizontalCenter:parent.horizontalCenter
                     anchors.top:parent.top
                     fill:0
-                    color: "#dfdfff"
+                    color: Color.surface
                 }
                 Text {
                     text:"Timer"
                     font.bold:true
-                    color: "#dfdfff"
+                    color: Color.surface
                     anchors.horizontalCenter:parent.horizontalCenter
                     anchors.bottom:parent.bottom
                 }

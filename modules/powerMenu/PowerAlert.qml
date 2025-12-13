@@ -5,6 +5,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
+import qs.config
 
 PanelWindow {
     id:root
@@ -98,7 +99,7 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         anchors.margins: 20
-        color: "#080812"
+        color: Color.base
         radius: 20
         ColumnLayout {
             anchors.fill:parent
@@ -111,7 +112,7 @@ PanelWindow {
                     case 3: "Logout"; break;
                     default: ""; break;
                 }
-                color:"#dfdfff"
+                color:Color.surface
                 font.bold:true
                 font.pixelSize:16
             }
@@ -125,7 +126,7 @@ PanelWindow {
                     default: ""; break;
                 }
                 wrapMode:Text.Wrap
-                color:"#dfdfff"
+                color:Color.surface
                 font.pixelSize:12
             }
             RowLayout {
@@ -138,7 +139,7 @@ PanelWindow {
                     text: "Cancel"
                     contentItem: Text {
                         text: parent.text
-                        color: !parent.hovered ? "#dfdfff" : "#12131F"
+                        color: !parent.hovered ? Color.surface : Color.container
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         Behavior on color {
@@ -146,10 +147,10 @@ PanelWindow {
                         }
                     }
                     background: Rectangle {
-                        color: parent.hovered ? "#dfdfff" : "#12131F"
+                        color: parent.hovered ? Color.surface : Color.container
                         radius: parent.hovered ? 20 : 10
                         border.width: parent.activeFocus ? 2 : 0
-                        border.color: "#dfdfff"
+                        border.color: Color.surface
                         Behavior on color {
                             ColorAnimation { duration: 100 }
                         }
@@ -179,7 +180,7 @@ PanelWindow {
                     }
                     contentItem: Text {
                         text: parent.text
-                        color: !parent.hovered ? "#dfdfff" : "#12131F"
+                        color: !parent.hovered ? Color.surface : Color.container
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         Behavior on color {
@@ -187,10 +188,10 @@ PanelWindow {
                         }
                     }
                     background: Rectangle {
-                        color: parent.hovered ? "#dfdfff" : "#5F1213"
+                        color: parent.hovered ? Color.surface : Color.secondary
                         radius: parent.hovered ? 20 : 10
                         border.width: parent.activeFocus ? 2 : 0
-                        border.color: "#dfdfff"
+                        border.color: Color.surface
                         Behavior on color {
                             ColorAnimation { duration: 100 }
                         }

@@ -6,7 +6,7 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import QtQuick.Effects
-
+import qs.config
 
 
 ColumnLayout {
@@ -36,11 +36,11 @@ ColumnLayout {
 
                 contentItem: Text {
                     text: toolTip.text
-                    color: "white"
+                    color: Color.surface
                 }
 
             background: Rectangle {
-                color: "#080812"
+                color: Color.base
                 radius: 6
             }
         }

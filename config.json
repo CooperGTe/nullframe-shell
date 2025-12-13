@@ -1,5 +1,14 @@
 {
-    "barHug": false,
-    "darkClock": true,
-    "workspacesShowed": 6
+    "bar": {
+        "hug": false,
+        "workspaceKanji": true,
+        "workspacesShown": 6
+    },
+    "desktopWidget": {
+        "invertClockColor": false,
+        "media": true
+    },
+    "launcher": {
+        "position": "center"
+    }
 }

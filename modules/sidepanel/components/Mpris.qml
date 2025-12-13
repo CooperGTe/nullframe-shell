@@ -8,6 +8,7 @@ import Quickshell.Services.Mpris
 import qs.services
 import qs.modules.common
 import qs.modules
+import qs.config
 
 ColumnLayout {
     id:root
@@ -29,13 +30,13 @@ ColumnLayout {
         MaterialIcon {
             icon: "music_video"
             font.pixelSize: 18
-            color: "#DFDFFF"
+            color: Color.surface
             fill: 0
         }
         Text {
             text: "Media"
             Layout.fillWidth:true
-            color: "#dfdfff"
+            color: Color.surface
             font.pixelSize:12
             font.bold: true
         }
@@ -44,7 +45,7 @@ ColumnLayout {
             implicitHeight:sync.implicitHeight
             onClicked: Globals.mprisSync = !Globals.mprisSync
             background: Rectangle {
-                color: Globals.mprisSync ? "#dfdfff" : "#12131F"
+                color: Globals.mprisSync ? Color.surface : Color.container
                 radius:20
             }
             MaterialIcon {
@@ -52,19 +53,19 @@ ColumnLayout {
                 anchors.centerIn:parent
                 icon: "sync"
                 font.pixelSize: 18
-                color: !Globals.mprisSync ? "#dfdfff" : "#12131F"
+                color: !Globals.mprisSync ? Color.surface : Color.container
                 fill: 0
             }
         }
         MaterialIcon {
             icon: "lyrics"
             font.pixelSize: 18
-            color: "#DFDFFF"
+            color: Color.surface
             fill: 0
         }
     }
     ClippingRectangle {
-        color: "#12131F"
+        color: Color.container
         radius:20
         implicitHeight: 90
         Layout.fillWidth: true
@@ -108,7 +109,7 @@ ColumnLayout {
                     elide: Text.ElideRight
                     Layout.maximumWidth: 190
                     font.pixelSize: 12
-                    color:"#DFDFFF"
+                    color:Color.surface
                     font.bold:true
                 }
                 Text{
@@ -128,7 +129,7 @@ ColumnLayout {
                         Layout.preferredWidth: 24
                         Layout.preferredHeight: 24
                         background: Rectangle { 
-                            color: "#12131F" 
+                            color: Color.container 
                             radius:10
                             opacity:0.5
                         }
@@ -139,7 +140,7 @@ ColumnLayout {
                                 anchors.centerIn: parent
                                 icon: "repeat_one"
                                 font.pixelSize: 20
-                                color: "#DFDFFF"
+                                color: Color.surface
                                 fill: 1
                             }
                         }
@@ -153,7 +154,7 @@ ColumnLayout {
                         Layout.preferredWidth: 24
                         Layout.preferredHeight: 24
                         background: Rectangle { 
-                            color: "#12131F" 
+                            color: Color.container 
                             radius:10
                             opacity:0.5
                         }
@@ -163,7 +164,7 @@ ColumnLayout {
                                 anchors.centerIn: parent
                                 icon: "skip_previous"
                                 font.pixelSize: 20
-                                color: "#DFDFFF"
+                                color: Color.surface
                                 fill: parent.hovered ? 1 : 0
                             }
                             property bool hovered: false
@@ -193,7 +194,7 @@ ColumnLayout {
                                 icon: activePlayer && activePlayer.isPlaying ? "pause" : "play_arrow"
                                 font.pixelSize: 20
                                 fill: 1
-                                color: "#22232F"
+                                color: Color.container_high
                             }
                             property bool hovered: false
                             MouseArea {
@@ -220,7 +221,7 @@ ColumnLayout {
                         Layout.preferredWidth: 24
                         Layout.preferredHeight: 24
                         background: Rectangle { 
-                            color: "#12131F" 
+                            color: Color.container 
                             radius:10
                             opacity:0.5
                         }
@@ -233,7 +234,7 @@ ColumnLayout {
                                 icon: "skip_next"
                                 font.pixelSize: 20
                                 fill: parent.hovered ? 1 : 0
-                                color: "#DFDFFF"
+                                color: Color.surface
                             }
                             property bool hovered: false
                             MouseArea {
@@ -254,7 +255,7 @@ ColumnLayout {
                         Layout.preferredWidth: 24
                         Layout.preferredHeight: 24
                         background: Rectangle { 
-                            color: "#12131F" 
+                            color: Color.container 
                             radius:10
                             opacity:0.5
                         }
@@ -265,7 +266,7 @@ ColumnLayout {
                                 anchors.centerIn: parent
                                 icon: "shuffle"
                                 font.pixelSize: 20
-                                color: "#DFDFFF"
+                                color: Color.surface
                                 fill: 1
                             }
                         }
@@ -276,7 +277,7 @@ ColumnLayout {
                     spacing:5
                     Text {
                         text: root.formatTime(root.position)
-                        color:"#dfdfdf"
+                        color:Color.surface
                     }
                     Slider {
                         // Stretches to fill all left-over space
@@ -299,7 +300,7 @@ ColumnLayout {
                                      top: parent.top
                                      left: parent.left
                                  }
-                                 color: "#DFDFFF"
+                                 color: Color.surface
 
                                  implicitWidth: parent.width * (root.position / activePlayer.length)
                                  radius: 20

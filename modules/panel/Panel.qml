@@ -9,7 +9,7 @@ import qs.modules.powerMenu
 import qs.modules.launcher
 import qs.modules
 import qs.services
-import qs.configs
+import qs.config
 
 import Quickshell.Hyprland as Hypr
 
@@ -46,7 +46,7 @@ Variants {
         }
         
         property bool internalSidePanelVisible: bar.sidePanelVisible
-        property bool barHug:  Hyprland.hasMaximize || scope.sidePanelVisible || Configs.barHug
+        property bool barHug:  Hyprland.hasMaximize || scope.sidePanelVisible || Config.bar.hug
 
         Hypr.GlobalShortcut {
             name: "sidepanel"
@@ -158,7 +158,7 @@ Variants {
 
                 ShapePath {
                 strokeWidth: 0
-                fillColor: "#080812"
+                fillColor: Color.base
                 startX: 0
                 startY: scope.cornerRadius
                 PathArc {
@@ -195,7 +195,7 @@ Variants {
                 
                 ShapePath {
                     strokeWidth: 0
-                    fillColor: "#080812"
+                    fillColor: Color.base
                     startX: scope.cornerRadius
                     startY: scope.cornerRadius
                     PathArc {
@@ -229,7 +229,7 @@ Variants {
                 
                 ShapePath {
                     strokeWidth: 0
-                    fillColor: "#080812"
+                    fillColor: Color.base
                     startX: 0
                     startY: 0
                     PathArc {
@@ -263,7 +263,7 @@ Variants {
                 
                 ShapePath {
                     strokeWidth: 0
-                    fillColor: "#080812"
+                    fillColor: Color.base
                     startX: 0
                     startY: scope.cornerRadius
                     PathLine { x: scope.cornerRadius; y: scope.cornerRadius }

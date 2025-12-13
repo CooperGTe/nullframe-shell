@@ -7,6 +7,7 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
 import qs.modules.common
+import qs.config
 
 PanelWindow {
     id:root
@@ -71,7 +72,7 @@ PanelWindow {
         preferredRendererType: Shape.CurveRenderer
         ShapePath {
             strokeWidth: 0
-            fillColor:"#080812"
+            fillColor:Color.base
             PathLine { 
                 relativeX: width
                 relativeY: 0 
@@ -137,10 +138,10 @@ PanelWindow {
                 implicitWidth:50
                 implicitHeight:50
                 background: Rectangle {
-                    color: parent.hovered ? "#dfdfff" : "#12131F"
+                    color: parent.hovered ? Color.surface : Color.container
                     radius: parent.hovered ? 30 : 15
                     border.width: parent.activeFocus ? 2 : 0
-                    border.color: "#dfdfff"
+                    border.color: Color.surface
                     Behavior on color {
                         ColorAnimation { duration: 100 }
                     }
@@ -169,7 +170,7 @@ PanelWindow {
                 Keys.onEnterPressed: clickAction()
                 MaterialIcon {
                     id:icon
-                    color: !parent.hovered ? "#dfdfff" : "#12131F"
+                    color: !parent.hovered ? Color.surface : Color.container
                     fill: !parent.hovered ? 0 : 1
                     font.pixelSize:32
                     anchors.centerIn:parent

@@ -9,6 +9,7 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Widgets
 import Quickshell.Wayland
+import qs.config
 
 PanelWindow {
     id: root
@@ -103,9 +104,9 @@ PanelWindow {
     }
     Rectangle { 
         id: windowbox
-        color: "#080812"
+        color: Color.base
         border.width:1
-        border.color: "#12131F"
+        border.color: Color.container
         radius: 20
         implicitWidth:root.implicitWidth-40
         implicitHeight: search.text !== "" ? root.implicitHeight-40 : 75
@@ -157,10 +158,10 @@ PanelWindow {
                 implicitHeight: 30
                 Layout.fillWidth:true
                 background: Rectangle {
-                    color: search.text !== "" ? "#12131F" : "transparent"
+                    color: search.text !== "" ? Color.container : "transparent"
                     radius:10
                     border.width:1
-                    border.color: search.text !== "" ? "#22232F" : "transparent"
+                    border.color: search.text !== "" ? Color.container_high : "transparent"
                     Behavior on border.color { CAnim {} }
                     Behavior on color { CAnim {} }
 
@@ -185,7 +186,7 @@ PanelWindow {
                         }
                     }
                     text: "Result: " + calc(search.text)
-                    color: "#dfdfff"
+                    color: Color.surface
                     font.pixelSize:12
                     anchors.verticalCenter:parent.verticalCenter
                     anchors.left: parent.left
@@ -242,7 +243,7 @@ PanelWindow {
                     radius: 10
                     implicitWidth: ListView.view.width
                     
-                    color: root.selectedIndex === index ? "#12131F" : "transparent"
+                    color: root.selectedIndex === index ? Color.container : "transparent"
                     RowLayout {
                         anchors.fill:parent
                         anchors.margins: 5
@@ -258,7 +259,7 @@ PanelWindow {
                                 Layout.fillWidth: true
                                 text: itemList.modelData.name
                                 horizontalAlignment: Text.AlignLeft
-                                color: "#dfdfff"
+                                color: Color.surface
                             }
                             Text {
                                 Layout.fillWidth: true
@@ -266,7 +267,7 @@ PanelWindow {
                                 text: itemList.modelData.comment
                                 horizontalAlignment: Text.AlignLeft
                                 font.pixelSize:8
-                                color: "#8f8f9f"
+                                color: Color.surface_mid
                             }
                         }
                     }
@@ -276,7 +277,7 @@ PanelWindow {
                 Layout.fillWidth:true
                 Layout.topMargin:search.text !== "" ? 0 : -30
                 implicitHeight:1
-                color: "#12131F"
+                color: Color.container
             }
 
             Item {
@@ -286,45 +287,45 @@ PanelWindow {
                 Behavior on Layout.topMargin { Anim {} }
                 RowLayout {
                     Rectangle {
-                        color: "#12131F"
+                        color: Color.container
                         implicitWidth:20
                         implicitHeight:20
                         radius:5
                         Text {
                             anchors.centerIn:parent
                             text: "↩"
-                            color: "#dfdfff"
+                            color: Color.surface
                         }
                     }
                     Text {
                         text: "Action"
-                        color: "#dfdfff"
+                        color: Color.surface
                     }
                     Rectangle {
-                        color: "#12131F"
+                        color: Color.container
                         implicitWidth:20
                         implicitHeight:20
                         radius:5
                         Text {
                             anchors.centerIn:parent
                             text: "⌃"
-                            color: "#dfdfff"
+                            color: Color.surface
                         }
                     }
                     Rectangle {
-                        color: "#12131F"
+                        color: Color.container
                         implicitWidth:20
                         implicitHeight:20
                         radius:5
                         Text {
                             anchors.centerIn:parent
                             text: "↩"
-                            color: "#dfdfff"
+                            color: Color.surface
                         }
                     }
                     Text {
                         text: "Search/Open In Browser"
-                        color: "#dfdfff"
+                        color: Color.surface
                     }
 
                 }

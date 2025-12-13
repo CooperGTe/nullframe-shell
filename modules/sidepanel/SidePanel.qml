@@ -5,10 +5,9 @@ import QtQuick.Effects
 import Quickshell
 import Quickshell.Hyprland as Hypr
 import Quickshell.Wayland
-import qs.modules
-import qs.modules.panel
+import qs.config
 import qs.services
-import qs.configs
+import qs.config
 
 import "components"
 
@@ -47,7 +46,7 @@ PanelWindow {
         SequentialAnimation {
             PauseAnimation { 
                 id:pause
-                duration: (scope.sidePanelVisible && !Hyprland.hasMaximize && !Configs.barHug) ? 200 : 0
+                duration: (scope.sidePanelVisible && !Hyprland.hasMaximize && !Config.bar.hug) ? 200 : 0
             }
             NumberAnimation { 
                 duration: 150; 
@@ -102,7 +101,7 @@ PanelWindow {
         active:true
         anchors.fill: parent
         sourceComponent: Rectangle {
-            color: "#080812"
+            color: Color.base
             radius:13
 
             anchors {

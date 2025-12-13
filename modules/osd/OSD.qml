@@ -6,6 +6,7 @@ import Quickshell.Services.Pipewire
 import Quickshell.Services.Mpris
 import qs.modules.common
 import qs.services
+import qs.config
 
 Scope {
 	id: root
@@ -111,7 +112,7 @@ Scope {
 			Rectangle {
 				anchors.fill: parent
 				radius: height / 2
-				color: "#080812"
+				color: Color.base
                 opacity:  root.shouldAnimateOsd ? 1 : -0
                 Behavior on opacity {
                     NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
@@ -131,7 +132,7 @@ Scope {
                             root.mode === "mpris" ?
                             `${Math.round(activePlayer.volume * 100) ?? 0}%` :
                             `${Math.round(brightnessFile.text()/maxBrightness.text.split("\n")[0] * 100) ?? 0}%`
-                        color: "#DFDFFF"
+                        color: Color.surface
                         font.pixelSize: 10
                         font.bold: true
                     }	
@@ -151,7 +152,7 @@ Scope {
                                 left: parent.left
                                 right: parent.right
 							}
-                            color: "#DFDFFF"
+                            color: Color.surface
 
                             implicitHeight: root.mode === "volume" ?
                                 parent.height * (Pipewire.defaultAudioSink?.audio.volume ?? 0) :
@@ -166,7 +167,7 @@ Scope {
                                 left: parent.left
                                 right: parent.right
 							}
-                            color: "#22232F"
+                            color: Color.container_high
 
                             implicitHeight: root.mode === "volume" ?
                                 parent.height * (1 - (Pipewire.defaultAudioSink?.audio.volume ?? 0)) - 1 :
@@ -180,7 +181,7 @@ Scope {
                         Layout.alignment:Qt.AlignHCenter
                         icon: root.mode === "volume" ? "volume_up" : root.mode === "mpris" ? "music_note" : "brightness_4"
                         font.pixelSize: 25
-                        color: "#DFDFFF"
+                        color: Color.surface
                         fill: root.mode === "volume" | "mpris" ? 1 : 0
                     }
 				}

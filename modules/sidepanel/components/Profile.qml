@@ -4,6 +4,7 @@ import Quickshell.Widgets
 import Quickshell
 import qs.services
 import qs.modules.common
+import qs.config
 
 Rectangle {
     id:root
@@ -29,7 +30,7 @@ Rectangle {
             Layout.margins:10
             radius:60
             clip: true
-            color: "#12131F"
+            color: Color.container
             Image {
                 anchors.fill: parent
                 source: Quickshell.shellDir + "/assets/profile.png"
@@ -49,7 +50,7 @@ Rectangle {
             Text {
                 Layout.alignment: Qt.AlignLeft
                 text: Quickshell.env('USER')
-                color: "#dfdfff"
+                color: Color.surface
                 font.bold:true
                 font.family:"monospace"
                 font.pixelSize:16
@@ -58,20 +59,20 @@ Rectangle {
             Text {
                 Layout.alignment: Qt.AlignLeft
                 text: System.prettyName
-                color: "#dfdfff"
+                color: Color.surface
                 font.pixelSize:10
             }
             Text {
                 Layout.alignment: Qt.AlignLeft
                 text: "Uptime: " + root.time(System.uptime)
-                color: "#dfdfff"
+                color: Color.surface
                 font.pixelSize:10
             }
         }
         RowLayout {
             Layout.alignment:Qt.AlignRight
             Rectangle {
-                color: "#12131F"
+                color: Color.container
                 radius:10
                 implicitWidth:32
                 implicitHeight:32
@@ -79,11 +80,11 @@ Rectangle {
                     icon: "settings"
                     anchors.centerIn:parent
                     font.pixelSize: 20
-                    color: "#DFDFFF"
+                    color: Color.surface
                 }
             }
             Rectangle {
-                color: "#12131F"
+                color: Color.container
                 radius:10
                 implicitWidth:32
                 implicitHeight:32
@@ -91,7 +92,7 @@ Rectangle {
                     icon: "power_settings_new"
                     anchors.centerIn:parent
                     font.pixelSize: 20
-                    color: "#DFDFFF"
+                    color: Color.surface
                 }
                 MouseArea {
                     anchors.fill:parent

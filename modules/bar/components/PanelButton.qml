@@ -1,7 +1,7 @@
 import qs.modules.common
 import QtQuick
 import QtQuick.Layouts
-import qs.modules
+import qs.config
 
 MouseArea {
     Layout.alignment: Qt.AlignHCenter
@@ -15,13 +15,13 @@ MouseArea {
         implicitHeight: 30
         implicitWidth: 30
         radius: 30
-        color: "#22232F"
+        color: Color.container_high
         MaterialIcon {
             icon: "moon_stars"
             anchors.centerIn: parent
             font.pixelSize: 16
             fill:1
-            color: "#DFDFFF"
+            color: Color.surface
         }
     }
 }

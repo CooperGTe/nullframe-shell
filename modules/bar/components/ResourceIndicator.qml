@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import qs.services
 import qs.modules.common
+import qs.config
 
 Item {
     id:root
@@ -18,7 +19,9 @@ Item {
 
     Rectangle {
         anchors.fill:parent
-        color: "#12131F"
+        color: Color.container
+        border.width: 1
+        border.color: Color.container_high
         radius:30
         anchors.leftMargin:5
         anchors.rightMargin:5
@@ -33,7 +36,7 @@ Item {
                     Layout.alignment: Qt.AlignCenter
                     font.pixelSize: 16
                     fill:0
-                    color: "#DFDFFF"
+                    color: Color.surface
                 }
                 ProgressBar {
                     value: ResourceUsage.cpuUsage
@@ -42,7 +45,7 @@ Item {
                     contentItem: Rectangle {
                         width: parent.width * parent.visualPosition
                         height: parent.height
-                        color: ResourceUsage.cpuUsage < 0.9 ? "#dfdfff" : "#ffafaf"
+                        color: ResourceUsage.cpuUsage < 0.9 ? Color.surface : "#ffafaf"
                         radius: 4
                     }
                 }
@@ -54,7 +57,7 @@ Item {
                     font.pixelSize: 16
                     Layout.bottomMargin: -5//patch
                     fill:0
-                    color: "#DFDFFF"
+                    color: Color.surface
                 }
                 Item {
                     implicitWidth:18
@@ -76,7 +79,7 @@ Item {
                         contentItem: Rectangle {
                             width: parent.width * parent.visualPosition
                             height: parent.height
-                            color: (ResourceUsage.memoryUsed / ResourceUsage.memoryTotal) < 0.9 ? "#dfdfff" : "#ffafaf"
+                            color: (ResourceUsage.memoryUsed / ResourceUsage.memoryTotal) < 0.9 ? Color.surface : "#ffafaf"
                             radius: 4
                         }
                     }
@@ -138,7 +141,7 @@ Item {
                     NumberAnimation { duration: 300; easing.type: Easing.InOutQuad }
                 }
 
-                color: "#080812"
+                color: Color.base
                 radius:15
                 RowLayout {
                     id:content
@@ -169,7 +172,7 @@ Item {
                                 text: "どうしたら良い"
                                 font.family: "Noto Sans CJK JP"
                                 font.bold: true
-                                color: "#dfdfff"
+                                color: Color.surface
                                 MouseArea {
                                     anchors.fill: parent
                                     onClicked: resman.state = "resman"
@@ -181,7 +184,7 @@ Item {
                                 implicitHeight: 30
                                 background: Rectangle{
                                     anchors.fill:parent
-                                    color: "#12131F"
+                                    color: Color.container
                                     radius: 12
                                 }
                                 onClicked: Quickshell.execDetached([
@@ -194,14 +197,14 @@ Item {
                                 implicitHeight: 30
                                 background: Rectangle{
                                     anchors.fill:parent
-                                    color: "#12131F"
+                                    color: Color.container
                                     radius: 12
                                 }
                             }
                         }
                     }
                     Rectangle {
-                        color: "#12131F"
+                        color: Color.container
                         radius:15
                         implicitWidth: resourceUsageMeter.implicitWidth + 10 + resourceUsageMeter.spacing
                         Layout.fillHeight:true
@@ -215,8 +218,8 @@ Item {
                                 size: resourceUsageMeter.implicitWidth
                                 Layout.alignment: Qt.AlignHCenter
                                 value: ResourceUsage.cpuUsage
-                                colPrimary: "#DFDFFF"
-                                colSecondary: "#080812"
+                                colPrimary: Color.surface
+                                colSecondary: Color.base
                                 lineWidth: 3
                                 Item {
                                     anchors.fill: parent
@@ -225,7 +228,7 @@ Item {
                                         fill: 1
                                         icon: "memory"
                                         font.pixelSize: 24
-                                        color: "#DFDFFF"
+                                        color: Color.surface
                                     }
                                 }
                             }
@@ -234,13 +237,13 @@ Item {
                                 Layout.alignment: Qt.AlignHCenter
                                 value: ResourceUsage.memoryUsedCache / ResourceUsage.memoryTotal
                                 colPrimary: "#ffafaf"
-                                colSecondary: "#080812"
+                                colSecondary: Color.base
                                 lineWidth: 3
                                 ClippedFilledCircularProgress {
                                     size: resourceUsageMeter.implicitWidth
                                     Layout.alignment: Qt.AlignHCenter
                                     value: ResourceUsage.memoryUsed / ResourceUsage.memoryTotal
-                                    colPrimary: "#dfdfff"
+                                    colPrimary: Color.surface
                                     colSecondary: "transparent"
                                     lineWidth: 3
                                     Item {
@@ -250,7 +253,7 @@ Item {
                                             fill: 0
                                             icon: "memory_alt"
                                             font.pixelSize: 22
-                                            color: "#DFDFFF"
+                                            color: Color.surface
                                         }
                                     }
                                 }
@@ -260,7 +263,7 @@ Item {
                     Rectangle { //swap progressbar
                         Layout.fillHeight:true
                         implicitWidth:15
-                        color:"#12131F"
+                        color:Color.container
                         radius: 15
                         Rectangle {
                             width: parent.width
@@ -276,41 +279,41 @@ Item {
                         Text{
                             text: `CPU USAGE:`
                             font.pixelSize:8
-                            color: "#DFDFFF"
+                            color: Color.surface
                         }
                         Text {
                             text: `${Math.floor(ResourceUsage.cpuUsage * 100)}%`
-                            color: "#DFDFFF"
+                            color: Color.surface
                             font.bold:true
                         }
                         Text{
                             text: `RAM USAGE:`
                             font.pixelSize:8
-                            color: "#DFDFFF"
+                            color: Color.surface
                         }
                         Text {
                             text: `${Math.floor(ResourceUsage.memoryUsed / ResourceUsage.memoryTotal * 100)}%`
-                            color: "#DFDFFF"
+                            color: Color.surface
                             font.bold:true
                         }
                         Text{
                             text: `RAM CACHE:`
                             font.pixelSize:8
-                            color: "#DFDFFF"
+                            color: Color.surface
                         }
                         Text {
                             text: `${Math.floor((ResourceUsage.memoryUsedCache - ResourceUsage.memoryUsed) / ResourceUsage.memoryTotal * 100)}%`
-                            color: "#DFDFFF"
+                            color: Color.surface
                             font.bold:true
                         }
                         Text{
                             text: `SWAP USAGE:`
                             font.pixelSize:8
-                            color: "#DFDFFF"
+                            color: Color.surface
                         }
                         Text {
                             text: `${Math.floor(ResourceUsage.swapUsedPercentage * 100)}%`
-                            color: "#DFDFFF"
+                            color: Color.surface
                             font.bold:true
                         }
                     }

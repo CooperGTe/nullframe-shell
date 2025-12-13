@@ -4,8 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
-import qs.modules
-import qs.modules.panel
+import qs.config
 
 import "components"
 
@@ -25,7 +24,7 @@ PanelWindow {
         bottom: true
     }
     Rectangle {
-        color: "#080812"
+        color: Color.base
         //color: "transparent"
         anchors.fill: parent
         topRightRadius: root.barHug ? 0 : 20
@@ -76,10 +75,9 @@ PanelWindow {
                 NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
             }
             Rectangle {
-                //color: "#12131F"
-                color: "#7F1223"
+                color: Color.container
                 radius: 30
-                border.width: 0
+                border.width: 1
                 border.color: "#22232F"
                 implicitHeight: ctlctl.implicitHeight + 10
                 implicitWidth: 30
@@ -99,7 +97,7 @@ PanelWindow {
                 Layout.bottomMargin: 3
                 Layout.fillWidth: true
                 implicitHeight: 1
-                color: "#12131F"
+                color: Color.container
             }
             BatteryIndicator{}
             Clock{}

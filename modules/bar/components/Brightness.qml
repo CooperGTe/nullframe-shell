@@ -2,6 +2,7 @@ import qs.modules.common
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import qs.config
 
 Item {
     id:root
@@ -28,6 +29,6 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         font.pixelSize: 16
         fill:1
-        color: "#DFDFFF"
+        color: Color.surface
     }
 }

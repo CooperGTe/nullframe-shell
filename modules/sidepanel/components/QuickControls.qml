@@ -5,6 +5,7 @@ import Quickshell
 import Quickshell.Services.Pipewire
 import qs.services
 import qs.modules.common
+import qs.config
 
 GridLayout {
     columns: 4
@@ -18,7 +19,7 @@ GridLayout {
         Layout.fillWidth:true
         implicitHeight: 60; 
         radius:20
-        color: Network.wifiEnabled ? "#DFDFFF" : "#12131F"
+        color: Network.wifiEnabled ? Color.surface : Color.container
         MouseArea {
             anchors.fill:parent
             onClicked: Network.toggleWifi()
@@ -32,17 +33,17 @@ GridLayout {
                 icon: "network_wifi"
                 font.pixelSize: 16
                 fill:1
-                color: !Network.wifiEnabled ? "#DFDFFF" : "#12131F"
+                color: !Network.wifiEnabled ? Color.surface : Color.container
             }
             Text {
                 text: Network.active ? Network.active.ssid : "Network"
                 font.family:"monospace"
                 font.bold:true
-                color: !Network.wifiEnabled ? "#DFDFFF" : "#12131F"
+                color: !Network.wifiEnabled ? Color.surface : Color.container
             }
             Text {
                 text: Network.active?.active ? "Connected" : "Disconnected"
-                color: !Network.wifiEnabled ? "#444553" : "#52536F"
+                color: !Network.wifiEnabled ? Color.surface_low : Color.surface_mid
             }
         }
     }
@@ -51,7 +52,7 @@ GridLayout {
         Layout.fillWidth:true
         implicitHeight: 60; 
         radius:20
-        color: "#12131F"
+        color: Color.container
         MouseArea {
             anchors.fill:parent
         }
@@ -64,70 +65,70 @@ GridLayout {
                 icon: "bluetooth"
                 font.pixelSize: 16
                 fill:1
-                color:"#DFDFFF"
+                color:Color.surface
             }
             Text {
                 text: "Bluetooth"
                 font.family:"monospace"
                 font.bold:true
-                color:"#DFDFFF"
+                color:Color.surface
             }
             Text {
                 text: "Disconnected"
-                color:"#444553"
+                color:Color.surface_low
             }
         }
     }
     Rectangle { 
         implicitHeight: 40
         radius:10
-        color: "#12131F"
+        color: Color.container
         Layout.fillWidth:true
         MaterialIcon {
             anchors.centerIn:parent
             icon: "coffee"
             font.pixelSize: 18
             fill:0
-            color: "#DFDFFF"
+            color: Color.surface
         }
     }
     Rectangle { 
         implicitHeight: 40; 
         radius:10
         Layout.fillWidth:true
-        color: "#12131F"
+        color: Color.container
         MaterialIcon {
             icon: "nightlight"
             anchors.centerIn:parent
             font.pixelSize: 18
             fill:0
-            color: "#DFDFFF"
+            color: Color.surface
         }
     }
     Rectangle { 
         implicitHeight: 40; 
         radius:10
         Layout.fillWidth:true
-        color: "#12131F"
+        color: Color.container
         MaterialIcon {
             icon: "energy_savings_leaf"
             anchors.centerIn:parent
             font.pixelSize: 18
             fill:0
-            color: "#DFDFFF"
+            color: Color.surface
         }
     }
     Rectangle { 
         implicitHeight: 40; 
         radius:10
         Layout.fillWidth:true
-        color: "#12131F"
+        color: Color.container
         MaterialIcon {
             icon: "colorize"
             anchors.centerIn:parent
             font.pixelSize: 18
             fill:0
-            color: "#DFDFFF"
+            color: Color.surface
         }
     }
 
@@ -160,12 +161,12 @@ GridLayout {
                     anchors.verticalCenter:parent.verticalCenter
                     anchors.right:parent.right
                     width: parent.width * (1 - volumeSlider.position -0.024)
-                    color: "#12131F"
+                    color: Color.container
                     radius: 10
                     Text {
                         text: `${Math.floor(Pipewire.defaultAudioSink?.audio.volume * 100) ?? 0}%`
                         horizontalAlignment: Text.AlignRight
-                        color: "#DFDFFF"
+                        color: Color.surface
                         font.bold: true
                         anchors.rightMargin:10
                         anchors.verticalCenter: parent.verticalCenter
@@ -177,7 +178,7 @@ GridLayout {
                     height: parent.height - 5
                     anchors.verticalCenter:parent.verticalCenter
                     width: parent.width * (volumeSlider.position - 0.01)
-                    color: "#dfdfff"
+                    color: Color.surface
                     radius: 10
                     MaterialIcon {
                         icon: "volume_up"
@@ -185,7 +186,7 @@ GridLayout {
                         anchors.right:parent.right
                         font.pixelSize: 20
                         fill:1
-                        color: "#080812"
+                        color: Color.base
                     }
                 }
             }
@@ -195,7 +196,7 @@ GridLayout {
                 height: 30
                 radius: 8
                 x: volumeSlider.visualPosition * volumeSlider.width
-                color: "#ddd"
+                color: Config.surface
             }
             WheelHandler {
                 acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
@@ -235,12 +236,12 @@ GridLayout {
                     anchors.verticalCenter:parent.verticalCenter
                     anchors.right:parent.right
                     width: parent.width * (1 - brightnessSlider.position -0.024)
-                    color: "#12131F"
+                    color: Color.container
                     radius: 10
                     Text {
                         text: `${Math.round(Brightness.value*100)}%`
                         horizontalAlignment: Text.AlignRight
-                        color: "#DFDFFF"
+                        color: Color.surface
                         font.bold: true
                         anchors.rightMargin:10
                         anchors.verticalCenter: parent.verticalCenter
@@ -252,7 +253,7 @@ GridLayout {
                     height: parent.height - 5
                     anchors.verticalCenter:parent.verticalCenter
                     width: parent.width * (brightnessSlider.position - 0.01)
-                    color: "#dfdfff"
+                    color: Color.surface
                     radius: 10
                     MaterialIcon {
                         icon: "brightness_medium"
@@ -260,7 +261,7 @@ GridLayout {
                         anchors.rightMargin:3
                         font.pixelSize: 20
                         fill:1
-                        color: "#080812"
+                        color: Color.base
                     }
                 }
             }

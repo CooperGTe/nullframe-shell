@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import qs.services
-import qs.configs
+import qs.config
 
 Item {
     id:root
@@ -11,8 +11,8 @@ Item {
     implicitWidth: 40
 
     //conf
-    property int workspaceLength: Configs.workspacesShowed
-    property bool kanji: true
+    property int workspaceLength: Config.bar.workspacesShown
+    property bool kanji: Config.bar.workspaceKanji
 
     WheelHandler {
         target: null
@@ -30,7 +30,7 @@ Item {
         anchors.leftMargin:5
         anchors.rightMargin:5
         radius: 30
-        color: "#12131F"
+        color: Color.container
 
 
         // Active workspace indicator
@@ -42,7 +42,7 @@ Item {
             y: ((Hyprland.activeWorkspace - 1) % root.workspaceLength) * 25
             //y: (root.monitor?.activeWorkspace?.id - 1 ?? 0) * 25 - 2
 
-            color: Hyprland.occupiedWorkspace ? "#dfdfff" : "#363745"
+            color: Hyprland.occupiedWorkspace ? Color.surface : Color.surface_low
             width: 30
             height: 30
 
@@ -94,7 +94,7 @@ Item {
                             }; 
                             return root.kanji ? (mapping[wsId] ?? wsId) : wsId
                         }
-                        color: active ? "#12131F" : toplevelCount ? "#DFDFFF" : "#464755"
+                        color: active ? Color.container : toplevelCount ? Color.surface : Color.surface_low
                         Behavior on color {
                             ColorAnimation { duration: 200; easing.type: Easing.OutQuad }
                         }

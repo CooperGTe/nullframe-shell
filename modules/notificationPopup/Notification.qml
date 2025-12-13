@@ -6,6 +6,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Services.Notifications
+import qs.config
 
 //
 // Boilerplate by mas <3
@@ -125,7 +126,7 @@ PanelWindow {
 
 			Rectangle {
 				anchors.fill: parent
-				color: "#080812"
+				color: Color.base
 				radius: 15
                 anchors.margins: 5
                 anchors.rightMargin: anim ? 5 : -300
@@ -167,7 +168,7 @@ PanelWindow {
                                 text: delegateFlick.modelData.appName
                                 font.pixelSize: 16
                                 font.weight: Font.Medium
-                                color: "#EEEEEE"
+                                color: Color.surface
                                 elide: Text.ElideRight
                             }
 
@@ -181,7 +182,7 @@ PanelWindow {
                                 Layout.preferredWidth: 24
                                 Layout.preferredHeight: 24
                                 background: Rectangle { 
-                                    color: "#12131F" 
+                                    color: Color.container 
                                     radius: 24
                                 }
                             }
@@ -194,7 +195,7 @@ PanelWindow {
                             text: delegateFlick.modelData.summary
                             font.pixelSize: 10
                             font.weight: Font.DemiBold
-                            color: "#EEEEEE"
+                            color: Color.surface
                             elide: Text.ElideRight
                             wrapMode: Text.Wrap
                             maximumLineCount: 2
@@ -206,7 +207,7 @@ PanelWindow {
                             text: delegateFlick.modelData.body
                             font.pixelSize: 10
                             font.weight: Font.DemiBold
-                            color: "#EEEEEE"
+                            color: Color.surface
                             elide: Text.ElideRight
                             wrapMode: Text.Wrap
                             maximumLineCount: 2
@@ -229,7 +230,7 @@ PanelWindow {
                                         lifetime.stop()
                                     }
                                     background: Rectangle { 
-                                        color: "#12131F" 
+                                        color: Color.container 
                                         radius: 24
                                     }
                                 }

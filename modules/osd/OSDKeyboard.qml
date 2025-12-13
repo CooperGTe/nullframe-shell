@@ -5,6 +5,7 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
 import Quickshell.Wayland
+import qs.config
 
 Variants {
     model: Quickshell.screens
@@ -84,7 +85,7 @@ Variants {
 
                 Rectangle {
                     anchors.fill:parent
-                    color:"#080812"
+                    color:Color.base
                     border.width: scope.mode === "yes" ? 2 : 0
                     border.color: "#ffadad"
                     radius:20
@@ -95,19 +96,19 @@ Variants {
                         Text {
                             Layout.alignment:Qt.AlignTop
                             text: "Keyboards Mode"
-                            color: "#dfdfff"
+                            color: Color.surface
                         }
                         Text {
                             text: scope.method
                             Layout.alignment:Qt.AlignTop
-                            color: "#afafbf"
+                            color: Color.surface_mid
                         }
                         Text {
                             text: if (scope.method === "fcitx5 (en_US)")
                                 return scope.mode === "yes" ? "Capslock: ON" : "Capslock: OFF"
                             else
                                 return scope.mode === "yes" ? "カタカナ" : "ひらがな"
-                            color: "#dfdfff"
+                            color: Color.surface
                             font.family: "monospace"
                             font.pixelSize:16
                             horizontalAlignment:font.horizontalCenter

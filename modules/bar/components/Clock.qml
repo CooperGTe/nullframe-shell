@@ -2,6 +2,7 @@ import Quickshell
 import QtQuick
 import QtQuick.Layouts
 import qs.services
+import qs.config
 
 ColumnLayout {
     Layout.alignment: Qt.AlignBottom && Qt.AlignHCenter
@@ -11,7 +12,7 @@ ColumnLayout {
     Text {
         text: Time.format("hh")
         Layout.alignment: Qt.AlignHCenter
-        color: "#DFDFFF"
+        color: Color.surface
         font.pixelSize: 18
         font.bold: true
         font.family: "monospace"
@@ -20,14 +21,14 @@ ColumnLayout {
         text: Time.format("mm")
         Layout.alignment: Qt.AlignHCenter
         font.family: "monospace"
-        color: "#DFDFFF"
+        color: Color.surface
         font.pixelSize: 18
         font.bold: true
     }
     Row {
         Text {
             text: Time.format("dd:MM")
-            color: "#DFDFFF"
+            color: Color.surface
             font.pixelSize: 8
             font.bold: false
         }

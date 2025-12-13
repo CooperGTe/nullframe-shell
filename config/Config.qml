@@ -5,9 +5,9 @@ import Quickshell.Io
 
 Singleton {
     id:root
-    property alias barHug: json.barHug
-    property alias darkClock: json.darkClock
-    property alias workspacesShowed: json.workspacesShowed
+    property alias bar: json.bar
+    property alias launcher: json.launcher
+    property alias desktopWidget: json.desktopWidget
     Timer {
         id: fileReloadTimer
         interval: 50
@@ -34,9 +34,25 @@ Singleton {
         }
         JsonAdapter {
             id:json
-            property bool barHug: false
-            property bool darkClock: false
-            property real workspacesShowed: 6
+            property Bar bar: Bar {}
+            property Launcher launcher: Launcher {}
+            property DesktopWidget desktopWidget: DesktopWidget {}
+
+            component Bar: JsonObject {
+                property bool hug: false
+                property real workspacesShown: 6
+                property bool workspaceKanji: true
+            }
+            component Launcher: JsonObject {
+                property string position: "center"
+                // top
+                // center
+                // bottom
+            }
+            component DesktopWidget: JsonObject {
+                property bool invertClockColor: false
+                property bool media: true
+            }
         }
     }
 }

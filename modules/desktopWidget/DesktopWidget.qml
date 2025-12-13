@@ -6,7 +6,7 @@ import Quickshell.Widgets
 import QtQuick.Layouts
 import Quickshell.Wayland
 import qs.services
-import qs.configs
+import qs.config
 import Quickshell.Services.Mpris
 
 Scope {
@@ -41,7 +41,7 @@ Scope {
                         Layout.alignment: Qt.AlignRight
                         MouseArea {
                             anchors.fill:parent
-                            onClicked: Configs.darkClock = !Configs.darkClock
+                            onClicked: Config.desktopWidget.invertClockColor = !Config.desktopWidget.invertClockColor
                         }
                         ColumnLayout {
                             id:clock
@@ -49,7 +49,7 @@ Scope {
                             Text {
                                 text: Time.format("hh:mm")
                                 Layout.alignment: Qt.AlignRight
-                                color: Configs.darkClock ? "#080812" : "#DFDFFF"
+                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.surface
                                 font.pixelSize: 50
                                 font.bold:true
                                 font.family: "monospace"
@@ -58,16 +58,17 @@ Scope {
                                 text: Time.format("yyyy年MM月dd日")
                                 Layout.alignment: Qt.AlignRight
                                 Layout.topMargin: -10
-                                color: Configs.darkClock ? "#080812" : "#DFDFFF"
+                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.surface
                                 font.pixelSize: 15
                                 font.bold: false
                             }
                         }
                     }
                     Rectangle {
+                        visible: Config.desktopWidget.media
                         Layout.alignment: Qt.AlignRight
                         Layout.topMargin: 10
-                        color: "#080812"
+                        color: Color.base
                         implicitHeight: 70
                         implicitWidth: 230
                         radius:50
@@ -79,7 +80,7 @@ Scope {
                                 Layout.leftMargin:5
                                 radius:60
                                 clip: true
-                                color: "black"
+                                color: Color.container
                                 Image {
                                     anchors.fill: parent
                                     source: root.activePlayer?.trackArtUrl ?? ""
@@ -95,7 +96,7 @@ Scope {
                                     elide: Text.ElideRight
                                     Layout.maximumWidth: 140
                                     font.pixelSize: 12
-                                    color:"#DFDFFF"
+                                    color:Color.surface
                                     font.bold:true
                                 }
                                 Text{
@@ -104,7 +105,7 @@ Scope {
                                     Layout.maximumWidth: 140
                                     Layout.topMargin: -5
                                     font.pixelSize: 8
-                                    color:"#8F8F9F"
+                                    color:Color.surface_mid
                                 }
                                 Rectangle {
                                     // Stretches to fill all left-over space
@@ -121,7 +122,7 @@ Scope {
                                             top: parent.top
                                             left: parent.left
                                         }
-                                        color: "#DFDFFF"
+                                        color: Color.surface
 
                                         implicitWidth: parent.width * (root.position / activePlayer.length)
                                         radius: parent.radius
@@ -132,7 +133,7 @@ Scope {
                                             bottom: parent.bottom
                                             right: parent.right
                                         }
-                                        color: "#22232F"
+                                        color: Color.container_high
 
                                         implicitWidth: parent.width * (1 - (root.position / activePlayer.length)) - 1
                                         radius: parent.radius
