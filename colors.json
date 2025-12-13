@@ -1,9 +1,11 @@
 {
-    "base": "#080812",
-    "container": "#12131F",
-    "container_high": "#22232F",
-    "primary": "#DFDFFF",
-    "secondary": "#7F1223",
-    "surface": "#DFDFFF",
-    "surface_high": "#DFDFFF"
+  "base": "#131412",
+  "container": "#1f201e",
+  "container_high": "#353533",
+  "primary": "#c0cab5",
+  "secondary": "#c3c8bb",
+  "surface": "#c0cab5",
+  "surface_low": "#474744",
+  "surface_mid": "#91918e",
+  "surface_high": "#c8c6c3"
 }

@@ -53,6 +53,8 @@ Scope {
                                 font.pixelSize: 50
                                 font.bold:true
                                 font.family: "monospace"
+                                style: Text.Raised
+                                styleColor: !Config.desktopWidget.invertClockColor ? Color.base : Color.surface
                             }
                             Text {
                                 text: Time.format("yyyy年MM月dd日")
@@ -61,6 +63,8 @@ Scope {
                                 color: Config.desktopWidget.invertClockColor ? Color.base : Color.surface
                                 font.pixelSize: 15
                                 font.bold: false
+                                style: Text.Raised
+                                styleColor: !Config.desktopWidget.invertClockColor ? Color.base : Color.surface
                             }
                         }
                     }

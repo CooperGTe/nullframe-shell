@@ -168,6 +168,7 @@ PanelWindow {
                 }
 
                 placeholderText: "Type to search"
+                color: Color.surface
             }
             
             Item {

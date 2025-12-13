@@ -78,7 +78,7 @@ PanelWindow {
                 color: Color.container
                 radius: 30
                 border.width: 1
-                border.color: "#22232F"
+                border.color: Color.container_high
                 implicitHeight: ctlctl.implicitHeight + 10
                 implicitWidth: 30
                 Layout.fillWidth: true

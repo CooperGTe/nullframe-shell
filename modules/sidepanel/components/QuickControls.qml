@@ -196,7 +196,7 @@ GridLayout {
                 height: 30
                 radius: 8
                 x: volumeSlider.visualPosition * volumeSlider.width
-                color: Config.surface
+                color: Color.surface
             }
             WheelHandler {
                 acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
@@ -271,7 +271,7 @@ GridLayout {
                 height: 30
                 radius: 8
                 x: brightnessSlider.visualPosition * brightnessSlider.width
-                color: "#ddd"
+                color: Color.surface
             }
             WheelHandler {
                 acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad

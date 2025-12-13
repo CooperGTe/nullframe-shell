@@ -8,6 +8,7 @@ import Quickshell.Services.Mpris
 import Quickshell
 import qs.services
 import qs.modules.common
+import qs.config
 
 WlSessionLockSurface {
     id: root
@@ -147,14 +148,14 @@ WlSessionLockSurface {
             Rectangle {
                 implicitHeight:100
                 implicitWidth: 300
-                color: "#080812"
+                color: Color.base
                 radius: 20
                 ColumnLayout {
                     anchors.centerIn:parent
                     spacing:-20
                     Text {
                         text: Time.format("hh:mm:ss")
-                        color: "#dfdfff"
+                        color: Color.surface
                         font.pixelSize:50
                         font.family: "monospace"
                         font.bold:true
@@ -172,7 +173,7 @@ WlSessionLockSurface {
                 Rectangle {
                     Layout.fillWidth:true
                     implicitHeight:60
-                    color:"#080812"
+                    color:Color.base
                     radius:20
                     RowLayout {
                         anchors.fill:parent
@@ -183,7 +184,7 @@ WlSessionLockSurface {
                             Layout.margins:5
                             radius:15
                             clip: true
-                            color: "#12131F"
+                            color: Color.container
                             Image {
                                 anchors.fill: parent
                                 source: Quickshell.shellDir + "/assets/profile.png"
@@ -203,7 +204,7 @@ WlSessionLockSurface {
                             Text {
                                 Layout.alignment: Qt.AlignLeft
                                 text: Quickshell.env('USER')
-                                color: "#dfdfff"
+                                color: Color.surface
                                 font.bold:true
                                 font.family:"monospace"
                                 font.pixelSize:16
@@ -212,14 +213,14 @@ WlSessionLockSurface {
                                 Layout.fillWidth:true
                                 Layout.alignment: Qt.AlignLeft
                                 text: "Uptime: " + root.time(System.uptime)
-                                color: "#dfdfff"
+                                color: Color.surface
                                 font.pixelSize:10
                             }
                         }            
                     }
                 }
                 Rectangle {
-                    color:"#080812"
+                    color:Color.base
                     radius:20
                     implicitHeight:60
                     implicitWidth:60
@@ -227,8 +228,8 @@ WlSessionLockSurface {
                         size: 50
                         anchors.centerIn:parent
                         value: Battery.percentage
-                        colPrimary: "#DFDFFF"
-                        colSecondary: "#12131F"
+                        colPrimary: Color.surface
+                        colSecondary: Color.container
                         lineWidth: 5
                         Item {
                             anchors.fill: parent
@@ -238,7 +239,7 @@ WlSessionLockSurface {
                                 icon: Battery.isCharging ? "bolt" : "battery_android_5"
 
                                 font.pixelSize: 24
-                                color: "#DFDFFF"
+                                color: Color.surface
                             }
                         }
                     }
@@ -247,7 +248,7 @@ WlSessionLockSurface {
             Rectangle {
                 implicitWidth: 300
                 implicitHeight:45
-                color: "#080812"
+                color: Color.base
                 radius:20
                 RowLayout {
                     anchors.verticalCenter:parent.verticalCenter
@@ -259,7 +260,7 @@ WlSessionLockSurface {
                         Layout.fillWidth:true
                         padding: 10
                         background: Rectangle{
-                            color: "#12131F"
+                            color: Color.container
                             radius:15
                         }
                         placeholderText: qsTr("Enter Password")
@@ -297,7 +298,7 @@ WlSessionLockSurface {
                         enabled: !root.context.unlockInProgress && root.context.currentText !== "";
                         onClicked: root.context.tryUnlock();
                         background: Rectangle{
-                            color: "#12131F"
+                            color: Color.container
                             radius:15
                         }
                     }
@@ -309,7 +310,7 @@ WlSessionLockSurface {
                 }
             }
             ClippingRectangle {
-                color: "#080812"
+                color: Color.base
                 radius:20
                 implicitHeight: 90
                 Layout.fillWidth: true
@@ -337,7 +338,7 @@ WlSessionLockSurface {
                             elide: Text.ElideRight
                             Layout.maximumWidth: 190
                             font.pixelSize: 12
-                            color:"#DFDFFF"
+                            color:Color.surface
                             font.bold:true
                         }
                         Text{
@@ -357,7 +358,7 @@ WlSessionLockSurface {
                                 Layout.preferredWidth: 24
                                 Layout.preferredHeight: 24
                                 background: Rectangle { 
-                                    color: "#12131F" 
+                                    color: Color.container 
                                     radius:10
                                 }
                                 onClicked: activePlayer.previous()
@@ -367,7 +368,7 @@ WlSessionLockSurface {
                                         anchors.centerIn: parent
                                         icon: "repeat_one"
                                         font.pixelSize: 20
-                                        color: "#DFDFFF"
+                                        color: Color.surface
                                         fill: 1
                                     }
                                 }
@@ -381,7 +382,7 @@ WlSessionLockSurface {
                                 Layout.preferredWidth: 24
                                 Layout.preferredHeight: 24
                                 background: Rectangle { 
-                                    color: "#12131F" 
+                                    color: Color.container 
                                     radius:10
                                 }
                                 contentItem: Item {
@@ -390,7 +391,7 @@ WlSessionLockSurface {
                                         anchors.centerIn: parent
                                         icon: "skip_previous"
                                         font.pixelSize: 20
-                                        color: "#DFDFFF"
+                                        color: Color.surface
                                         fill: parent.hovered ? 1 : 0
                                     }
                                     property bool hovered: false
@@ -408,7 +409,7 @@ WlSessionLockSurface {
                                 Layout.preferredWidth: 28
                                 Layout.preferredHeight: 28
                                 background: Rectangle { 
-                                    color: "#dfdfdf" 
+                                    color: Color.surface 
                                     radius:20
                                     anchors.fill:parent
                                 }
@@ -420,7 +421,7 @@ WlSessionLockSurface {
                                         icon: activePlayer && activePlayer.isPlaying ? "pause" : "play_arrow"
                                         font.pixelSize: 20
                                         fill: 1
-                                        color: "#22232F"
+                                        color: Color.container_high
                                     }
                                     property bool hovered: false
                                     MouseArea {
@@ -447,7 +448,7 @@ WlSessionLockSurface {
                                 Layout.preferredWidth: 24
                                 Layout.preferredHeight: 24
                                 background: Rectangle { 
-                                    color: "#12131F" 
+                                    color: Color.container 
                                     radius:10
                                 }
                                 padding: 0
@@ -459,7 +460,7 @@ WlSessionLockSurface {
                                         icon: "skip_next"
                                         font.pixelSize: 20
                                         fill: parent.hovered ? 1 : 0
-                                        color: "#DFDFFF"
+                                        color: Color.surface
                                     }
                                     property bool hovered: false
                                     MouseArea {
@@ -480,7 +481,7 @@ WlSessionLockSurface {
                                 Layout.preferredWidth: 24
                                 Layout.preferredHeight: 24
                                 background: Rectangle { 
-                                    color: "#12131F" 
+                                    color: Color.container 
                                     radius:10
                                 }
                                 onClicked: activePlayer.previous()
@@ -490,7 +491,7 @@ WlSessionLockSurface {
                                         anchors.centerIn: parent
                                         icon: "shuffle"
                                         font.pixelSize: 20
-                                        color: "#DFDFFF"
+                                        color: Color.surface
                                         fill: 1
                                     }
                                 }
@@ -502,7 +503,7 @@ WlSessionLockSurface {
                             spacing:5
                             Text {
                                 text: root.formatTime(root.position)
-                                color:"#dfdfdf"
+                                color:Color.surface
                             }
                             Slider {
                                 // Stretches to fill all left-over space
@@ -525,7 +526,7 @@ WlSessionLockSurface {
                                             top: parent.top
                                             left: parent.left
                                         }
-                                        color: "#DFDFFF"
+                                        color: Color.surface
 
                                         implicitWidth: parent.width * (root.position / activePlayer.length)
                                         radius: 20
@@ -536,7 +537,7 @@ WlSessionLockSurface {
                                             bottom: parent.bottom
                                             right: parent.right
                                         }
-                                        color: "#12131F"
+                                        color: Color.container
 
                                         implicitWidth: parent.width * (1 - (root.position / activePlayer.length)) - 1
                                         radius: 20
@@ -559,7 +560,7 @@ WlSessionLockSurface {
                             }
                             Text {
                                 text: root.formatTime(activePlayer.length)
-                                color:"#dfdfdf"
+                                color:Color.surface
                             }
                         }
                     }
