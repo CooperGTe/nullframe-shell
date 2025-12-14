@@ -118,7 +118,7 @@ ColumnLayout {
                     Layout.maximumWidth: 140
                     Layout.topMargin: -5
                     font.pixelSize: 10
-                    color:"#8F8F9F"
+                    color:Color.surface_mid
                 }
                 RowLayout {
                     spacing: 5
@@ -182,7 +182,7 @@ ColumnLayout {
                         Layout.preferredWidth: 28
                         Layout.preferredHeight: 28
                         background: Rectangle { 
-                            color: "#dfdfdf" 
+                            color: Color.surface
                             radius:20
                             anchors.fill:parent
                         }
@@ -335,7 +335,7 @@ ColumnLayout {
                     }
                     Text {
                         text: root.formatTime(activePlayer.length)
-                        color:"#dfdfdf"
+                        color:Color.surface
                     }
                 }
             }

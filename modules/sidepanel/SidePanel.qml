@@ -112,7 +112,7 @@ PanelWindow {
                 anchors.fill:parent
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: parent.width - 20
-                anchors.margins:10
+                anchors.margins:5
                 spacing:10
                 Profile{
                     id:profile

@@ -11,7 +11,7 @@ Rectangle {
     property int currentYear:  Number(Time.format("yyyy"))
     Layout.fillWidth:true
     color: Color.container
-    radius:20
+    radius:10
     implicitHeight:220
     implicitWidth:230
     RowLayout {

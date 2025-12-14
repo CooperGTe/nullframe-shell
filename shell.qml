@@ -8,9 +8,8 @@ import qs.modules.lyricsEngine
 import qs.modules.osd
 import qs.modules.desktopWidget
 import qs.modules.notificationPopup
-import qs.modules.sidepanel
 import qs.modules.lockscreen
-import qs.modules.powerMenu
+import qs.modules.dock
 
 ShellRoot {
     Panel {}
@@ -20,4 +19,5 @@ ShellRoot {
     DesktopWidget {}
     Notification{}
     LockScreen{}
+    Dock{}
 }

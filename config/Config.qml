@@ -8,6 +8,8 @@ Singleton {
     property alias bar: json.bar
     property alias launcher: json.launcher
     property alias desktopWidget: json.desktopWidget
+    property alias dock: json.dock
+    onBarChanged: console.log(bar.hug)
     Timer {
         id: fileReloadTimer
         interval: 50
@@ -37,6 +39,7 @@ Singleton {
             property Bar bar: Bar {}
             property Launcher launcher: Launcher {}
             property DesktopWidget desktopWidget: DesktopWidget {}
+            property Dock dock: Dock {}
 
             component Bar: JsonObject {
                 property bool hug: false
@@ -52,6 +55,9 @@ Singleton {
             component DesktopWidget: JsonObject {
                 property bool invertClockColor: false
                 property bool media: true
+            }
+            component Dock: JsonObject {
+                property bool enable: false
             }
         }
     }
