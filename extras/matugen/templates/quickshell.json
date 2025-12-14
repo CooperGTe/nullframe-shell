@@ -1,0 +1,11 @@
+{
+  "base": "{{ colors.background.default.hex }}",
+  "container": "{{ colors.surface_container.default.hex }}",
+  "container_high": "{{ colors.surface_container_highest.default.hex }}",
+  "primary": "{{ colors.primary.default.hex }}",
+  "secondary": "{{ colors.secondary.default.hex }}",
+  "surface": "{{ colors.primary.default.hex }}",
+  "surface_low": "{{ colors.outline_variant.default.hex }}",
+  "surface_mid": "{{ colors.outline.default.hex }}",
+  "surface_high": "{{ colors.on_surface_variant.default.hex }}"
+}

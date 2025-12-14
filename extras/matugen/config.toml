@@ -1,7 +1,3 @@
-[config]
-
-reload_apps = true
-
 [templates.quickshell]
-input_path = './templates/colors.json'
-output_path = '~/.config/quickshell/colors-matugen.json'
+input_path = './templates/quickshell.json'
+output_path = '~/.config/quickshell/colors.json'
