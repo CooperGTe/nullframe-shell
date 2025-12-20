@@ -58,6 +58,14 @@ Singleton {
             }
             component Dock: JsonObject {
                 property bool enable: false
+                property bool hideOnTile: true
+                property bool ignoreSpecialWorkspace:true
+                property real position: 0
+                // 0 bottom
+                // 1 vertical (opposite of bar)
+                property bool onlyShowFloating: false
+                property list<string> pinnedApp: ["kitty","thunar"]
+                property bool autoHide: false
             }
         }
     }

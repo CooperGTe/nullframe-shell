@@ -8,10 +8,21 @@
         "invertClockColor": false,
         "media": true
     },
+    "dock": {
+        "autoHide": false,
+        "enable": true,
+        "hideOnTile": true,
+        "ignoreSpecialWorkspace": true,
+        "onlyShowFloating": false,
+        "pinnedApp": [
+            "kitty",
+            "thunar",
+            "zen",
+            "obsidian"
+        ],
+        "position": 0
+    },
     "launcher": {
         "position": "center"
-    },
-    "dock": {
-        "enable": true
     }
 }

@@ -1,0 +1,102 @@
+pragma Singleton
+import Quickshell
+import Quickshell.Hyprland as Hypr
+import qs.config
+
+Singleton {
+    property list<var> apps: {
+        var map = new Map();
+
+        // Pinned App
+        const pinnedApps = Config.dock.pinnedApp ?? [];
+        for (const appId of pinnedApps) {
+            if (!map.has(appId.toLowerCase())) map.set(appId.toLowerCase(), ({
+                pinned: true,
+                toplevels: []
+            }));
+        }
+        if (pinnedApps.length > 0) {
+            map.set("SEPARATOR", { pinned: false, toplevels: [] });
+        }
+
+        // Open windows (Hyprland)
+        for (const toplevel of Hypr.Hyprland.toplevels.values) {
+            const ws = toplevel.workspace;
+
+            if (!ws) continue
+            if(ws.id < 0) continue;
+            const appId = toplevel.wayland.appId;
+            if (!appId) continue;
+
+            const key = appId.toLowerCase();
+
+            if (!map.has(key)) {
+                map.set(key, {
+                    pinned: false,
+                    toplevels: []
+                });
+            }
+
+            map.get(key).toplevels.push({
+                hypr: toplevel,          // HyprlandToplevel (has address)
+                wl: toplevel.wayland,     // Wayland Toplevel (for screencopy)
+            });        
+        }
+
+        var values = [];
+
+        for (const [key, value] of map) {
+            values.push(appEntryComp.createObject(null, { appId: key, toplevels: value.toplevels, pinned: value.pinned }));
+        }
+
+        return values;
+    }
+
+    property list<var> minimizeApps: {
+        var map = new Map();
+
+        map.set("SEPARATOR", { pinned: false, toplevels: [] });
+
+        // Open windows (Hyprland)
+        for (const toplevel of Hypr.Hyprland.toplevels.values) {
+            const ws = toplevel.workspace;
+
+            var isMin = (ws.id < 0 && ws.name === "special:min");
+            if (ws.name !== "special:min") continue;
+            const appId = toplevel.wayland.appId;
+            if (!appId) continue;
+
+            const key = appId.toLowerCase();
+
+            if (!map.has(key)) {
+                map.set(key, {
+                    toplevels: []
+                });
+            }
+
+            map.get(key).toplevels.push({
+                hypr: toplevel,          // HyprlandToplevel (has address)
+                wl: toplevel.wayland,     // Wayland Toplevel (for screencopy)
+                min: isMin
+            });        
+        }
+
+        var values = [];
+
+        for (const [key, value] of map) {
+            values.push(appEntryComp.createObject(null, { appId: key, toplevels: value.toplevels, pinned: value.pinned }));
+        }
+
+        return values;
+    }
+    component TaskbarAppEntry: QtObject {
+        id: wrapper
+        required property string appId
+        required property list<var> toplevels
+        required property bool pinned
+    }
+    Component {
+        id: appEntryComp
+        TaskbarAppEntry {}
+    }
+}

@@ -128,7 +128,12 @@ Variants {
                 anchors {
                     bottom: true
                 }
-                margins { bottom: Hyprland.hasMaximize ? 70 : 10 }
+                margins { 
+                    bottom: Config.dock.enable 
+                    ? (Config.dock.hideOnTile ? (Hyprland.hasMaximize ? 70 : (Hyprland.hasTiling ? 10 : 50))
+                    : (Hyprland.hasMaximize ? 70 : 10))
+                    : (Hyprland.hasMaximize ? 70 : 10)               
+                }
                 property bool showSubtitle: true
                 implicitWidth: root.currentLine != "" ? subtitle.implicitWidth + 20 : 0
                 implicitHeight: subtitle.implicitHeight
