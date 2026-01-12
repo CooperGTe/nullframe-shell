@@ -24,8 +24,8 @@ Item {
         value: percentage
         valueBarWidth: 24
         valueBarHeight: 40
-        highlightColor: (isLow && !isCharging) ? "#aa4a5a" : Color.surface
-        trackColor: Color.container
+        highlightColor: (isLow && !isCharging) ? "#aa4a5a" : Color.secondary
+        trackColor: Color.container_high
 
         Item {
             anchors.centerIn: parent

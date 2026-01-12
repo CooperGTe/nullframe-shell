@@ -5,6 +5,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import qs.config
+import qs.services
 
 import "components"
 
@@ -33,6 +34,9 @@ PanelWindow {
             topMargin: root.barHug ? 0 : 5
             bottomMargin: root.barHug ? 0 : 5
         }
+        Behavior on color {
+            ColorAnimation { duration: 200; easing.type: Easing.InOutQuad }
+        }
         Behavior on topRightRadius {
             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
         }
@@ -60,7 +64,9 @@ PanelWindow {
                 }
             }
             Tray{}
-            ResourceIndicator{}
+            ResourceIndicator{
+                window:root
+            }
         }
         ColumnLayout {
             anchors.centerIn: parent
@@ -74,27 +80,11 @@ PanelWindow {
             Behavior on anchors.bottomMargin {
                 NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
             }
-            Rectangle {
-                color: Color.container
-                radius: 30
-                border.width: 1
-                border.color: Color.container_high
-                implicitHeight: ctlctl.implicitHeight + 10
-                implicitWidth: 30
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter
-                ColumnLayout {
-                    anchors.centerIn:parent
-                    id:ctlctl
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    spacing:0
-                    Brightness{}
-                    Audio{}
-                    Network{}
-                }
-            }
+            ControlsGroup {} 
             Rectangle {
                 Layout.bottomMargin: 3
+                Layout.leftMargin: 5
+                Layout.rightMargin: 5
                 Layout.fillWidth: true
                 implicitHeight: 1
                 color: Color.container

@@ -12,7 +12,7 @@ ColumnLayout {
     Text {
         text: Time.format("hh")
         Layout.alignment: Qt.AlignHCenter
-        color: Color.surface
+        color: Color.secondary
         font.pixelSize: 18
         font.bold: true
         font.family: "monospace"
@@ -21,14 +21,14 @@ ColumnLayout {
         text: Time.format("mm")
         Layout.alignment: Qt.AlignHCenter
         font.family: "monospace"
-        color: Color.surface
+        color: Color.secondary
         font.pixelSize: 18
         font.bold: true
     }
     Row {
         Text {
             text: Time.format("dd:MM")
-            color: Color.surface
+            color: Color.secondary
             font.pixelSize: 8
             font.bold: false
         }

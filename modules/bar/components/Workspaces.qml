@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -20,7 +21,7 @@ Item {
         onWheel: (event) => {
             if (event.angleDelta.y < 0)
                 Hyprland.dispatch("workspace r+1")
-            else if (event.angleDelta.y > 0)
+            else if (event.angleDelta.y > 0 && Hyprland.activeWorkspace > 1)
                 Hyprland.dispatch("workspace r-1")
         }
     }
@@ -32,19 +33,52 @@ Item {
         radius: 30
         color: Color.container
 
+        ColumnLayout {
+            anchors.horizontalCenter:parent.horizontalCenter
+            spacing:0
+            y:2 //hack for rectangle toppadding
+            Repeater {
+                model: root.workspaceLength
+                Rectangle {
+                    required property int index
+                    property int wsId: index + (1 + (root.workspaceLength * Math.floor((Hyprland.activeWorkspace - 1) / root.workspaceLength)))
+                    property int toplevelCount: Hyprland.topLevel
+                        .filter(t => t.workspace && t.workspace.id === wsId)
+                        .length
+                    property int topleveltop: Hyprland.topLevel
+                        .filter(t => t.workspace && t.workspace.id === wsId + 1)
+                        .length
+                    property int toplevelbottom: Hyprland.topLevel
+                        .filter(t => t.workspace && t.workspace.id === wsId - 1)
+                        .length
+
+
+                    Layout.alignment:Qt.AlignHCenter
+                    implicitWidth: 26
+                    implicitHeight: 26
+                    color: toplevelCount ?  Color.container_high : "transparent"
+
+                    bottomLeftRadius: topleveltop ? 0 : 12
+                    bottomRightRadius: topleveltop ? 0 : 12
+                    topLeftRadius: toplevelbottom ? 0 : 12
+                    topRightRadius: toplevelbottom ? 0 : 12
+                }
+            }
+        }
 
         // Active workspace indicator
         Rectangle {
             id: activeIndicator
             z: 0
-            radius: 30
+            radius: 26
+            anchors.horizontalCenter:parent.horizontalCenter
 
-            y: ((Hyprland.activeWorkspace - 1) % root.workspaceLength) * 25
+            y: (((Hyprland.activeWorkspace - 1) % root.workspaceLength) * 26) + 2
             //y: (root.monitor?.activeWorkspace?.id - 1 ?? 0) * 25 - 2
 
             color: Hyprland.occupiedWorkspace ? Color.surface : Color.surface_low
-            width: 30
-            height: 30
+            width: 26
+            height: 26
 
             Behavior on y {
                 NumberAnimation { duration: 150; easing.type: Easing.OutSine }
@@ -63,14 +97,15 @@ Item {
             Repeater {
                 model: root.workspaceLength
                 Rectangle {
+                    required property int index
                     property int wsId: index + (1 + (root.workspaceLength * Math.floor((Hyprland.activeWorkspace - 1) / root.workspaceLength)))
                     property bool active: Hyprland.activeWorkspace === wsId
                     property int toplevelCount: Hyprland.topLevel
                         .filter(t => t.workspace && t.workspace.id === wsId)
                         .length
                         
-                    implicitWidth: 25
-                    implicitHeight: 25
+                    implicitWidth: 26
+                    implicitHeight: 26
                     radius: 12
                     color: "transparent"
 
@@ -94,7 +129,7 @@ Item {
                             }; 
                             return root.kanji ? (mapping[wsId] ?? wsId) : wsId
                         }
-                        color: active ? Color.container : toplevelCount ? Color.surface : Color.surface_low
+                        color: active ? Color.container : toplevelCount ? Color.secondary : Color.surface_low
                         Behavior on color {
                             ColorAnimation { duration: 200; easing.type: Easing.OutQuad }
                         }

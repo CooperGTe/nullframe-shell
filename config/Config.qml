@@ -9,6 +9,7 @@ Singleton {
     property alias launcher: json.launcher
     property alias desktopWidget: json.desktopWidget
     property alias dock: json.dock
+    property alias showLyrics: json.showLyrics
     onBarChanged: console.log(bar.hug)
     Timer {
         id: fileReloadTimer
@@ -41,8 +42,14 @@ Singleton {
             property DesktopWidget desktopWidget: DesktopWidget {}
             property Dock dock: Dock {}
 
+            property bool showLyrics: true
+
             component Bar: JsonObject {
-                property bool hug: false
+                property real hug: 0
+                // 0: false
+                // 1: only when tiling
+                // 2: only when on empty workspaces 
+                // 3: true
                 property real workspacesShown: 6
                 property bool workspaceKanji: true
             }

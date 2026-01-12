@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
@@ -14,6 +15,7 @@ import qs.config
 
 PanelWindow {
 	id: root
+    WlrLayershell.namespace: "notification"
 
 	readonly property var notificationCount: notifications.length
 	property list<QtObject> notifications: []
@@ -53,17 +55,27 @@ PanelWindow {
 		right: true
 	}
 
-
-
-	WlrLayershell.namespace: "shell:notification"
 	exclusiveZone: 0
 	color: "transparent"
 
 	implicitWidth: 300
-	implicitHeight: listView.contentHeight + 20
+	implicitHeight: 728
 
     
 	visible: root.notifications.length > 0 ? true : false
+
+    component Anim: NumberAnimation { 
+        duration: 400
+        easing.type: Easing.BezierSpline
+        easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
+    }
+
+    mask: Region {
+        id:mask
+        width: root.width
+        height: listView.contentHeight
+    }
+
 
 	ListView {
 		id: listView
@@ -74,8 +86,23 @@ PanelWindow {
 
 		spacing: 5
 		clip: true
+        addDisplaced: Transition {
+            NumberAnimation {
+                property: "y" // Animates the vertical position
+                duration: 300
+                easing.type: Easing.OutCubic
+            }
+        }
+        removeDisplaced: Transition {
+            NumberAnimation {
+                property: "y" // Animates the vertical position
+                duration: 300
+                easing.type: Easing.OutCubic
+            }
+        }
+
 		model: ScriptModel {
-			values: [...root.notifications.map(a => a)].reverse()
+			values: [...root.notifications.map(a => a)]
 		}
 
 		delegate: Flickable {
@@ -84,7 +111,7 @@ PanelWindow {
 			required property Notification modelData
 
 			implicitWidth: listView.width
-			implicitHeight: contentLayout.implicitHeight + 32
+			implicitHeight: contentLayout.implicitHeight + 24
 			boundsBehavior: Flickable.DragAndOvershootBounds
 			flickableDirection: Flickable.HorizontalFlick
 
@@ -100,8 +127,19 @@ PanelWindow {
                 running: true
                 repeat: false
                 onTriggered: {
-                    delegateFlick.modelData.dismiss()
+                    tAnim = true
+                    lifetimeafter.start()
+                }
+            }
+            Timer {
+                id:lifetimeafter
+                interval: 700
+                running: false
+                repeat: false
+                onTriggered: {
+                    delegateFlick.modelData.closed("Expired")
                     anim = false
+                    tAnim = false
                     deleteBeforeAnim.start()
                 }
             }
@@ -115,27 +153,57 @@ PanelWindow {
                 }
             }
             property bool anim: false
+            property bool tAnim: false
             Timer {
                 interval: 200
                 running:true
                 repeat:false
                 onTriggered: {
                     anim = true
+                    tAnim = true
+                    deleteT.start()
+                }
+            }
+            Timer {
+                id:deleteT
+                interval: 700
+                repeat:false
+                running:false
+                onTriggered: {
+                    tAnim = false
+                }
+            }
+            Item {
+                Component.onCompleted: {
+                    parent.layer.enabled = true;
+                    parent.layer.effect = effectComponent;
+                }
+
+                Component {
+                    id: effectComponent
+                    MultiEffect {
+                        shadowEnabled: true
+                        shadowOpacity: 1
+                        shadowColor: "black"
+                        shadowBlur: 1
+                        shadowScale: 1
+                    }
                 }
             }
 
-			Rectangle {
+            Rectangle {
+                id:notifItem
 				anchors.fill: parent
 				color: Color.base
 				radius: 15
                 anchors.margins: 5
                 anchors.rightMargin: anim ? 5 : -300
-                anchors.leftMargin: anim ? 5 : 305
+                anchors.leftMargin: anim ? 20 : 305
                 Behavior on anchors.rightMargin {
-                    NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+                    Anim{}
                 }
                 Behavior on anchors.leftMargin {
-                    NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+                    Anim{}
                 }
                 RowLayout {
                     spacing:0
@@ -155,7 +223,7 @@ PanelWindow {
                     }
                     ColumnLayout {
                         id: contentLayout
-                        Layout.margins: 8
+                        Layout.margins: 5
                         Layout.fillWidth:true
                         Layout.fillHeight:true
                         RowLayout {
@@ -222,7 +290,7 @@ PanelWindow {
                                     required property NotificationAction modelData
                                     Layout.fillWidth: true
                                     implicitHeight: 24
-                                    text: modelData.text
+                                    text: modelData?.text
                                     onClicked:{ modelData.invoke();
                                         //hack dismiss fuck yeah
                                         anim = false
@@ -239,6 +307,17 @@ PanelWindow {
                     }
 				}
 			}
+            Rectangle {
+                id:transitionItem
+				anchors.fill: parent
+				color: Color.surface
+				radius: 0
+                anchors.margins: 0
+                anchors.leftMargin: tAnim ? 20 : 305
+                Behavior on anchors.leftMargin {
+                    Anim{}
+                }
+            }
 		}
 	}
 }

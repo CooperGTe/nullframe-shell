@@ -1,11 +1,13 @@
 {
-  "base": "#131315",
-  "container": "#1f1f21",
-  "container_high": "#353536",
-  "primary": "#c1c6d6",
-  "secondary": "#c4c6cf",
-  "surface": "#c1c6d6",
-  "surface_low": "#474648",
-  "surface_mid": "#929092",
-  "surface_high": "#c8c6c7"
+  "base": "#141218",
+  "container": "#211f24",
+  "container_high": "#2b292f",
+  "primary": "#d0bcfe",
+  "secondary": "#ccc2db",
+  "surface": "#d0bcfe",
+  "surface_low": "#49454e",
+  "surface_mid": "#948f99",
+  "surface_high": "#cac4cf",
+  "error": "#ffb4ab",
+  "error_container": "#93000a"
 }

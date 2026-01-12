@@ -24,7 +24,7 @@ Variants {
         property var lrcParsed: []
         property string currentLine: ""
         property int offset: 0
-        property bool showLyrics: true
+        property bool showLyrics: Config.showLyrics
         property string artist: root.activePlayer.trackArtist
 
 

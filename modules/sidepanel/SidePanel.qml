@@ -120,11 +120,7 @@ PanelWindow {
                 }
                 QuickControls{}
                 Mpris{}
-                //filler
-                Item {
-                    Layout.fillHeight:true
-                }
-                Date{}
+                Stack {}
             }
         }
     }

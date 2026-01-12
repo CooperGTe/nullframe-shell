@@ -16,6 +16,7 @@ Singleton {
 	id: root;
 	property MprisPlayer trackedPlayer: null;
 	property MprisPlayer activePlayer: trackedPlayer ?? Mpris.players.values[0] ?? null;
+	property var allPlayer: Mpris.players;
 	signal trackChanged(reverse: bool);
     property real visualPosition: 0
     

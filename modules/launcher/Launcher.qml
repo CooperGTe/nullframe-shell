@@ -1,5 +1,4 @@
 pragma ComponentBehavior: Bound
-//@ pragma IconTheme Papirus-Dark
 
 import QtQuick
 import QtQuick.Effects

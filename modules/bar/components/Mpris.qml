@@ -68,7 +68,7 @@ Item {
                     contentItem: ClippedFilledCircularProgress {
                         size: 28
                         value: root.position / activePlayer?.length
-                        colPrimary: Color.surface
+                        colPrimary: Color.primary
                         colSecondary: Color.container_high
                         lineWidth: 3
                         Item {
@@ -134,7 +134,7 @@ Item {
                 icon: "music_note"
                 font.pixelSize: 20
                 fill: 1
-                color: Color.surface
+                color: Color.secondary
             }
             Layout.alignment: Qt.AlignHCenter
             WheelHandler {

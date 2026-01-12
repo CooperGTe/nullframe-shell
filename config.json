@@ -1,6 +1,6 @@
 {
     "bar": {
-        "hug": false,
+        "hug": 0,
         "workspaceKanji": true,
         "workspacesShown": 6
     },
@@ -24,5 +24,6 @@
     },
     "launcher": {
         "position": "center"
-    }
+    },
+    "showLyrics": false
 }

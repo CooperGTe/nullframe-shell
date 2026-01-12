@@ -14,6 +14,8 @@ Singleton {
     property alias container_high: json.container_high
     property alias primary: json.primary
     property alias secondary: json.secondary
+    property alias error: json.error
+    property alias error_container: json.error_container
 
     Timer {
         id: fileReloadTimer
@@ -49,7 +51,9 @@ Singleton {
             property string container: "#12131F"
             property string container_high: "#22232F"
             property string primary: "#DFDFFF"
-            property string secondary: "#7F1223"
+            property string secondary: "#DFDFFF"
+            property string error: "#7F1223"
+            property string error_container: "#7F1223"
         }
     }
 }

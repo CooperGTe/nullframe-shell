@@ -45,8 +45,8 @@ Singleton {
             }
         }
     }
-
     FileView {
+        id:uptime
         path: '/proc/uptime'
         watchChanges: true
         onFileChanged: {

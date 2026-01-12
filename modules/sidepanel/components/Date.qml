@@ -12,8 +12,8 @@ Rectangle {
     Layout.fillWidth:true
     color: Color.container
     radius:10
-    implicitHeight:220
-    implicitWidth:230
+    implicitHeight:180
+    implicitWidth:300
     RowLayout {
         anchors.fill:parent
         anchors.margins:10
@@ -101,7 +101,7 @@ Rectangle {
 
                                 const dayOfWeek = dayItem.model.date.getUTCDay()
                                 if (dayOfWeek === 5 || dayOfWeek === 6)
-                                return "#ffafaf"
+                                return Color.error
                                 return Color.surface
                             }
                             opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : 0.3
@@ -165,10 +165,54 @@ Rectangle {
                     }
                 }
             }
+        }
+        ColumnLayout {
+            Layout.fillHeight: true
+            spacing:0
+            Text {
+                text: Time.format("MMM. d")
+                font.bold:true
+                font.pointSize:30
+                Layout.alignment:Qt.AlignRight
+                color: Color.surface
+            }
+            Text {
+                text:Time.format("dddd")
+                font.bold:true
+                color: Color.surface
+                Layout.alignment:Qt.AlignRight
+            }
+            //moonclock
+            Item {
+                implicitWidth: 30
+                implicitHeight: 30
+                Layout.alignment:Qt.AlignRight
+                Layout.topMargin: 10 
+                Layout.bottomMargin: 30 
+
+                Rectangle {
+                    anchors.fill: parent
+                    radius: width / 2
+                    color: Color.surface
+                    clip: true
+
+                    Rectangle {
+                        width: parent.width
+                        height: parent.height
+                        radius: width / 2
+                        color: Color.container
+                        property real phase: Time.synodicDays / 29.53059
+                        property real dir: phase < 0.5 ? -1 : 1
+
+                        x: dir * width * (1 - Math.abs(1 - 2 * phase))               
+                    }
+                }
+            }            
             RowLayout {
                 id: monthSelector
                 Layout.margins: 0
                 Layout.fillWidth: true
+                Layout.fillHeight: true
 
                 Button {
                     Layout.alignment: Qt.AlignRight
@@ -235,63 +279,6 @@ Rectangle {
 
                     font.pointSize: 10
                     color: Color.surface
-                }
-            }
-        }
-        ColumnLayout {
-            Layout.fillHeight: true
-            Layout.leftMargin:10
-            spacing:10
-            Rectangle {
-                color: Color.surface
-                Layout.bottomMargin:-40
-                radius:15
-                implicitWidth:50
-                implicitHeight:25
-            }
-            Button {
-                implicitWidth:50
-                implicitHeight:38
-                background: Rectangle {
-                    color: "transparent"
-                }
-                MaterialIcon {
-                    icon: "calendar_today"
-                    font.pixelSize: 18
-                    anchors.horizontalCenter:parent.horizontalCenter
-                    anchors.top:parent.top
-                    fill:1
-                    color: Color.container
-                }
-                Text {
-                    text:"Calendar"
-                    color: Color.surface
-                    font.bold: true
-                    anchors.horizontalCenter:parent.horizontalCenter
-                    anchors.bottom:parent.bottom
-                }
-            }
-            Button {
-                implicitWidth:50
-                implicitHeight:38
-                background: Rectangle {
-                    color: "transparent"
-                    radius:10
-                }
-                MaterialIcon {
-                    icon: "timer"
-                    font.pixelSize: 18
-                    anchors.horizontalCenter:parent.horizontalCenter
-                    anchors.top:parent.top
-                    fill:0
-                    color: Color.surface
-                }
-                Text {
-                    text:"Timer"
-                    font.bold:true
-                    color: Color.surface
-                    anchors.horizontalCenter:parent.horizontalCenter
-                    anchors.bottom:parent.bottom
                 }
             }
         }

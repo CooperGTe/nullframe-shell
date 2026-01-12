@@ -10,18 +10,16 @@ Item {
     Layout.alignment: Qt.AlignHCenter
     implicitHeight: 20
     implicitWidth: 40
+    // Bind the pipewire node so its volume will be tracked
+	PwObjectTracker {
+		objects: [ Pipewire.defaultAudioSink ]
+	}
 
     WheelHandler {
         acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
         onWheel: (event) => {
-            if (event.angleDelta.y < 0)
-            Quickshell.execDetached([
-                "pactl", "set-sink-volume", "@DEFAULT_SINK@" ,"-1%"
-            ])
-            else if (event.angleDelta.y > 0)
-            Quickshell.execDetached([
-                "pactl", "set-sink-volume", "@DEFAULT_SINK@" ,"+1%"
-            ])
+            if (event.angleDelta.y < 0) Pipewire.defaultAudioSink.audio.volume += 0.01
+            else if (event.angleDelta.y > 0) Pipewire.defaultAudioSink.audio.volume -= 0.01
         }
     }
 

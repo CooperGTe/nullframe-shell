@@ -8,6 +8,7 @@ import qs.modules.common
 import qs.config
 
 GridLayout {
+    id:root
     columns: 4
     rows: 4
     rowSpacing: 8
@@ -19,31 +20,40 @@ GridLayout {
         Layout.fillWidth:true
         implicitHeight: 60; 
         radius:20
-        color: Network.wifiEnabled ? Color.surface : Color.container
+        color: Color.container
         MouseArea {
             anchors.fill:parent
             onClicked: Network.toggleWifi()
         }
-        ColumnLayout {
+        RowLayout {
             spacing:0
+            anchors.margins: 5
             anchors.fill:parent
-            anchors.margins:5
-            anchors.leftMargin:15
-            MaterialIcon {
-                icon: "network_wifi"
-                font.pixelSize: 16
-                fill:1
-                color: !Network.wifiEnabled ? Color.surface : Color.container
+            Rectangle {
+                implicitWidth:50
+                implicitHeight:50
+                radius: 15
+                color: Network.wifiEnabled ? Color.surface : Color.container_high
+                MaterialIcon {
+                    icon: "network_wifi"
+                    font.pixelSize: 24
+                    fill:1
+                    anchors.centerIn:parent
+                    color: !Network.wifiEnabled ? Color.surface : Color.container
+                }
             }
-            Text {
-                text: Network.active ? Network.active.ssid : "Network"
-                font.family:"monospace"
-                font.bold:true
-                color: !Network.wifiEnabled ? Color.surface : Color.container
-            }
-            Text {
-                text: Network.active?.active ? "Connected" : "Disconnected"
-                color: !Network.wifiEnabled ? Color.surface_low : Color.surface_mid
+            ColumnLayout {
+                spacing:0
+                Text {
+                    text: Network.active ? Network.active.ssid : "Network"
+                    font.family:"monospace"
+                    font.bold:true
+                    color: Color.surface
+                }
+                Text {
+                    text: Network.active?.active ? "Connected" : "Disconnected"
+                    color: Color.surface_low
+                }
             }
         }
     }
@@ -56,80 +66,120 @@ GridLayout {
         MouseArea {
             anchors.fill:parent
         }
-        ColumnLayout {
+        RowLayout {
+            spacing:0
+            anchors.margins: 5
+            anchors.fill:parent
+            Rectangle {
+                implicitWidth:50
+                implicitHeight:50
+                radius: 15
+                color: Color.container_high
+                MaterialIcon {
+                    icon: "bluetooth"
+                    font.pixelSize: 24
+                    anchors.centerIn:parent
+                    fill:1
+                    color:Color.surface
+                }
+            }
+            ColumnLayout {
+                spacing:0
+                Text {
+                    text: "Bluetooth"
+                    font.family:"monospace"
+                    font.bold:true
+                    color:Color.surface
+                }
+                Text {
+                    text: "Disconnected"
+                    color:Color.surface_low
+                }
+            }
+        }
+    }
+    Rectangle { 
+        implicitHeight: 50; 
+        radius:20
+        Layout.columnSpan:2
+        Layout.fillWidth:true
+        color: Color.container
+        RowLayout {
+            anchors.margins:5
+            anchors.fill:parent
+            Rectangle { 
+                implicitHeight: 40
+                radius:15
+                color: Color.container_high
+                Layout.fillWidth:true
+                MaterialIcon {
+                    anchors.centerIn:parent
+                    icon: "coffee"
+                    font.pixelSize: 18
+                    fill:0
+                    color: Color.surface
+                }
+            }
+            Rectangle { 
+                implicitHeight: 40; 
+                radius: 15
+                Layout.fillWidth:true
+                color: Color.surface
+                MaterialIcon {
+                    icon: "dark_mode"
+                    anchors.centerIn:parent
+                    font.pixelSize: 18
+                    fill:1
+                    color: Color.base
+                }
+            }
+        }
+    }
+    Rectangle { 
+        implicitHeight: 50; 
+        radius:20
+        Layout.columnSpan:2
+        Layout.fillWidth:true
+        color: Color.container
+        implicitWidth: root.implicitWidth/12
+        RowLayout {
             spacing:0
             anchors.fill:parent
-            anchors.margins:5
-            anchors.leftMargin:15
-            MaterialIcon {
-                icon: "bluetooth"
-                font.pixelSize: 16
-                fill:1
-                color:Color.surface
+            Rectangle {
+                Layout.leftMargin: 5
+                implicitWidth: 50
+                implicitHeight: 40
+                color:Color.container_high
+                radius: 15
+                MaterialIcon {
+                    icon: "nightlight"
+                    font.pixelSize: 18
+                    anchors.centerIn:parent
+                    fill:0
+                    color: Color.surface
+                }
             }
-            Text {
-                text: "Bluetooth"
-                font.family:"monospace"
-                font.bold:true
-                color:Color.surface
+            ColumnLayout {
+                spacing:0
+                Text {
+                    text: "Night Light"
+                    font.family:"monospace"
+                    font.bold:true
+                    color:Color.surface
+                }
+                Text {
+                    text: "Off"
+                    color:Color.surface_low
+                }
             }
-            Text {
-                text: "Disconnected"
-                color:Color.surface_low
-            }
         }
     }
-    Rectangle { 
-        implicitHeight: 40
-        radius:10
-        color: Color.container
-        Layout.fillWidth:true
-        MaterialIcon {
-            anchors.centerIn:parent
-            icon: "coffee"
-            font.pixelSize: 18
-            fill:0
-            color: Color.surface
-        }
-    }
-    Rectangle { 
-        implicitHeight: 40; 
-        radius:10
+    //seperator
+    Rectangle {
+        Layout.columnSpan:4
+        implicitHeight:1
         Layout.fillWidth:true
         color: Color.container
-        MaterialIcon {
-            icon: "nightlight"
-            anchors.centerIn:parent
-            font.pixelSize: 18
-            fill:0
-            color: Color.surface
-        }
-    }
-    Rectangle { 
-        implicitHeight: 40; 
-        radius:10
-        Layout.fillWidth:true
-        color: Color.container
-        MaterialIcon {
-            icon: "energy_savings_leaf"
-            anchors.centerIn:parent
-            font.pixelSize: 18
-            fill:0
-            color: Color.surface
-        }
-    }
-    Rectangle { 
-        implicitHeight: 40; 
-        radius:10
-        Layout.fillWidth:true
-        color: Color.container
-        MaterialIcon {
-            icon: "colorize"
-            anchors.centerIn:parent
-            font.pixelSize: 18
-            fill:0
-            color: Color.surface
-        }
     }
 
     ColumnLayout {
@@ -169,9 +219,16 @@ GridLayout {
                         color: Color.surface
                         font.bold: true
                         anchors.rightMargin:10
+                        opacity: volumeSlider.position < 0.8 ? 1 : 0
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right:parent.right
                         font.pixelSize:12
+                        Behavior on opacity {
+                            NumberAnimation { 
+                                duration: 300; 
+                                easing.type: Easing.InOutBack
+                            }
+                        }
                     }
                 }
                 Rectangle {     // foreground (filled)
@@ -182,11 +239,40 @@ GridLayout {
                     radius: 10
                     MaterialIcon {
                         icon: "volume_up"
-                        anchors.rightMargin:3
+                        anchors.rightMargin:volumeSlider.position > 0.1 ? 3 : -33
                         anchors.right:parent.right
                         font.pixelSize: 20
                         fill:1
+                        color: volumeSlider.position > 0.1 ? Color.base : Color.surface
+                        Behavior on anchors.rightMargin {
+                            NumberAnimation { 
+                                duration: 300; 
+                                easing.type: Easing.InOutBack
+                            }
+                        }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 300; 
+                                easing.type: Easing.InOutBack
+                            }
+                        }
+                    }
+                    Text {
+                        text: `${Math.floor(Pipewire.defaultAudioSink?.audio.volume * 100) ?? 0}%`
+                        horizontalAlignment: Text.AlignRight
                         color: Color.base
+                        font.bold: true
+                        anchors.leftMargin:10
+                        opacity: volumeSlider.position > 0.8 ? 1 : 0
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left:parent.left
+                        font.pixelSize:12
+                        Behavior on opacity {
+                            NumberAnimation { 
+                                duration: 300; 
+                                easing.type: Easing.InOutBack
+                            }
+                        }
                     }
                 }
             }
@@ -244,9 +330,16 @@ GridLayout {
                         color: Color.surface
                         font.bold: true
                         anchors.rightMargin:10
+                        opacity: brightnessSlider.position < 0.8 ? 1 : 0
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.right:parent.right
                         font.pixelSize:12
+                        Behavior on opacity {
+                            NumberAnimation { 
+                                duration: 300; 
+                                easing.type: Easing.InOutBack
+                            }
+                        }
                     }
                 }
                 Rectangle {     // foreground (filled)
@@ -258,10 +351,39 @@ GridLayout {
                     MaterialIcon {
                         icon: "brightness_medium"
                         anchors.right:parent.right
-                        anchors.rightMargin:3
+                        anchors.rightMargin: brightnessSlider.position > 0.1 ? 3 : -33
                         font.pixelSize: 20
                         fill:1
+                        color: brightnessSlider.position > 0.1 ? Color.base : Color.surface
+                        Behavior on anchors.rightMargin {
+                            NumberAnimation { 
+                                duration: 300; 
+                                easing.type: Easing.InOutBack
+                            }
+                        }
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 300; 
+                                easing.type: Easing.InOutBack
+                            }
+                        }
+                    }
+                    Text {
+                        text: `${Math.round(Brightness.value*100)}%`
+                        horizontalAlignment: Text.AlignRight
                         color: Color.base
+                        font.bold: true
+                        anchors.leftMargin:10
+                        opacity: brightnessSlider.position > 0.8 ? 1 : 0
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.left:parent.left
+                        font.pixelSize:12
+                        Behavior on opacity {
+                            NumberAnimation { 
+                                duration: 300; 
+                                easing.type: Easing.InOutBack
+                            }
+                        }
                     }
                 }
             }

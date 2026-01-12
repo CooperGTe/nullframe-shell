@@ -12,6 +12,10 @@ Item {
     property color colSecondary: "#F1D3F9"
     property bool enableAnimation: true
     property int animationDuration: 800
+    property real sweepDegree: 360
+    property real startAngle: -90
+    property real startAngleSpace: 30
+    property real backgroundSpace: 60
 
     // allow children inside the circle
     default property alias content: contentContainer.data
@@ -20,7 +24,7 @@ Item {
     implicitHeight: size
 
     // internal math
-    property real degree: value * 360
+    property real degree: value * root.sweepDegree
     property real centerX: width / 2
     property real centerY: height / 2
     property real arcRadius: size / 2 - lineWidth / 2
@@ -42,8 +46,8 @@ Item {
                 centerY: root.centerY
                 radiusX: root.arcRadius
                 radiusY: root.arcRadius
-                startAngle: -120
-                sweepAngle: -(360 / 1-(degree+60))
+                startAngle: root.startAngle + root.sweepDegree - root.startAngleSpace
+                sweepAngle: -(root.sweepDegree / 1 - ( degree + root.backgroundSpace )) < 0 ? -(root.sweepDegree / 1 - ( degree + root.backgroundSpace ) ) : 0
             }
         }
     }
@@ -64,8 +68,8 @@ Item {
                 centerY: root.centerY
                 radiusX: root.arcRadius
                 radiusY: root.arcRadius
-                startAngle: -90
-                sweepAngle: degree
+                startAngle: root.startAngle
+                sweepAngle: degree === 0 ? 1 : degree // give a dot at value 0 
             }
         }
     }

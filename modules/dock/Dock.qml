@@ -17,7 +17,7 @@ PanelWindow{
     implicitWidth: repeater.implicitWidth + 20 // margin
     exclusiveZone:0
     color:"transparent"
-    visible: Config.dock.hideOnTile ? (!Hyprland.hasTiling && Config.dock.enable) : Config.dock.enable
+    margins.bottom: Config.dock.hideOnTile ? (!Hyprland.hasTiling && Config.dock.enable ? 0 : (panelHover.hovered ? 0 : -35)) : (Config.dock.enable ? 0 : -300)
     property real maxWindowPreviewHeight: 140
     property real maxWindowPreviewWidth: 240
     property real showPreviewIndex: 0
@@ -46,7 +46,7 @@ PanelWindow{
 
             if (!ws) continue
             if(ws.id < 0) continue;
-            const appId = toplevel.wayland.appId;
+            const appId = toplevel.wayland?.appId;
             if (!appId) continue;
 
             const key = appId.toLowerCase();
@@ -82,8 +82,8 @@ PanelWindow{
         for (const toplevel of Hypr.Hyprland.toplevels.values) {
             const ws = toplevel.workspace;
 
-            var isMin = (ws.id < 0 && ws.name === "special:min");
-            if (ws.name !== "special:min") continue;
+            var isMin = (ws?.id < 0 && ws.name === "special:min");
+            if (ws?.name !== "special:min") continue;
             const appId = toplevel.wayland.appId;
             if (!appId) continue;
 
@@ -130,6 +130,9 @@ PanelWindow{
         repeat: false
         running:false
         onTriggered: root.showPreviewIndex = 0
+    }
+    HoverHandler {
+        id: panelHover
     }
 
     Rectangle {

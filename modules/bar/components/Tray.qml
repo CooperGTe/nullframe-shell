@@ -25,7 +25,7 @@ ColumnLayout {
             layer.effect: MultiEffect {
                 contrast:0.2
                 brightness:0
-                saturation:-1
+                saturation:-0.5
             }
 
             ToolTip {

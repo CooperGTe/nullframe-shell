@@ -24,12 +24,10 @@ PanelWindow {
     implicitHeight: 60
     margins.top: root.visibility ? 0 : -60
     Behavior on margins.top {
-        SequentialAnimation {
-            NumberAnimation { 
-                duration: 400
-                easing.type: Easing.BezierSpline
-                easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
-            }
+        NumberAnimation { 
+            duration: 400
+            easing.type: Easing.BezierSpline
+            easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
         }
     }
 
