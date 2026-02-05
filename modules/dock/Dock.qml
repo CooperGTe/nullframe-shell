@@ -1,5 +1,6 @@
 pragma ComponentBehavior: Bound
 import Quickshell
+import QtQuick.Shapes
 import Quickshell.Io
 import Quickshell.Widgets
 import Quickshell.Hyprland as Hypr
@@ -14,10 +15,20 @@ PanelWindow{
     id:root
     WlrLayershell.layer: WlrLayer.Top
     implicitHeight: 40
-    implicitWidth: repeater.implicitWidth + 20 // margin
+    implicitWidth: repeater.implicitWidth + 20 +40 // margin
+    WlrLayershell.namespace: "dock"
     exclusiveZone:0
     color:"transparent"
     margins.bottom: Config.dock.hideOnTile ? (!Hyprland.hasTiling && Config.dock.enable ? 0 : (panelHover.hovered ? 0 : -35)) : (Config.dock.enable ? 0 : -300)
+    Behavior on margins.bottom {
+        NumberAnimation { 
+            duration: 400
+            easing.type: Easing.BezierSpline
+            easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
+        }
+    }
+    margins.right:20
+    margins.left:20
     property real maxWindowPreviewHeight: 140
     property real maxWindowPreviewWidth: 240
     property real showPreviewIndex: 0
@@ -75,7 +86,7 @@ PanelWindow{
 
     property list<var> minimizeApps: {
         var map = new Map();
-
+        
         map.set("SEPARATOR", { pinned: false, toplevels: [] });
 
         // Open windows (Hyprland)
@@ -135,15 +146,84 @@ PanelWindow{
         id: panelHover
     }
 
-    Rectangle {
-        anchors.fill:parent
-        color:Color.base
-        topRightRadius: 20
-        topLeftRadius: 20
-        RowLayout {
+    Shape {
+        id:shape
+        anchors.top:parent.top
+        implicitWidth: repeater.implicitWidth + 60//????
+        property real radius:20
+        property bool flatten: height < shape.radius * 2
+        property real radiusRounding: shape.flatten ? shape.height / 2 : shape.radius
+        height: Config.dock.hideOnTile ? (!Hyprland.hasTiling && Config.dock.enable ?40 : (panelHover.hovered ? 40 : 5)) : (Config.dock.enable ? 40 : 5)
+
+        Behavior on height {
+            NumberAnimation { 
+                duration: 400
+                easing.type: Easing.BezierSpline
+                easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
+            }
+        }
+        //onHeightChanged:console.log(height)
+
+
+        preferredRendererType: Shape.CurveRenderer
+        ShapePath {
+            strokeWidth: 0
+            fillColor:Color.base
+            PathLine { 
+                relativeX: 0
+                relativeY: shape.height
+            }
+            PathArc { 
+                relativeX: shape.radius
+                relativeY:-shape.radiusRounding
+                radiusX: shape.radius
+                radiusY: Math.min(shape.radius, shape.height)
+                direction: PathArc.Counterclockwise
+            }
+            PathLine { 
+                relativeX: 0
+                relativeY: shape.height - shape.radiusRounding * 2
+            }
+            PathArc { 
+                relativeX: shape.radius
+                relativeY:-shape.radiusRounding
+                radiusX: shape.radius
+                radiusY: Math.min(shape.radius, shape.height)
+            }
+            PathLine { 
+                relativeX: (shape.width - shape.radius * 4)
+                relativeY: 0
+            }
+            PathArc { 
+                relativeX:shape.radius
+                relativeY:shape.radiusRounding
+                radiusX: shape.radius
+                radiusY: Math.min(shape.radius, shape.height)
+            }
+            PathLine { 
+                relativeX: 0
+                relativeY: -(shape.height - shape.radiusRounding * 2)
+            }
+            PathArc { 
+                relativeX: shape.radius
+                relativeY: shape.radiusRounding
+                radiusX: shape.radius
+                radiusY: Math.min(shape.radius, shape.height)
+                direction: PathArc.Counterclockwise
+            }
+            PathLine { 
+                relativeX: -shape.width
+                relativeY: 0
+            }
+        }        
+       RowLayout {
             id:repeater
             spacing: 0
-            anchors.centerIn:parent
+            anchors {
+                top:parent.top
+                horizontalCenter:parent.horizontalCenter
+                topMargin:2
+            }
             Repeater {
                 model: root.apps.concat(root.minimizeApps)
 
@@ -162,6 +242,17 @@ PanelWindow{
                         visible: appitem.modelData.appId !== "SEPARATOR"
                         source: Quickshell.iconPath(DesktopEntries.heuristicLookup(modelData.appId)?.icon, "image-missing")                        
                         implicitSize: 30
+                    }
+                    //indicator
+                    Rectangle {
+                        width:5
+                        height:5
+                        radius:5
+                        color:Color.surface
+                        anchors.bottomMargin: -5
+                        anchors.bottom:parent.bottom
+                        anchors.horizontalCenter:parent.horizontalCenter
+                        visible: appitem.modelData.toplevels.length > 0
                     }
                     MouseArea {
                         id:hover
