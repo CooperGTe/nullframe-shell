@@ -6,6 +6,7 @@ import Quickshell.Io
 import Quickshell.Hyprland
 import Quickshell.Wayland
 import qs.config
+import qs.modules.common
 
 Variants {
     model: Quickshell.screens
@@ -27,6 +28,9 @@ Variants {
                 }
             }
         }
+        // ==============================================
+        // NON HARDCODED METHOD LATER CUZ I DIDNT NEED IT
+        // ==============================================
         Process {
             id: imeCheck
             command: ["bash", "-c", "fcitx5-remote -n"]
@@ -63,7 +67,10 @@ Variants {
         Timer {
             id: hideTimer
             interval: 1000
-            onTriggered: if (scope.mode === "no") scope.visible = false
+            onTriggered: {
+                if (scope.mode === "no" && scope.method === "fcitx5 (en_US)") scope.visible = false
+                console.log(scope.mode, scope.method)
+            }
         }
 
         LazyLoader {
@@ -74,34 +81,29 @@ Variants {
                 WlrLayershell.layer: WlrLayer.Overlay
                 exclusiveZone:0
                 
-                implicitWidth: 150
-                implicitHeight:80
+                implicitWidth: itemcontent.implicitWidth + 30
+                implicitHeight:30
                 color: "transparent"
-                margins.bottom:50
+                margins.top:10
                 mask: Region {}
                 anchors {
-                    bottom: true
+                    top: true
                 }
 
                 Rectangle {
                     anchors.fill:parent
                     color:Color.base
-                    border.width: scope.mode === "yes" ? 2 : 0
-                    border.color: "#ffadad"
                     radius:20
-                    ColumnLayout {
+                    RowLayout {
+                        id:itemcontent
                         anchors.fill:parent
-                        anchors.margins:10
+                        anchors.leftMargin: 10
+                        anchors.rightMargin: 10
                         spacing:0
-                        Text {
-                            Layout.alignment:Qt.AlignTop
-                            text: "Keyboards Mode"
+                        MaterialIcon {
+                            icon: scope.mode === "yes" ? "lock" : "lock_open"
                             color: Color.surface
-                        }
-                        Text {
-                            text: scope.method
-                            Layout.alignment:Qt.AlignTop
-                            color: Color.surface_mid
+                            font.pointSize: 16
                         }
                         Text {
                             text: if (scope.method === "fcitx5 (en_US)")
@@ -110,11 +112,15 @@ Variants {
                                 return scope.mode === "yes" ? "カタカナ" : "ひらがな"
                             color: Color.surface
                             font.family: "monospace"
-                            font.pixelSize:16
-                            horizontalAlignment:font.horizontalCenter
                             font.bold:true
-                            Layout.fillHeight:true
-                            Layout.alignment:Qt.AlignHCenter
+                            Layout.alignment:Qt.AlignLeft
+                            horizontalAlignment: Text.AlignLeft
+                        }
+                        Text {
+                            text: scope.method !== "fcitx5 (en_US)" ? scope.method : ""
+                            color: Color.surface_mid
+                            Layout.alignment:Qt.AlignRight
+                            horizontalAlignment: Text.AlignLeft
                         }
                     }
                 }
