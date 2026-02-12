@@ -79,7 +79,7 @@ Variants {
                 id:root
                 screen: scope.modelData
                 WlrLayershell.layer: WlrLayer.Overlay
-                exclusiveZone:0
+                exclusionMode: ExclusionMode.Ignore
                 
                 implicitWidth: itemcontent.implicitWidth + 30
                 implicitHeight:30

@@ -9,8 +9,8 @@ import Quickshell.Wayland
 import Quickshell.Services.Mpris
 
 import qs.config
-
 import qs.services
+import qs.modules.dock
 
 Variants {
     model: Quickshell.screens
@@ -26,8 +26,10 @@ Variants {
         property int offset: 0
         property bool showLyrics: Config.showLyrics
         property string artist: root.activePlayer.trackArtist
+        property bool panelHovered: Dock.panelHovered
+        onPanelHoveredChanged: console.log(panelHovered)
 
-
+        // lyrics fetch from local file
         FileView {
             id: lrcFile
             printErrors: false
@@ -49,9 +51,11 @@ Variants {
                 root.lrcRaw = raw;
                 root.lrcParsed = root.parseLrc(raw);
                 root.currentLine = raw;
+                console.log(root.artist.replace(" feat. ", ", ").replace(" & ", ", "))
             }
         }
 
+        //parser v0.2
         function parseLrc(raw) {
             const lines = raw.split("\n")
             let parsed = []
@@ -77,13 +81,23 @@ Variants {
         property real visualPosition: 0
         property real basePosition: 0
         property real lastUpdate: 0
+        property real lastPosition: -1
 
         // DBus updates your real position every 1 second
         Connections {
             target: root.activePlayer
             onPositionChanged: {
-                basePosition = root.position
-                lastUpdate = Date.now() / 1000
+                let diff = root.position - visualPosition
+                if (diff < -2) {
+                    // real backward seek → accept it
+                    visualPosition = root.position
+                    basePosition = root.position
+                    lastUpdate = Date.now() / 1000
+                } else if (root.position > lastPosition) {
+                    // normal forward update
+                    basePosition = root.position
+                    lastUpdate = Date.now() / 1000
+                }            
             }
         }
 
@@ -94,10 +108,11 @@ Variants {
                 let dt = now - root.lastUpdate
 
                 // interpolate forward at 1x speed
-                root.visualPosition = root.basePosition + dt
+                let nextPos = basePosition + dt
 
-                // use visualPosition for lyrics
-                let pos = root.visualPosition - (root.offset / 1000);
+                // prevent visual going backwards
+                visualPosition = Math.max(visualPosition, nextPos)
+                let pos = visualPosition - (root.offset / 1000)
                 //console.log(pos)
 
                 for (let i = root.lrcParsed.length - 1; i >= 0; i--) {
@@ -121,8 +136,10 @@ Variants {
             PanelWindow {
                 id: winroot
                 screen:root.modelData
+                WlrLayershell.namespace: "lyrics"
                 WlrLayershell.layer: WlrLayer.Overlay
-                exclusiveZone: 0
+                exclusionMode: ExclusionMode.Ignore
+
                 color: "transparent"
                 //mask: Region {}
                 anchors {
@@ -142,6 +159,10 @@ Variants {
                     implicitHeight: subtitle.implicitHeight
                     implicitWidth: subtitle.implicitWidth + 20
                     opacity: winroot.showSubtitle ? 1 : 0.2
+                    border {
+                        width:1
+                        color:Color.container_high
+                    }
                     Behavior on opacity {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
@@ -150,7 +171,8 @@ Variants {
                         horizontalCenter: parent.horizontalCenter
                     }
 
-                    color: Hyprland.hasMaximize ? Qt.rgba(0.031,0.031,0.070,0.3) : Color.base
+                    //color: Hyprland.hasMaximize ? Qt.rgba(0.031,0.031,0.070,0.3) : Color.base
+                    color: Color.base
                     radius: 10
                     MouseArea {
                         anchors.fill: parent

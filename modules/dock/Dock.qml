@@ -17,21 +17,25 @@ PanelWindow{
     implicitHeight: 40
     implicitWidth: repeater.implicitWidth + 20 +40 // margin
     WlrLayershell.namespace: "dock"
-    exclusiveZone:0
+    exclusionMode: ExclusionMode.Ignore
     color:"transparent"
     margins.bottom: Config.dock.hideOnTile ? (!Hyprland.hasTiling && Config.dock.enable ? 0 : (panelHover.hovered ? 0 : -35)) : (Config.dock.enable ? 0 : -300)
+    component Anim: NumberAnimation {
+        duration: 400
+        easing.type: Easing.BezierSpline
+        easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
+    }
     Behavior on margins.bottom {
-        NumberAnimation { 
-            duration: 400
-            easing.type: Easing.BezierSpline
-            easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
-        }
+        Anim{}
     }
     margins.right:20
     margins.left:20
     property real maxWindowPreviewHeight: 140
     property real maxWindowPreviewWidth: 240
     property real showPreviewIndex: 0
+    
+    //for lyrics
+    property bool panelHovered: panelHover.hovered
 
     Component.onCompleted: {
         console.log(Hypr.Hyprland.toplevels.values.map(toplevel => toplevel.wayland.appId))
@@ -156,11 +160,7 @@ PanelWindow{
         height: Config.dock.hideOnTile ? (!Hyprland.hasTiling && Config.dock.enable ?40 : (panelHover.hovered ? 40 : 5)) : (Config.dock.enable ? 40 : 5)
 
         Behavior on height {
-            NumberAnimation { 
-                duration: 400
-                easing.type: Easing.BezierSpline
-                easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
-            }
+            Anim{}        
         }
         //onHeightChanged:console.log(height)
 
