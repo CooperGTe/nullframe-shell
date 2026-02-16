@@ -1,9 +1,11 @@
 # NullFrameShell
-![Desktop Clean](./images/desktop_only.png)
-![Launcher](./images/launcher.png)
-![Lockscreen](./images/lockscreen.png)
+NullFrame Shell is a Desktop Shell built using Quickshell Toolkit for Hyprland
+
 ----
-A *Modern Desktop* shell built using Quickshell for **Hyprland** Compositor
+Current Preview
+![Desktop Clean](./images/1.png)
+![Launcher](./images/2.png)
+----
 
 > [!WARNING]
 > Status: indev (Unfinished)
@@ -26,7 +28,8 @@ A *Modern Desktop* shell built using Quickshell for **Hyprland** Compositor
 
 ## Dependency
 - Quickshell
-???
+- Material Symbol
+??? (wip)
 
 
 
