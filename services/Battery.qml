@@ -40,6 +40,9 @@ QtObject {
     property real energyRate: UPower.displayDevice.changeRate
     property real timeToEmpty: UPower.displayDevice.timeToEmpty
     property real timeToFull: UPower.displayDevice.timeToFull
+    property real healthPercentage: UPower.displayDevice.healthPercentage
+    property bool healthSupported: UPower.displayDevice.healthSupported
+    
 
     // --- Event handlers ---
     onIsLowAndNotChargingChanged: {

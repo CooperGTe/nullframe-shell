@@ -29,7 +29,7 @@ PopupWindow {
     anchor.edges: Edges.Left
     anchor.gravity: Edges.Right
     anchor.margins{
-        left: 40
+        left: 35
         right: 0
         top:-20
         bottom: -20

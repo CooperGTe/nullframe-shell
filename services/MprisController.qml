@@ -19,8 +19,9 @@ Singleton {
 	property var allPlayer: Mpris.players;
 	signal trackChanged(reverse: bool);
     property real visualPosition: 0
-    
+
     Timer {
+        id: postimer
         running: root.activePlayer?.playbackState == MprisPlaybackState.Playing
         interval: 1000
         repeat: true
@@ -32,7 +33,6 @@ Singleton {
     }
     Process {
         id: playerPosition
-        running: Globals.mprisSync
 
         // dbus-send + parse int64 Position
         command: [
@@ -45,7 +45,7 @@ Singleton {
 
         stdout: StdioCollector {
             onStreamFinished: {
-                var ns = parseInt(this.text)     // nanoseconds
+                var ns = parseFloat(this.text)     // nanoseconds
                 if (!ns) return
 
                 var val = ns / 1000000        // seconds

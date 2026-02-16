@@ -58,7 +58,7 @@ Rectangle {
                         font.bold:true
                     }
                     onClicked:{
-                        if (stack.currentitem.objectname === "cal") stack.replace(nc)
+                        if (stack.currentItem.objectName === "cal") stack.replace(nc)
                         stack.forward = false
                     }
                 }

@@ -5,6 +5,7 @@ import Quickshell.Io
 
 Singleton {
     id:root
+    property bool barOrientation: root.bar.position === 1 || root.bar.position === 3
     property alias bar: json.bar
     property alias launcher: json.launcher
     property alias desktopWidget: json.desktopWidget
@@ -50,6 +51,11 @@ Singleton {
                 // 1: only when tiling
                 // 2: only when on empty workspaces 
                 // 3: true
+                property real position: 0
+                // 0: left
+                // 1: top
+                // 2: right
+                // 3: bottom
                 property real workspacesShown: 6
                 property bool workspaceKanji: true
             }
@@ -66,6 +72,7 @@ Singleton {
             component Dock: JsonObject {
                 property bool enable: false
                 property bool hideOnTile: true
+                property bool ignorePanel: true
                 property bool ignoreSpecialWorkspace:true
                 property real position: 0
                 // 0 bottom

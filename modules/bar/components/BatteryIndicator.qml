@@ -4,6 +4,8 @@ import QtQuick
 import QtQuick.Layouts
 import qs.config
 
+import "./"
+
 Item {
     id: root
     property bool borderless: true
@@ -13,7 +15,9 @@ Item {
     readonly property real percentage: Battery.percentage
     readonly property bool isLow: percentage <= 15 / 100
 
-    implicitWidth: 20
+    property bool popupVisibility: hover.hovered
+
+    implicitWidth: 40
     implicitHeight: batteryProgress.implicitHeight
 
     Layout.alignment: Qt.AlignHCenter
@@ -22,8 +26,8 @@ Item {
         vertical:true
         anchors.centerIn: parent
         value: percentage
-        valueBarWidth: 24
-        valueBarHeight: 40
+        valueBarWidth: Config.barOrientation ? 40 : 24
+        valueBarHeight: Config.barOrientation ? 24 : 40
         highlightColor: (isLow && !isCharging) ? "#aa4a5a" : Color.secondary
         trackColor: Color.container_high
 
@@ -31,26 +35,59 @@ Item {
             anchors.centerIn: parent
             width: batteryProgress.valueBarWidth
             height: batteryProgress.valueBarHeight
-
-            ColumnLayout {
+            Loader {
                 anchors.centerIn: parent
-                spacing: 0
+                sourceComponent: Config.barOrientation ? horizontal : vertical
+                Component {
+                    id: vertical
+                    ColumnLayout {
+                        anchors.centerIn: parent
+                        spacing: 0
 
-                MaterialIcon {
-                    id: boltIcon
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.topMargin: -2
-                    Layout.bottomMargin: -2
-                    fill: 1
-                    icon: isCharging ? "bolt" : "battery_android_5"
-                    font.pixelSize: 16
+                        MaterialIcon {
+                            id: boltIcon
+                            Layout.alignment: Qt.AlignHCenter
+                            Layout.topMargin: -2
+                            Layout.bottomMargin: -2
+                            fill: 1
+                            icon: isCharging ? "bolt" : "battery_android_5"
+                            font.pixelSize: 16
+                        }
+                        Text {
+                            Layout.alignment: Qt.AlignHCenter
+                            text: batteryProgress.text
+                            font.bold: true
+                        }
+                    }
                 }
-                Text {
-                    Layout.alignment: Qt.AlignHCenter
-                    text: batteryProgress.text
-                    font.bold: true
+                Component {
+                    id: horizontal
+                    RowLayout {
+                        anchors.centerIn: parent
+                        spacing: 0
+
+                        MaterialIcon {
+                            id: boltIcon
+                            Layout.alignment: Qt.AlignVCenter
+                            fill: 1
+                            icon: isCharging ? "bolt" : "battery_android_5"
+                            font.pixelSize: 16
+                        }
+                        Text {
+                            Layout.alignment: Qt.AlignVCenter
+                            text: batteryProgress.text
+                            font.bold: true
+                        }
+                    }
                 }
             }
         }
+    }
+    HoverHandler {
+        id:hover
+        cursorShape: Qt.PointingHandCursor
+    }
+    BatteryPopup {
+        parent:root
     }
 }

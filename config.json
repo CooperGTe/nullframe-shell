@@ -1,6 +1,7 @@
 {
     "bar": {
         "hug": 0,
+        "position":0,
         "workspaceKanji": true,
         "workspacesShown": 6
     },
@@ -10,20 +11,23 @@
     },
     "dock": {
         "autoHide": false,
-        "enable": true,
+        "enable": trur,
         "hideOnTile": true,
+        "ignorePanel": true,
         "ignoreSpecialWorkspace": true,
         "onlyShowFloating": false,
         "pinnedApp": [
             "kitty",
             "thunar",
             "zen",
-            "obsidian"
+            "obsidian",
+            "cinny",
+            "vesktop"
         ],
         "position": 0
     },
     "launcher": {
         "position": "center"
     },
-    "showLyrics": false
+    "showLyrics": true
 }

@@ -8,12 +8,26 @@ import Quickshell.Services.SystemTray
 import QtQuick.Effects
 import qs.config
 
+Loader {
+    Layout.alignment: Config.barOrientation ?  Qt.AlignVCenter : Qt.AlignHCenter
+    sourceComponent: Config.barOrientation ? horizontal : vertical
 
-ColumnLayout {
-    spacing: 8
-    Layout.alignment: Qt.AlignHCenter
+    Component {
+        id: horizontal
+        RowLayout {
+            spacing: 8
+            Content {}
+        }
+    }
+    Component {
+        id: vertical
+        ColumnLayout {
+            spacing: 8
+            Content {}
+        }
+    }
 
-    Repeater {
+    component Content : Repeater {
         model: SystemTray.items
 
         IconImage {
@@ -39,44 +53,44 @@ ColumnLayout {
                     color: Color.surface
                 }
 
-            background: Rectangle {
-                color: Color.base
-                radius: 6
+                background: Rectangle {
+                    color: Color.base
+                    radius: 6
+                }
             }
-        }
-        QsMenuAnchor {
-            id: menuAnchor
-            anchor.item: icon
-            anchor.edges: Edges.Left
-            anchor.gravity: Edges.Right
+            QsMenuAnchor {
+                id: menuAnchor
+                anchor.item: icon
+                anchor.edges: Edges.Left
+                anchor.gravity: Edges.Right
 
-            anchor.margins {
-                left:35
+                anchor.margins {
+                    left:35
+                }
+
+                menu: icon.modelData.menu
             }
 
-            menu: icon.modelData.menu
-        }
+            MouseArea {
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
+                hoverEnabled: true
+                anchors.fill: parent
 
-        MouseArea {
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
-            hoverEnabled: true
-            anchors.fill: parent
-
-            onClicked: mouse => {
-                if (mouse.button === Qt.LeftButton)
+                onClicked: mouse => {
+                    if (mouse.button === Qt.LeftButton)
                     icon.modelData.activate();
-                else if (mouse.button === Qt.RightButton)
+                    else if (mouse.button === Qt.RightButton)
                     menuAnchor.open();
-            }
+                }
 
-            onEntered: {
-                if (icon.modelData.tooltipTitle === "")
+                onEntered: {
+                    if (icon.modelData.tooltipTitle === "")
                     return;
 
-                toolTip.show(icon.modelData.tooltipTitle);
-            }
+                    toolTip.show(icon.modelData.tooltipTitle);
+                }
 
-            onExited: toolTip.hide()
+                onExited: toolTip.hide()
             }
         }
     }

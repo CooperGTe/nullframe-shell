@@ -170,7 +170,7 @@ PopupWindow {
                     }
                     Text {
                         text: Pipewire.defaultAudioSink?.name
-                        color: Color.container_high
+                        color: Color.surface_mid
                         font.pointSize:6
                     }
                     Text {
@@ -232,7 +232,7 @@ PopupWindow {
                     }
                     Text {
                         text:"Strength: " +Network.active.strength + "%"
-                        color: Color.container_high
+                        color: Color.surface_mid
                     }
                 }
             }

@@ -17,7 +17,7 @@ PanelWindow{
     implicitHeight: 40
     implicitWidth: repeater.implicitWidth + 20 +40 // margin
     WlrLayershell.namespace: "dock"
-    exclusionMode: ExclusionMode.Ignore
+    exclusionMode: Config.dock.ignorePanel ? ExclusionMode.Ignore : ExclusionMode.Normal
     color:"transparent"
     margins.bottom: Config.dock.hideOnTile ? (!Hyprland.hasTiling && Config.dock.enable ? 0 : (panelHover.hovered ? 0 : -35)) : (Config.dock.enable ? 0 : -300)
     component Anim: NumberAnimation {

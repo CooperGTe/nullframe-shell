@@ -6,9 +6,9 @@ import qs.config
 
 Item {
     id:root
-    Layout.alignment: Qt.AlignHCenter
-    implicitHeight: 20
-    implicitWidth: 40
+    Layout.alignment: Config.barOrientation ? Qt.AlignVCenter : Qt.AlignHCenter
+    implicitHeight: Config.barOrientation ? 20: 20
+    implicitWidth: Config.barOrientation ? 20 : 40
 
     WheelHandler {
         acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
@@ -26,7 +26,10 @@ Item {
 
     MaterialIcon {
         icon: "brightness_2"
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors { 
+            horizontalCenter: !Config.barOrientation ? parent.horizontalCenter : undefined
+            verticalCenter: Config.barOrientation ? parent.verticalCenter : undefined
+        }
         font.pixelSize: 16
         fill:1
         color: Color.surface

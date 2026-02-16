@@ -22,7 +22,7 @@ Scope {
                 id:wgRoot
                 // Layer props
                 screen: modelData
-                exclusionMode: ExclusionMode.Ignore
+                exclusionMode: ExclusionMode.Normal
                 WlrLayershell.layer: WlrLayer.Bottom
                 color: "transparent"
 
