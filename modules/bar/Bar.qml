@@ -45,46 +45,31 @@ PanelWindow {
             leftMargin: root.barHug ? 0 : (Config.barOrientation ? 5 : 0 )
             rightMargin: root.barHug ? 0 : (Config.barOrientation ? 5 : 0 )
         }
-        Behavior on color {
-            ColorAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-        Behavior on topRightRadius {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-        Behavior on bottomRightRadius {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-        Behavior on topLeftRadius {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-        Behavior on bottomLeftRadius {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-        Behavior on anchors.topMargin {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-        Behavior on anchors.bottomMargin {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-        Behavior on anchors.leftMargin {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-        Behavior on anchors.rightMargin {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
+        component ColorAnim: ColorAnimation { duration: 200; easing.type: Easing.InOutQuad }
+        component NumAnim: NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
+        
+        Behavior on color { ColorAnim{} }
+        Behavior on topRightRadius { NumAnim{} }
+        Behavior on bottomRightRadius { NumAnim{} }
+        Behavior on topLeftRadius { NumAnim{} }
+        Behavior on bottomLeftRadius { NumAnim{} }
+        Behavior on anchors.topMargin { NumAnim{} }
+        Behavior on anchors.bottomMargin { NumAnim{} }
+        Behavior on anchors.leftMargin { NumAnim{} }
+        Behavior on anchors.rightMargin { NumAnim{} }
+        //Dynamic Loader
         Loader {
             anchors.fill: parent
             sourceComponent: Config.barOrientation ? horizontalLayout : verticalLayout
         }
-
         Component {
             id: verticalLayout
-            ColumnLayout {
+            Column {
                 anchors.fill: parent
                 // TOP
                 ColumnLayout {
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                    Layout.topMargin: root.barHug ? 10 : 20
+                    anchors.top: parent.top
+                    anchors.margins: root.barHug ? 10 : 20
                     Behavior on Layout.topMargin {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
@@ -95,18 +80,19 @@ PanelWindow {
                     Tray {}
                     ResourceIndicator { window: root }
                 }
-                Item { Layout.fillHeight: true }   // spacer
                 // CENTER
                 ColumnLayout {
-                    Layout.alignment: Qt.AlignHCenter
+                    anchors.centerIn: parent
+                    anchors.margins: root.barHug ? 10 : 20
+                    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                    Layout.fillHeight: true
                     Workspaces {}
                     Mpris {}
                 }
-                Item { Layout.fillHeight: true }   // spacer
                 // BOTTOM
                 ColumnLayout {
-                    Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-                    Layout.bottomMargin: root.barHug ? 10 : 20
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: root.barHug ? 10 : 20
                     Behavior on Layout.bottomMargin {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
@@ -140,7 +126,9 @@ PanelWindow {
                         onClicked: scope.sidePanelVisible = !scope.sidePanelVisible
                     }
                     Tray {}
-                    ResourceIndicator { window: root }
+                    ResourceIndicator { 
+                        window: root 
+                    }
                 }
                 // CENTER
                 RowLayout {
@@ -158,9 +146,10 @@ PanelWindow {
                     Mpris {}
                     ControlsGroup {}
                     Rectangle {
-                        Layout.bottomMargin: 3
-                        Layout.leftMargin: 5
-                        Layout.rightMargin: 5
+                        Layout.bottomMargin: Config.barOrientation ? 5 : 3
+                        Layout.topMargin: Config.barOrientation ? 5 : 0
+                        Layout.leftMargin: Config.barOrientation ? 0 : 5
+                        Layout.rightMargin: Config.barOrientation ? 3 : 5
                         Layout.fillHeight: true
                         implicitWidth: 1
                         color: Color.container
