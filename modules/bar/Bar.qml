@@ -69,8 +69,8 @@ PanelWindow {
                 // TOP
                 ColumnLayout {
                     anchors.top: parent.top
-                    anchors.margins: root.barHug ? 10 : 20
-                    Behavior on Layout.topMargin {
+                    anchors.topMargin: root.barHug ? 10 : 20
+                    Behavior on anchors.topMargin {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
                     PanelButton {
@@ -83,7 +83,6 @@ PanelWindow {
                 // CENTER
                 ColumnLayout {
                     anchors.centerIn: parent
-                    anchors.margins: root.barHug ? 10 : 20
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                     Layout.fillHeight: true
                     Workspaces {}
@@ -93,7 +92,7 @@ PanelWindow {
                 ColumnLayout {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: root.barHug ? 10 : 20
-                    Behavior on Layout.bottomMargin {
+                    Behavior on anchors.bottomMargin {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
                     ControlsGroup {}
