@@ -10,10 +10,11 @@ import Quickshell.Services.Mpris
 import qs.modules
 
 /**
- * A service that provides easy access to the active Mpris player.
+ * A service that provides easy access to the active Mpris player, code from caelestia long time ago idk i forgor
  */
 Singleton {
 	id: root;
+    property bool lock: false
 	property MprisPlayer trackedPlayer: null;
 	property MprisPlayer activePlayer: trackedPlayer ?? Mpris.players.values[0] ?? null;
 	property var allPlayer: Mpris.players;
@@ -66,41 +67,53 @@ Singleton {
 
 	property bool __reverse: false;
 
-	property var activeTrack;
+    property var activeTrack;
 
-	Instantiator {
-		model: Mpris.players;
+    function autoSelectPlayer() {
+        if (lock) return
 
-		Connections {
-			required property MprisPlayer modelData;
-			target: modelData;
+        for (const p of Mpris.players.values) {
+            if (p.isPlaying) {
+                trackedPlayer = p
+                return
+            }
+        }
 
-			Component.onCompleted: {
-				if (root.trackedPlayer == null || modelData.isPlaying) {
-					root.trackedPlayer = modelData;
-				}
-			}
+        if (Mpris.players.values.length > 0)
+        trackedPlayer = Mpris.players.values[0]
+    }
+    function setActivePlayer(player: MprisPlayer) {
+        lock = true
+        trackedPlayer = player
+    }
+    function resetAutoPlayer() {
+        lock = false
+        autoSelectPlayer()
+    }
 
-			Component.onDestruction: {
-				if (root.trackedPlayer == null || !root.trackedPlayer.isPlaying) {
-					for (const player of Mpris.players.values) {
-						if (player.playbackState.isPlaying) {
-							root.trackedPlayer = player;
-							break;
-						}
-					}
+    Instantiator {
+        model: Mpris.players
 
-					if (trackedPlayer == null && Mpris.players.values.length != 0) {
-						trackedPlayer = Mpris.players.values[0];
-					}
-				}
-			}
+        Connections {
+            required property MprisPlayer modelData
+            target: modelData
 
-			function onPlaybackStateChanged() {
-				if (root.trackedPlayer !== modelData) root.trackedPlayer = modelData;
-			}
-		}
-	}
+            Component.onCompleted: {
+                if (!root.lock && root.trackedPlayer === null && modelData.isPlaying)
+                root.trackedPlayer = modelData
+            }
+
+            Component.onDestruction: {
+                if (!root.lock && root.trackedPlayer === modelData)
+                root.autoSelectPlayer()
+            }
+
+            function onPlaybackStateChanged() {
+                if (!root.lock && modelData.isPlaying)
+                root.trackedPlayer = modelData
+            }
+        }
+    }
 
 	Connections {
 		target: activePlayer
@@ -176,20 +189,6 @@ Singleton {
 		if (this.shuffleSupported) {
 			this.activePlayer.shuffle = shuffle;
 		}
-	}
-
-	function setActivePlayer(player: MprisPlayer) {
-		const targetPlayer = player ?? Mpris.players[0];
-		console.log(`[Mpris] Active player ${targetPlayer} << ${activePlayer}`)
-
-		if (targetPlayer && this.activePlayer) {
-			this.__reverse = Mpris.players.indexOf(targetPlayer) < Mpris.players.indexOf(this.activePlayer);
-		} else {
-			// always animate forward if going to null
-			this.__reverse = false;
-		}
-
-		this.trackedPlayer = targetPlayer;
 	}
 
 	IpcHandler {
