@@ -351,7 +351,7 @@ Item {
         Layout.preferredWidth: 28
         Layout.preferredHeight: 28
         background: Rectangle { color: "transparent" }
-        onClicked: root.media.togglePlaying() //triggerable when the mouse area is not loaded; when the trigger = 3
+        onClicked: if (root.trigger === 2) root.media.togglePlaying() //triggerable when the mouse area is not loaded; when the trigger = 2
 
         Loader {
             anchors.fill: parent
