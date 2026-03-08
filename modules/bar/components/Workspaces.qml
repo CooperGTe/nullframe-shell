@@ -124,7 +124,7 @@ Item {
             x: Config.barOrientation ? ((((Hyprland.activeWorkspace - 1) % root.workspaceLength) * 26) + 3) : 0
             //y: (root.monitor?.activeWorkspace?.id - 1 ?? 0) * 25 - 2
 
-            color: Hyprland.occupiedWorkspace ? Color.surface : Color.surface_low
+            color: Hyprland.occupiedWorkspace ? Color.primary : Color.surface_low
             width: 26
             height: 26
 

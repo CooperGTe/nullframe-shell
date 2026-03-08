@@ -28,7 +28,7 @@ Item {
         value: percentage
         valueBarWidth: Config.barOrientation ? 40 : 24
         valueBarHeight: Config.barOrientation ? 24 : 40
-        highlightColor: (isLow && !isCharging) ? "#aa4a5a" : Color.secondary
+        highlightColor: (isLow && !isCharging) ? Color.tertiary : Color.secondary
         trackColor: Color.container_high
 
         Item {

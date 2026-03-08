@@ -31,7 +31,7 @@ Item {
         }
 
         border.width: 1
-        border.color: Color.container_high
+        border.color: Color.container_highest
 
         Loader {
             id:ctlctl

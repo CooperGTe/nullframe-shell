@@ -21,7 +21,7 @@ MouseArea {
             anchors.centerIn: parent
             font.pixelSize: 16
             fill:1
-            color: Color.surface
+            color: Color.tertiary
         }
     }
 }
