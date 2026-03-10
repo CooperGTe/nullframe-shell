@@ -27,6 +27,8 @@ Singleton {
         repeat: true
         onTriggered: { 
             activePlayer.positionChanged();
+            playerPosition.running = true
+            //console.log(root.activePlayer.position, root.visualPosition)
         }
     }
     Process {
