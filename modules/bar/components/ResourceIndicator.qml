@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Hyprland as Hypr
 
 import qs.services
-import qs.modules.common
+import qs.components
 import qs.config
 
 import "."

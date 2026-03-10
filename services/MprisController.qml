@@ -7,7 +7,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Mpris
-import qs.modules
 
 /**
  * A service that provides easy access to the active Mpris player, code from caelestia long time ago idk i forgor
@@ -28,8 +27,6 @@ Singleton {
         repeat: true
         onTriggered: { 
             activePlayer.positionChanged();
-            if (Globals.mprisSync) playerPosition.running = true
-            //console.log(root.activePlayer.position, root.visualPosition)
         }
     }
     Process {

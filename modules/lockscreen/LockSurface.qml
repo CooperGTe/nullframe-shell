@@ -7,7 +7,7 @@ import Quickshell.Widgets
 import Quickshell.Services.Mpris
 import Quickshell
 import qs.services
-import qs.modules.common
+import qs.components
 import qs.config
 
 WlSessionLockSurface {

@@ -9,7 +9,7 @@ import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import QtQuick.Effects
 import qs.config
-import qs.modules.common
+import qs.components
 
 Loader {
     id: root

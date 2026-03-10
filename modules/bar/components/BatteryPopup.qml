@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import qs.config
 import qs.services
-import qs.modules.common
+import qs.components
 
 PopupWindow {
     id:root

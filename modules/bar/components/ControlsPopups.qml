@@ -5,7 +5,7 @@ import Quickshell
 import Quickshell.Services.Pipewire
 
 import qs.config
-import qs.modules.common
+import qs.components
 import qs.services
 
 PopupWindow {

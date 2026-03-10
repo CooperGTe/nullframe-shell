@@ -3,7 +3,7 @@ import QtQuick.Layouts
 import Quickshell.Widgets
 import Quickshell
 import qs.services
-import qs.modules.common
+import qs.components
 import qs.config
 
 Rectangle {

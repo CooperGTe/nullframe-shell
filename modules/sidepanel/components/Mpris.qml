@@ -8,8 +8,7 @@ import Quickshell.Io
 import Quickshell.Widgets
 import Quickshell.Services.Mpris
 import qs.services
-import qs.modules.common
-import qs.modules
+import qs.components
 import qs.config
 
 ColumnLayout {

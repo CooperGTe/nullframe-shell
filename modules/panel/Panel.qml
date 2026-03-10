@@ -1,14 +1,11 @@
 import QtQuick
 import Quickshell
-import Quickshell.Io
 import QtQuick.Shapes
 
 import qs.modules.bar
 import qs.modules.sidepanel
-import qs.modules.controlPanel
 import qs.modules.powerMenu
 import qs.modules.launcher
-import qs.modules
 import qs.services
 import qs.config
 
@@ -24,7 +21,6 @@ Variants {
 
         //visibility state
         property bool sidePanelVisible: false
-        property bool controlPanelVisible: false
         property bool powerMenuVisible: false
         property bool launcherVisible: false
 
@@ -40,18 +36,6 @@ Variants {
             else powermenu.active = true
         }
 
-        onControlPanelVisibleChanged: {
-            console.log(scope.controlPanelVisible)
-            if(!scope.controlPanelVisible) {
-                controlPanelHide.restart()
-                controlpanel.item.visibility = false
-            }
-            else {
-                controlPanelHide.stop()
-                controlpanel.active = true
-                controlpanel.item.visibility = true
-            }
-        }
         onPowerAlertChanged: {
             console.log(scope.powerAlert)
             if (powerAlert !== 0) {
@@ -94,14 +78,6 @@ Variants {
                 scope.launcherVisible = !scope.launcherVisible
             }
         }
-        Hypr.GlobalShortcut {
-            name: "controlpanel"
-            onPressed: {
-                if (scope.modelData.name === Hyprland.focusedMonitor)
-                scope.controlPanelVisible = !scope.controlPanelVisible
-            }
-        }
-
 
         SidePanel {
             id: sidepanel
@@ -139,18 +115,6 @@ Variants {
         }
 
 
-        LazyLoader {
-            id: controlpanel
-            component: ControlPanel {}
-            onActiveChanged: {
-                if (active && item && scope) {
-                    item.scope = scope
-                    item.screen = scope.modelData
-                    item.visibility = true
-                }
-                console.log("controlpanel: " + controlpanel.active)
-            }
-        }
         LazyLoader {
             id: powermenu
             component: PowerMenu { }

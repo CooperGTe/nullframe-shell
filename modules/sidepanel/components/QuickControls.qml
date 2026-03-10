@@ -1,10 +1,9 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import Quickshell
 import Quickshell.Services.Pipewire
 import qs.services
-import qs.modules.common
+import qs.components
 import qs.config
 
 GridLayout {

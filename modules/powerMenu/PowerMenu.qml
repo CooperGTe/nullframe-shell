@@ -6,7 +6,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
-import qs.modules.common
+import qs.components
 import qs.config
 
 PanelWindow {

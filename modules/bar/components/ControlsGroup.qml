@@ -5,7 +5,7 @@ import QtQuick.Layouts
 import Quickshell.Services.Pipewire
 
 import qs.config
-import qs.modules.common
+import qs.components
 Item {
     id:root
     implicitHeight: !Config.barOrientation ? ctlctl.implicitHeight + 10 : 40

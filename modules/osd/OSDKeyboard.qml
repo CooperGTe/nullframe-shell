@@ -6,7 +6,7 @@ import Quickshell.Io
 import Quickshell.Hyprland
 import Quickshell.Wayland
 import qs.config
-import qs.modules.common
+import qs.components
 
 Variants {
     model: Quickshell.screens
