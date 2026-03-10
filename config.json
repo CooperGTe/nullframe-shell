@@ -1,11 +1,12 @@
 {
     "bar": {
-        "hug": 0,
+        "hug": 1,
         "position": 0,
         "workspaceKanji": true,
         "workspacesShown": 6
     },
     "desktopWidget": {
+        "invertCalColor": false,
         "invertClockColor": false,
         "media": true
     },
@@ -21,7 +22,7 @@
             "thunar",
             "zen",
             "obsidian",
-            "cinny",
+            "Element",
             "vesktop"
         ],
         "position": 0

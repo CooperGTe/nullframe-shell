@@ -7,7 +7,6 @@ import Quickshell.Hyprland as Hypr
 import Quickshell.Wayland
 import qs.config
 import qs.services
-import qs.config
 
 import "components"
 
