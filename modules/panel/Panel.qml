@@ -1,11 +1,12 @@
 import QtQuick
 import Quickshell
-import QtQuick.Shapes
+import Quickshell.Wayland
 
-import qs.modules.bar
-import qs.modules.sidepanel
+import qs.modules.panel.bar
+import qs.modules.panel.controlpanel
 import qs.modules.powerMenu
 import qs.modules.launcher
+import qs.modules.panel
 import qs.services
 import qs.config
 
@@ -20,7 +21,7 @@ Variants {
         property real cornerRadius: 15
 
         //visibility state
-        property bool sidePanelVisible: false
+        property bool controlPanelVisible: false
         property bool powerMenuVisible: false
         property bool launcherVisible: false
 
@@ -50,18 +51,18 @@ Variants {
             }
         }
         
-        property bool internalSidePanelVisible: bar.sidePanelVisible
-        property bool barHug:  Hyprland.hasMaximize || scope.sidePanelVisible || 
+        property bool internalcontrolPanelVisible: bar.controlPanelVisible
+        property bool barHug:  Hyprland.hasMaximize || scope.controlPanelVisible || 
         (Config.bar.hug === 0 ? false 
         : (Config.bar.hug === 1 ? Hyprland.hasTiling 
         : (Config.bar.hug === 2 ? Hyprland.occupiedWorkspace 
         : true)))
 
         Hypr.GlobalShortcut {
-            name: "sidepanel"
+            name: "controlpanel"
             onReleased: {
                 if (scope.modelData.name === Hyprland.focusedMonitor)
-                scope.sidePanelVisible = !scope.sidePanelVisible
+                scope.controlPanelVisible = !scope.controlPanelVisible
             }
         }
         Hypr.GlobalShortcut {
@@ -79,18 +80,37 @@ Variants {
             }
         }
 
-        SidePanel {
-            id: sidepanel
+        ControlPanel {
+            id: controlpanel
             barRoot: bar
             scope: scope
             screen: scope.modelData
-            sidePanelVisible: scope.sidePanelVisible
-        }        
+            controlPanelVisible: scope.controlPanelVisible
+        }
+
+        Border {
+            hug: scope.barHug
+        }
+
         Bar { 
             id:bar
             screen: scope.modelData
             barHug: scope.barHug
             scope: scope
+        }
+        PanelWindow {
+            WlrLayershell.layer: WlrLayer.Top
+            exclusiveZone: 40
+
+            color: "transparent"
+
+            anchors {
+                top: (Config.bar.position === 3) ? false : true
+                left: (Config.bar.position === 2) ? false : true
+                bottom: (Config.bar.position === 1)? false : true
+                right: (Config.bar.position === 0) ? false : true
+            }
+            mask: Region {}
         }
         Timer {
             id: controlPanelHide
@@ -145,150 +165,6 @@ Variants {
                     item.scope = scope
                     item.screen = scope.modelData
                     item.visibility = true
-                }
-            }
-        }
-
-        // panel corner border
-        //top left corner
-        PanelWindow {
-            id: topLeftCorner
-            screen: scope.modelData
-            implicitWidth: scope.barHug ? scope.cornerRadius : 0
-            implicitHeight: scope.barHug ? scope.cornerRadius : 0
-            color: "transparent"
-            exclusiveZone: 0
-            anchors {
-                top: true
-                left: true
-            }
-            margins { // not funni square patch
-                top: scope.barHug ? 0 : -scope.cornerRadius 
-            }
-          
-            Shape {
-                anchors.fill: parent
-                preferredRendererType: Shape.CurveRenderer
-
-                ShapePath {
-                strokeWidth: 0
-                fillColor: Color.base
-                startX: 0
-                startY: scope.cornerRadius
-                PathArc {
-                    x: scope.cornerRadius
-                    y: 0
-                    radiusX: scope.cornerRadius
-                    radiusY: scope.cornerRadius
-                    direction: PathArc.Clockwise
-                }
-                PathLine { x: 0; y: 0 }
-                PathLine { x: 0; y: scope.cornerRadius }
-                }
-            }
-        }
-        // Bottom-left corner
-        PanelWindow {
-            id: bottomLeftCorner
-            screen: scope.modelData
-            implicitWidth: scope.barHug ? scope.cornerRadius : 0
-            implicitHeight: scope.barHug ? scope.cornerRadius : 0
-            color: "transparent"
-            exclusiveZone: 0
-            anchors {
-                bottom: true
-                left: true
-            }
-            margins { // anim patch
-                bottom: scope.barHug ? 0 : -scope.cornerRadius 
-            }
-            
-            Shape {
-                anchors.fill: parent
-                preferredRendererType: Shape.CurveRenderer
-                
-                ShapePath {
-                    strokeWidth: 0
-                    fillColor: Color.base
-                    startX: scope.cornerRadius
-                    startY: scope.cornerRadius
-                    PathArc {
-                        x: 0
-                        y: 0
-                        radiusX: scope.cornerRadius
-                        radiusY: scope.cornerRadius
-                        direction: PathArc.Clockwise
-                    }
-                    PathLine { x: 0; y: scope.cornerRadius }
-                    PathLine { x: scope.cornerRadius; y: scope.cornerRadius }
-                }
-            }
-        }
-        // Top-right corner 
-        PanelWindow {
-            id: topRightCorner
-            screen: scope.modelData
-            implicitWidth: scope.barHug ? scope.cornerRadius : 0
-            implicitHeight: scope.barHug ? scope.cornerRadius : 0
-            color: "transparent"
-            exclusiveZone: 0
-            anchors {
-                top: true
-                right: true
-            }
-            
-            Shape {
-                anchors.fill: parent
-                preferredRendererType: Shape.CurveRenderer
-                
-                ShapePath {
-                    strokeWidth: 0
-                    fillColor: Color.base
-                    startX: 0
-                    startY: 0
-                    PathArc {
-                        x: scope.cornerRadius
-                        y: scope.cornerRadius
-                        radiusX: scope.cornerRadius
-                        radiusY: scope.cornerRadius
-                        direction: PathArc.Clockwise
-                    }
-                    PathLine { x: scope.cornerRadius; y: 0 }
-                    PathLine { x: 0; y: 0 }
-                }
-            }
-        }
-        // Bottom-right corner
-        PanelWindow {
-            id: bottomRightCorner
-            screen: scope.modelData
-            implicitWidth: scope.barHug ? scope.cornerRadius : 0
-            implicitHeight: scope.barHug ? scope.cornerRadius : 0
-            color: "transparent"
-            exclusiveZone: 0
-            anchors {
-                bottom: true
-                right: true
-            }
-              
-            Shape {
-                anchors.fill: parent
-                 preferredRendererType: Shape.CurveRenderer
-                
-                ShapePath {
-                    strokeWidth: 0
-                    fillColor: Color.base
-                    startX: 0
-                    startY: scope.cornerRadius
-                    PathLine { x: scope.cornerRadius; y: scope.cornerRadius }
-                    PathLine { x: scope.cornerRadius; y: 0 }
-                    PathArc {
-                        x: 0
-                        y: scope.cornerRadius  
-                        radiusX: scope.cornerRadius
-                        radiusY: scope.cornerRadius
-                        direction: PathArc.Clockwise
-                    }
                 }
             }
         }

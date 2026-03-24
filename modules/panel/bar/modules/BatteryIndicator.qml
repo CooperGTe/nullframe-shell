@@ -4,25 +4,28 @@ import QtQuick
 import QtQuick.Layouts
 import qs.config
 
-import "./"
+import "../components/"
 
 Item {
     id: root
-    property bool borderless: true
+
     readonly property var chargeState: Battery.chargeState
     readonly property bool isCharging: Battery.isCharging
     readonly property bool isPluggedIn: Battery.isPluggedIn
     readonly property real percentage: Battery.percentage
     readonly property bool isLow: percentage <= 15 / 100
 
+    property bool borderless: true
     property bool popupVisibility: hover.hovered
 
-    implicitWidth: 40
+    Layout.alignment: Qt.AlignHCenter
+
+    implicitWidth: batteryProgress.implicitWidth
     implicitHeight: batteryProgress.implicitHeight
 
-    Layout.alignment: Qt.AlignHCenter
     ClippedProgressBar {
         id: batteryProgress
+
         vertical:true
         anchors.centerIn: parent
         value: percentage
@@ -33,11 +36,15 @@ Item {
 
         Item {
             anchors.centerIn: parent
+
             width: batteryProgress.valueBarWidth
             height: batteryProgress.valueBarHeight
             Loader {
                 anchors.centerIn: parent
+
                 sourceComponent: Config.barOrientation ? horizontal : vertical
+                asynchronous: true
+
                 Component {
                     id: vertical
                     ColumnLayout {
@@ -64,7 +71,7 @@ Item {
                     id: horizontal
                     RowLayout {
                         anchors.centerIn: parent
-                        spacing: 0
+                        spacing:2
 
                         MaterialIcon {
                             id: boltIcon

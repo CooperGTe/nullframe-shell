@@ -8,7 +8,7 @@ import qs.services
 import qs.components
 import qs.config
 
-import "."
+import "../components/"
 
 Item {
     id:root

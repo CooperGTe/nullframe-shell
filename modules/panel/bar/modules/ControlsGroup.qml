@@ -6,6 +6,8 @@ import Quickshell.Services.Pipewire
 
 import qs.config
 import qs.components
+
+import "../components/"
 Item {
     id:root
     implicitHeight: !Config.barOrientation ? ctlctl.implicitHeight + 10 : 40
@@ -37,6 +39,7 @@ Item {
             id:ctlctl
             anchors.centerIn:parent
             sourceComponent: Config.barOrientation ? horizontal : vertical 
+            asynchronous: true
         }
         //Brightness
         component Brightness: Item {
@@ -57,7 +60,7 @@ Item {
                 }
             }
             MaterialIcon {
-                icon: "brightness_2"
+                icon: "light_mode"
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 16
@@ -92,12 +95,15 @@ Item {
         }
         //Network
         component Network: Item {
-            Layout.alignment: Qt.AlignHCenter
-            implicitHeight: 20
-            implicitWidth:40
+            Layout.alignment: Config.barOrientation ? Qt.AlignVCenter : Qt.AlignHCenter
+            implicitHeight: Config.barOrientation ? 40 : 20
+            implicitWidth: Config.barOrientation ? 20 : 40
             MaterialIcon {
                 icon: "network_wifi_3_bar"
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors {
+                    horizontalCenter: !Config.barOrientation ? parent.horizontalCenter : undefined
+                    verticalCenter: Config.barOrientation ? parent.verticalCenter : undefined
+                }
                 font.pixelSize: 16
                 fill:1
                 color: Color.surface

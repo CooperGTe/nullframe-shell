@@ -6,6 +6,11 @@ import Quickshell.Io
 Singleton {
     id:root
     property bool barOrientation: root.bar.position === 1 || root.bar.position === 3
+    property real barTotalWidth: root.barWidth + (root.barMargin * 2)
+    property real barWidth: root.bar.width * root.bar.scale
+    property real barSpacing: root.bar.moduleSpacing * root.bar.scale
+    property real barMargin: root.bar.margin * root.bar.scale
+
     property alias bar: json.bar
     property alias launcher: json.launcher
     property alias desktopWidget: json.desktopWidget
@@ -58,6 +63,10 @@ Singleton {
                 // 3: bottom
                 property real workspacesShown: 6
                 property bool workspaceKanji: true
+                property real scale: 1
+                property int margin: 5
+                property int moduleSpacing: 5
+                property int width: 30
             }
             component Launcher: JsonObject {
                 property string position: "center"

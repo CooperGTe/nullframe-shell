@@ -5,8 +5,10 @@ import qs.services
 import qs.config
 
 Loader {
-    Layout.alignment: Qt.AlignBottom && Qt.AlignHCenter
+    Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
     sourceComponent: Config.barOrientation ? horizontal : vertical
+    asynchronous: true
+
     Component {
         id: vertical
         ColumnLayout {
@@ -41,16 +43,23 @@ Loader {
     }
     Component {
         id: horizontal
-        RowLayout {
-            Layout.alignment: Qt.AlignBottom && Qt.AlignHCenter
-            Layout.fillWidth:true
-            spacing:0
-            implicitHeight:50
+        ColumnLayout {
+            spacing:-3
+            implicitHeight:Config.barWidth
             Text {
                 text: Time.format("hh:mm")
+                Layout.alignment: Qt.AlignRight
+                color: Color.secondary
+                font.pixelSize: 12
+                font.bold: true
+                font.family: "monospace"
+            }
+            Text {
+                text: Time.format("dd/MM/yyyy")
                 Layout.alignment: Qt.AlignHCenter
                 color: Color.secondary
-                font.pixelSize: 18
+                opacity:0.8
+                font.pixelSize: 8
                 font.bold: true
                 font.family: "monospace"
             }

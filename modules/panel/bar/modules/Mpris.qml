@@ -23,7 +23,25 @@ Item {
         anchors.fill: parent
         sourceComponent: Config.barOrientation ? horizontal : vertical
     }
-    
+    //track change popout
+    // [start]
+	Connections {
+		target: activePlayer
+
+		function onPostTrackChanged() {
+            popout.hoverBlocker = true
+            trackChanged.restart()
+        }
+    }
+    Timer {
+        id: trackChanged
+        interval: 1000
+        repeat: false
+        running: false
+        onTriggered: popout.hoverBlocker = false
+    }
+    // [end]
+                                
     PopupWindow {
         id: popout
 

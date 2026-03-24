@@ -32,7 +32,7 @@ Variants {
         // lyrics fetch from local file
         FileView {
             id: lrcFile
-            printErrors: false
+            printErrors: true
             path: Quickshell.env("HOME") + 
             "/.lyrics/" + 
             root.artist.replace(" feat. ", ", ").replace(" & ", ", ") + //inconsistent artist output patch
@@ -51,7 +51,7 @@ Variants {
                 root.lrcRaw = raw;
                 root.lrcParsed = root.parseLrc(raw);
                 root.currentLine = raw;
-                console.log(root.artist.replace(" feat. ", ", ").replace(" & ", ", "))
+                console.log(root.artist.replace(" feat. ", ", ").replace(" & ", ", "), "-", root.activePlayer.trackTitle + ".lrc")
             }
         }
 
