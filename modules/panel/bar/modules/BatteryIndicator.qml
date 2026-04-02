@@ -26,7 +26,7 @@ Item {
     ClippedProgressBar {
         id: batteryProgress
 
-        vertical:true
+        vertical:!Config.barOrientation
         anchors.centerIn: parent
         value: percentage
         valueBarWidth: Config.barOrientation ? 40 : 24

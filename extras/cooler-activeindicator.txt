@@ -1,0 +1,38 @@
+        // Active workspace indicator
+        Rectangle {
+            id: activeIndicator
+            z: 0
+            radius: 26
+
+            property real animValue: (Hyprland.activeWorkspace - 1) % root.workspaceLength
+            property real fast: animValue
+            property real slow: animValue
+
+            Behavior on fast { NumberAnimation { duration: 100; easing.type: Easing.OutSine } }
+            Behavior on slow { NumberAnimation { duration: 300; easing.type: Easing.OutSine } }
+
+            onAnimValueChanged: {
+                fast = animValue
+                slow = animValue
+            }
+
+            anchors {
+                horizontalCenter: !Config.barOrientation ? parent.horizontalCenter : undefined
+                verticalCenter: Config.barOrientation ? parent.verticalCenter : undefined
+            }
+
+            x: Config.barOrientation ? (Math.min(fast, slow) * 26 + 3) : 0
+            y: !Config.barOrientation ? (Math.min(fast, slow) * 26 + 2) : 0
+
+            implicitWidth: Config.barOrientation 
+            ? (Math.abs(fast - slow) * 26 + 26) 
+            : 26
+            implicitHeight: !Config.barOrientation 
+            ? (Math.abs(fast - slow) * 26 + 26) 
+            : 26
+
+            color: Hyprland.occupiedWorkspace ? Color.primary : Color.surface_low
+            Behavior on color {
+                ColorAnimation { duration: 200; easing.type: Easing.OutQuad }
+            }
+        }

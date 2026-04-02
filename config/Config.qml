@@ -5,6 +5,7 @@ import Quickshell.Io
 
 Singleton {
     id:root
+
     property bool barOrientation: root.bar.position === 1 || root.bar.position === 3
     property real barTotalWidth: root.barWidth + (root.barMargin * 2)
     property real barWidth: root.bar.width * root.bar.scale
@@ -17,6 +18,7 @@ Singleton {
     property alias dock: json.dock
     property alias showLyrics: json.showLyrics
     onBarChanged: console.log(bar.hug)
+
     Timer {
         id: fileReloadTimer
         interval: 50
@@ -25,6 +27,7 @@ Singleton {
             configFileView.reload()
         }
     }
+
     FileView {
         id:configFileView
         path: Quickshell.shellDir + "/config.json"
@@ -41,6 +44,7 @@ Singleton {
                 console.log("file not found")
             }
         }
+
         JsonAdapter {
             id:json
             property Bar bar: Bar {}
@@ -65,8 +69,10 @@ Singleton {
                 property bool workspaceKanji: true
                 property real scale: 1
                 property int margin: 5
+                property int edgeMargin: 5
                 property int moduleSpacing: 5
                 property int width: 30
+                property bool floating: false
             }
             component Launcher: JsonObject {
                 property string position: "center"

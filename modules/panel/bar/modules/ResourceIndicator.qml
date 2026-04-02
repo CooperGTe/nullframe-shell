@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
-import Quickshell
+import Quickshell.Widgets
 import Quickshell.Hyprland as Hypr
 
 import qs.services
@@ -42,6 +42,7 @@ Item {
             id:resitem
             anchors.fill:parent
             sourceComponent: Config.barOrientation ? horizontal : vertical
+            asynchronous: true
         }
         Component {
             id: vertical
@@ -101,16 +102,21 @@ Item {
                     }
                 }
                 ProgressBar {
+                    id: pgswap
                     Layout.topMargin: -20 //mergehack
                     Layout.alignment: Qt.AlignHCenter
                     value:ResourceUsage.swapUsed / ResourceUsage.swapTotal
                     implicitWidth:20
                     implicitHeight:5
-                    contentItem: Rectangle {
-                        width: parent.width  * parent.visualPosition
-                        height: parent.height 
-                        color: (ResourceUsage.swapUsed / ResourceUsage.swapTotal) < 0.5 ? Color.tertiary : Color.error
+                    contentItem:ClippingRectangle { 
+                        color: "transparent"
                         radius: 4
+                        Rectangle {
+                            width: pgswap.width  * pgswap.visualPosition
+                            height: pgswap.height
+                            radius: 4
+                            color: (ResourceUsage.swapUsed / ResourceUsage.swapTotal) < 0.8 ? Color.tertiary : Color.error
+                        }
                     }
                     background: Rectangle {
                         color: Color.container_highest
@@ -129,7 +135,7 @@ Item {
                         Layout.leftMargin: 3
                         size: 24
                         value: ResourceUsage.cpuUsage
-                        colPrimary:  ResourceUsage.cpuUsage < 0.9 ? Color.surface : "#ffafaf"
+                        colPrimary:  ResourceUsage.cpuUsage < 0.9 ? Color.surface : Color.tertiary
                         colSecondary: Color.container_highest
                         lineWidth: 3
                         Item {
@@ -169,7 +175,7 @@ Item {
                         colPrimary:  ((ResourceUsage.memoryUsedCache - ResourceUsage.memoryUsed) 
                         / (ResourceUsage.memoryTotal - ResourceUsage.memoryUsed)) < 0.5 
                         ? Color.secondary
-                        : Color.error
+                        : Color.tertiary
                         colSecondary: Color.container_highest
                         lineWidth: 3
                         sweepDegree: 60
@@ -177,17 +183,21 @@ Item {
                     }
                 }
                 ProgressBar {
+                    id: pgswap1
                     Layout.leftMargin: -20 //mergehack
                     Layout.alignment: Qt.AlignHCenter
                     value:ResourceUsage.swapUsed / ResourceUsage.swapTotal
                     implicitWidth:5
                     implicitHeight:20
-                    contentItem: Rectangle {
-                        width: parent.width
-                        height: parent.height * parent.visualPosition
-                        color: (ResourceUsage.swapUsed / ResourceUsage.swapTotal) < 0.5 ? "#ff9f9f" : "#ff2020"
+                    contentItem:ClippingRectangle { 
+                        color: "transparent"
                         radius: 4
-                        anchors.bottom:parent.bottom
+                        Rectangle {
+                            height: pgswap1.height  * pgswap1.visualPosition
+                            width: pgswap1.width
+                            radius: 4
+                            color: (ResourceUsage.swapUsed / ResourceUsage.swapTotal) < 0.8 ? Color.tertiary : Color.error
+                        }
                     }
                     background: Rectangle {
                         color: Color.container_highest

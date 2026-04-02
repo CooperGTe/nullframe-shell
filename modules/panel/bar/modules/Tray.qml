@@ -85,65 +85,12 @@ Loader {
                     easing.type: Easing.BezierSpline
                     easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
                 }
-                Shape {
+                PopoutShape {
                     id:shape
                     anchors.left:parent.left
                     height: trayPopout.implicitHeight
-                    property real radius:15
-                    property bool flatten: shape.width < shape.radius * 2
-                    property real radiusRounding: shape.flatten ? shape.width / 2 : shape.radius
                     width: trayPopout.visibility ? 30 : 0
 
-                    Behavior on width {
-                        Anim{}        
-                    }
-                    //onHeightChanged:console.log(height)
-
-
-                    preferredRendererType: Shape.CurveRenderer
-                    ShapePath {
-                        strokeWidth: 0
-                        fillColor:Color.base
-                        
-                        PathArc { 
-                            relativeY:shape.radius
-                            relativeX:shape.radiusRounding
-                            radiusY: shape.radius
-                            radiusX: Math.min(shape.radius, shape.width)
-                            direction: PathArc.Counterclockwise
-                        }
-                        PathLine { 
-                            relativeX: shape.width - shape.radiusRounding * 2
-                            relativeY: 0
-                        }
-                        PathArc { 
-                            relativeY:shape.radius
-                            relativeX:shape.radiusRounding
-                            radiusY: shape.radius
-                            radiusX: Math.min(shape.radius, shape.width)
-                        }
-                        PathLine { 
-                            relativeX: 0
-                            relativeY: shape.height - (shape.radius * 4)
-                        }
-                        PathArc { 
-                            relativeY:shape.radius
-                            relativeX:-shape.radiusRounding
-                            radiusY: shape.radius
-                            radiusX: Math.min(shape.radius, shape.width)
-                        }
-                        PathLine { 
-                            relativeX: -shape.width - -shape.radiusRounding * 2
-                            relativeY: 0
-                        }
-                        PathArc { 
-                            relativeY:shape.radius
-                            relativeX:-shape.radiusRounding
-                            radiusY: shape.radius
-                            radiusX:Math.min(shape.radius, shape.width)
-                            direction: PathArc.Counterclockwise
-                        }
-                    }        
                     ColumnLayout {
                         id:contentitem
                         anchors {

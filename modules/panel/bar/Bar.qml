@@ -16,6 +16,7 @@ PanelWindow {
     property var scope
     property var barHug
     property bool controlPanelVisible: false
+    property bool floating: Config.bar.floating
     property real shadowRange: 16
 
     WlrLayershell.layer: WlrLayer.Top
@@ -37,6 +38,7 @@ PanelWindow {
     }
     ItemShadow {
         id:shadow
+
         spread: 2
         size:1
         enabled: true
@@ -44,9 +46,12 @@ PanelWindow {
     }
     Timer {
         id:shadowRefresh
+
         interval: 100
+
         repeat:false
         running: false
+
         onTriggered: {
             shadow.update()
         }
@@ -66,20 +71,30 @@ PanelWindow {
 
     Rectangle {
         id: bar
+
         color: Color.base
 
+        anchors {
+            leftMargin: (Config.bar.position === 0 && root.floating) ? (root.barHug ? 0 : 5) : 0
+            topMargin: (Config.bar.position === 1 && root.floating) ? (root.barHug ? 0 : 5) : 0
+            rightMargin: (Config.bar.position === 2 && root.floating) ? (root.barHug ? 0 : 5) : 0
+            bottomMargin: (Config.bar.position === 3 && root.floating) ? (root.barHug ? 0 : 5) : 0
+        }
+
         implicitHeight: (Config.barOrientation) ? Config.barTotalWidth
-        : scope.modelData.height - (root.barHug ? 0 : 10)
+        : scope.modelData.height - (root.barHug ? 0 : Config.bar.edgeMargin * 2)
         implicitWidth: (!Config.barOrientation) ? Config.barTotalWidth 
-        : scope.modelData.width - (root.barHug ? 0 : 10)
+        : scope.modelData.width - (root.barHug ? 0 : Config.bar.edgeMargin * 2)
 
         // conditionally setting anchors like that can cause binding instability, fix: 
         states: [
             State {
                 name: "left"
+
                 when: Config.bar.position === 0
                 AnchorChanges {
                     target: bar
+
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: undefined
@@ -87,9 +102,11 @@ PanelWindow {
             },
             State {
                 name: "top"
+
                 when: Config.bar.position === 1
                 AnchorChanges {
                     target: bar
+
                     anchors.top: parent.top
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: undefined
@@ -97,9 +114,11 @@ PanelWindow {
             },
             State {
                 name: "right"
+
                 when: Config.bar.position === 2
                 AnchorChanges {
                     target: bar
+
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: undefined
@@ -107,9 +126,11 @@ PanelWindow {
             },
             State {
                 name: "bottom"
+
                 when: Config.bar.position === 3
                 AnchorChanges {
                     target: bar
+
                     anchors.bottom: parent.bottom
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: undefined
@@ -121,22 +142,33 @@ PanelWindow {
             AnchorAnimation { duration: 200; easing.type: Easing.InOutQuad }
         }
         topRightRadius: root.barHug ? 0 
-        : ((Config.bar.position === 0 || Config.bar.position === 3) ? 20 : 0)
+        : ((Config.bar.position === 0 || Config.bar.position === 3) ? 20 
+        : root.floating ? 20 : 0)
         bottomRightRadius: root.barHug ? 0 
-        : ((Config.bar.position === 0 || Config.bar.position === 1) ? 20 : 0)
+        : ((Config.bar.position === 0 || Config.bar.position === 1) ? 20 
+        : root.floating ? 20 : 0)
         topLeftRadius: root.barHug ? 0 
-        : ((Config.bar.position === 2 || Config.bar.position === 3) ? 20 : 0)
-        bottomLeftRadius:  root.barHug ? 0 
-        : ((Config.bar.position === 2 || Config.bar.position === 1) ? 20 : 0)
+        : ((Config.bar.position === 2 || Config.bar.position === 3) ? 20 
+        : root.floating ? 20 : 0)
+        bottomLeftRadius: root.barHug ? 0 
+        : ((Config.bar.position === 2 || Config.bar.position === 1) ? 20 
+        : root.floating ? 20 : 0)
 
         component ColorAnim: ColorAnimation { duration: 200; easing.type: Easing.InOutQuad }
         component NumAnim: NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
         
         Behavior on color { ColorAnim{} }
+
         Behavior on topRightRadius { NumAnim{} }
         Behavior on bottomRightRadius { NumAnim{} }
         Behavior on topLeftRadius { NumAnim{} }
         Behavior on bottomLeftRadius { NumAnim{} }
+
+        Behavior on anchors.leftMargin { NumAnim{} }
+        Behavior on anchors.topMargin { NumAnim{} }
+        Behavior on anchors.rightMargin { NumAnim{} }
+        Behavior on anchors.bottomMargin { NumAnim{} }
+
         Behavior on implicitHeight { NumAnim{} }
         Behavior on implicitWidth { NumAnim{} }
 
@@ -153,6 +185,7 @@ PanelWindow {
 
         Timer {
             id: loadtimer
+
             repeat: false
             running: false
             interval: 400
@@ -166,6 +199,7 @@ PanelWindow {
 
         NumberAnimation {
             id: fadeIn
+
             target: bar
             property: "opacity"
             from: 0
@@ -194,7 +228,7 @@ PanelWindow {
 
         Component {
             id: verticalLayout
-            Column {
+            Item {
                 anchors.fill: parent
 
                 // Start
@@ -254,7 +288,8 @@ PanelWindow {
         }
         Component {
             id: horizontalLayout
-            Row {
+            Item {
+                id: horizontalBar
                 anchors.fill: parent
 
                 // Start
@@ -262,7 +297,7 @@ PanelWindow {
 
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: root.barHug ? 10 : 20
+                    anchors.leftMargin: root.barHug ? 10 : 0
 
                     Behavior on Layout.leftMargin {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
@@ -273,38 +308,40 @@ PanelWindow {
                         onClicked: scope.controlPanelVisible = !scope.controlPanelVisible
                     }
 
-                    Tray {}
-
-                    ResourceIndicator { 
-                        window: root 
-                    }
                 }
 
                 // CENTER
                 RowLayout {
                     anchors.centerIn: parent
 
+                    Clock {}
+
+                    ResourceIndicator { 
+                        window: root 
+                    }
+
                     Workspaces {}
+
                     Mpris {}
+
                 }
                 // RIGHT
                 RowLayout {
-
                     anchors.right:parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.rightMargin: root.barHug ? 10 : 20
+                    anchors.rightMargin: root.barHug ? 10 : 5
 
                     Behavior on Layout.rightMargin {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
 
-                    ControlsGroup {}
+                    Tray {}
 
                     BarSeparator {}
 
                     BatteryIndicator {}
 
-                    Clock {}
+                    ControlsGroup {}
                 }
             }
         }

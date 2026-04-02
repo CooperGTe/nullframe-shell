@@ -100,7 +100,7 @@ Variants {
         }
         PanelWindow {
             WlrLayershell.layer: WlrLayer.Top
-            exclusiveZone: 40
+            exclusiveZone: (!scope.barHug && Config.bar.floating) ? Config.barTotalWidth + 5 : Config.barTotalWidth
 
             color: "transparent"
 

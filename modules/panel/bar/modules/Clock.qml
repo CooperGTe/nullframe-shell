@@ -33,7 +33,7 @@ Loader {
             Row {
                 Layout.alignment: Qt.AlignHCenter
                 Text {
-                    text: Time.format("dd:MM")
+                    text: Time.format("dd/MM")
                     color: Color.secondary
                     font.pixelSize: 8
                     font.bold: false

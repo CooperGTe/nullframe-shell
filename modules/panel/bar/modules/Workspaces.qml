@@ -14,6 +14,8 @@ Item {
     //conf
     property int workspaceLength: Config.bar.workspacesShown
     property bool kanji: Config.bar.workspaceKanji
+    property bool roundStart: true
+    property bool roundEnd: false
 
     WheelHandler {
         target: null
@@ -34,12 +36,16 @@ Item {
             topMargin: Config.barOrientation ? 5 : 0
             bottomMargin:  Config.barOrientation ? 5 : 0
         }
-        radius: 30
+        topLeftRadius: !Config.barOrientation ? (root.roundStart ? 30 : 8) : (root.roundStart ? 30 : 8)
+        topRightRadius: !Config.barOrientation ? (root.roundStart ? 30 : 8) : (root.roundEnd ? 30 : 8)
+        bottomLeftRadius: !Config.barOrientation ? (root.roundEnd ? 30 : 8) : (root.roundStart ? 30 : 8)
+        bottomRightRadius: ! Config.barOrientation ? (root.roundEnd ? 30 : 8) : (root.roundEnd ? 30 : 8)
         color: Color.container
         // occupation indicator
         Loader {
             anchors.horizontalCenter:parent.horizontalCenter
             sourceComponent: Config.barOrientation ? horizontal : vertical
+            asynchronous: true
         }
         Component {
             id: vertical
@@ -144,6 +150,7 @@ Item {
             id: wscolumn
             anchors.horizontalCenter:parent.horizontalCenter
             sourceComponent: Config.barOrientation ? horizontalind : verticalind
+            asynchronous: true
         }
         Component {
             id: verticalind
