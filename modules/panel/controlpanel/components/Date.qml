@@ -40,7 +40,7 @@ Rectangle {
                         text: model.narrowName
                         anchors.centerIn: parent
                         horizontalAlignment: Text.AlignHCenter
-                        color: Color.surface
+                        color: Color.primary
                         font.pixelSize: 12
                     }
                 }
@@ -76,7 +76,7 @@ Rectangle {
 
                             radius: 12
 
-                            color: model.today ? Color.surface : "transparent"
+                            color: model.today ? Color.primary : "transparent"
                             border.width: model.today ? 0 : 2
                             // border.color: hover.hovered ? Theme.colors.bg_light : "transparent"
                             border.color: {
@@ -101,8 +101,8 @@ Rectangle {
 
                                 const dayOfWeek = dayItem.model.date.getUTCDay()
                                 if (dayOfWeek === 5 || dayOfWeek === 6)
-                                return Color.error
-                                return Color.surface
+                                return Color.tertiary
+                                return Color.primary
                             }
                             opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : 0.3
                             font.pixelSize: 12
@@ -148,7 +148,7 @@ Rectangle {
 
                     color: "transparent"
                     border.width: 2
-                    border.color: Color.surface
+                    border.color: Color.primary
 
                     Behavior on x {
                         NumberAnimation {
@@ -174,12 +174,12 @@ Rectangle {
                 font.bold:true
                 font.pointSize:30
                 Layout.alignment:Qt.AlignRight
-                color: Color.surface
+                color: Color.primary
             }
             Text {
                 text:Time.format("dddd")
                 font.bold:true
-                color: Color.surface
+                color: Color.primary
                 Layout.alignment:Qt.AlignRight
             }
             //moonclock
@@ -193,7 +193,7 @@ Rectangle {
                 Rectangle {
                     anchors.fill: parent
                     radius: width / 2
-                    color: Color.surface
+                    color: Color.primary
                     clip: true
 
                     Rectangle {
@@ -237,7 +237,7 @@ Rectangle {
                         anchors.centerIn: parent
                         icon: "keyboard_arrow_left"
                         font.pixelSize: 24
-                        color: Color.surface
+                        color: Color.primary
                     }
                 }
 
@@ -265,7 +265,7 @@ Rectangle {
                         anchors.centerIn: parent
                         icon: "keyboard_arrow_right"
                         font.pixelSize: 24
-                        color: Color.surface
+                        color: Color.primary
                     }
                 }
 
@@ -278,7 +278,7 @@ Rectangle {
                     text:root.currentYear + "年 " + Qt.locale("ja_JP").monthName(root.currentMonth)
 
                     font.pointSize: 10
-                    color: Color.surface
+                    color: Color.primary
                 }
             }
         }

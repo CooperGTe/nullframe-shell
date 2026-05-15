@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import qs.config
@@ -6,79 +7,85 @@ import qs.components
 
 FloatingWindow {
     id:root
-    minimumSize: Qt.size(150, 50) 
+    minimumSize: Qt.size(200, 50) 
     title: "Nullframe Shell Setting"
     color: Color.base
-
-    RowLayout {
+    ScrollBox {
         anchors.fill:parent
-        Rectangle {
-            Layout.fillHeight: true
-            color: Color.container
-            implicitWidth: root.width > 400 ? 150 : 50
-            Behavior on implicitWidth {
-                NumberAnimation { duration: 50; easing.type: Easing.InOutQuad }
+        SectionBox {
+            SettingSwitch {
+                mainText: "PanelFloat"
+                subText: "change float value on the panel"
             }
-            ColumnLayout {
-                SectionButton {
-                    text: "General"
-                    icon: "settings"
-                }
-                SectionButton {
-                    text: "Panel"
-                    icon: "dock_to_right"
-                }
-                SectionButton {
-                    text: "Desktop Widget"
-                    icon: "widgets"
-                }
-                SectionButton {
-                    text: "Dock"
-                    icon: "dock_to_bottom"
-                }
-                SectionButton {
-                    text: "Launcher"
-                    icon: "apps"
-                }
-                SectionButton {
-                    text: "OSD"
-                }
-                SectionButton {
-                    text: "Notification"
-                    icon: "notifications"
-                }
-                SectionButton {
-                    text: "About"
-                    icon: "info"
-                }
+            SettingSwitch {
+                mainText: "Panel Orientation"
+                subText: "change panel position"
+            }
+            SettingSwitch {
+                mainText: "Panel Margin"
+                subText: "change panel position"
+            }
+            SettingSwitch {
+                mainText: "Panel Hug"
+                subText: "change panel position"
             }
         }
-        Item {
-            Layout.fillHeight: true
-            Layout.fillWidth: true
+        SectionBox {
+            SettingSwitch {
+                mainText: "PanelFloat"
+                subText: "change float value on the panel"
+            }
+            SettingSwitch {
+                mainText: "Panel Orientation"
+                subText: "change panel position"
+            }
+            SettingSwitch {
+                mainText: "Panel Margin"
+                subText: "change panel position"
+            }
+            SettingSwitch {
+                mainText: "Panel Hug"
+                subText: "change panel position"
+            }
         }
     }
-    component SectionButton: RowLayout {
-        id:sec
-        Layout.fillWidth:true
-        Layout.margins: 10
-        property string text: "section"
-        property string icon: "settings"
-        MaterialIcon {
-            icon: sec.icon
-            anchors { 
-                verticalCenter: parent.verticalCenter
-            }
-            font.pixelSize: 16
-            fill:1
-            color: Color.secondary
+
+    component ScrollBox: ScrollView {
+        default property alias content: layout.children
+
+        ColumnLayout {
+            id: layout
+            anchors.margins: 10
+            anchors.fill: parent
         }
-        Text {
-            anchors { 
-                verticalCenter: parent.verticalCenter
-            }
-            color: Color.secondary
-            text: sec.text
+    }
+
+    component SettingSwitch: Column {
+        id: root
+
+        required property string mainText
+        property string subText
+
+        anchors.margins: 10
+        StyledText {
+            text: root.mainText
+            surface: 0
+        }
+        StyledText {
+            text: root.subText
+            surface: 2
+        }
+    }
+    component SectionBox: Rectangle {
+        default property alias content: layout.children
+        Layout.fillWidth: true
+        implicitHeight: layout.implicitHeight + (layout.anchors.margins * 2)
+        color: Color.container
+        radius: 10 
+        ColumnLayout {
+            id: layout
+            anchors.margins: 10
+            anchors.fill: parent
         }
     }
 }

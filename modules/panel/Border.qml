@@ -34,7 +34,7 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            anchors.margins: 0
+            anchors.margins: Config.bar.borderWidth
             anchors.leftMargin: Config.bar.position === 0 ? (root.hug 
             ? Config.barTotalWidth
             : 0 + this.anchors.margins)
@@ -56,7 +56,7 @@ Item {
             : this.anchors.margins
 
 
-            radius: root.hug ? 15 : 0
+            radius: 15
 
             component Anim: NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
 

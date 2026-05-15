@@ -36,7 +36,7 @@ PopupWindow {
     anchor.edges: Edges.Left
     anchor.gravity: Edges.Right
     anchor.margins{
-        left: 40
+        left: 30
         right: 0
 
     }
@@ -83,7 +83,7 @@ PopupWindow {
             anchors.fill:parent
             Text {
                 text: "Battery: " + root.percentage * 100 + "%"
-                color: Color.surface
+                color: Color.primary
                 font.bold:true
             }
             Text {

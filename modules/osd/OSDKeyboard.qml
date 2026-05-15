@@ -102,7 +102,7 @@ Variants {
                         spacing:0
                         MaterialIcon {
                             icon: scope.mode === "yes" ? "lock" : "lock_open"
-                            color: Color.surface
+                            color: Color.primary
                             font.pointSize: 16
                         }
                         Text {
@@ -110,7 +110,7 @@ Variants {
                                 return scope.mode === "yes" ? "Capslock: ON" : "Capslock: OFF"
                             else
                                 return scope.mode === "yes" ? "カタカナ" : "ひらがな"
-                            color: Color.surface
+                            color: Color.primary
                             font.family: "monospace"
                             font.bold:true
                             Layout.alignment:Qt.AlignLeft
@@ -118,7 +118,7 @@ Variants {
                         }
                         Text {
                             text: scope.method !== "fcitx5 (en_US)" ? scope.method : ""
-                            color: Color.surface_mid
+                            color: Color.secondary
                             Layout.alignment:Qt.AlignRight
                             horizontalAlignment: Text.AlignLeft
                         }

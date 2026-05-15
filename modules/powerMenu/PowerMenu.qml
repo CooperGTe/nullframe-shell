@@ -136,10 +136,10 @@ PanelWindow {
                 implicitWidth:50
                 implicitHeight:50
                 background: Rectangle {
-                    color: parent.hovered ? Color.surface : Color.container
+                    color: parent.hovered ? Color.primary : Color.container
                     radius: parent.hovered ? 30 : 15
                     border.width: parent.activeFocus ? 2 : 0
-                    border.color: Color.surface
+                    border.color: Color.primary
                     Behavior on color {
                         ColorAnimation { duration: 100 }
                     }
@@ -168,7 +168,7 @@ PanelWindow {
                 Keys.onEnterPressed: clickAction()
                 MaterialIcon {
                     id:icon
-                    color: !parent.hovered ? Color.surface : Color.container
+                    color: !parent.hovered ? Color.primary : Color.container
                     fill: !parent.hovered ? 0 : 1
                     font.pixelSize:32
                     anchors.centerIn:parent

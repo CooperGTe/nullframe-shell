@@ -125,7 +125,7 @@ PopupWindow {
                     size: 80
                     anchors.centerIn:parent
                     value: Brightness.value
-                    colPrimary: Color.surface
+                    colPrimary: Color.primary
                     colSecondary: Color.container_high
                     lineWidth: 5
                     startAngle: -225
@@ -139,7 +139,7 @@ PopupWindow {
                             fill: 1
                             icon: "brightness_2"
                             font.pixelSize: 24
-                            color: Color.surface
+                            color: Color.primary
                         }
                     }
                 }
@@ -150,7 +150,7 @@ PopupWindow {
                         horizontalCenter:parent.horizontalCenter
                         bottomMargin: 5
                     }
-                    color: Color.surface
+                    color: Color.primary
                     font.bold: true
                 }
             }
@@ -165,12 +165,12 @@ PopupWindow {
                     anchors.fill:parent
                     Text {
                         text: Pipewire.defaultAudioSink?.description
-                        color: Color.surface
+                        color: Color.primary
                         font.bold:true
                     }
                     Text {
                         text: Pipewire.defaultAudioSink?.name
-                        color: Color.surface_mid
+                        color: Color.primary_mid
                         font.pointSize:6
                     }
                     Text {
@@ -190,7 +190,7 @@ PopupWindow {
                                     top: parent.top
                                     left: parent.left
                                 }
-                                color: Color.surface
+                                color: Color.primary
 
                                 implicitWidth: parent.width * Pipewire.defaultAudioSink?.audio.volume
                                 radius: 20
@@ -227,12 +227,12 @@ PopupWindow {
                     Text {
                         text:Network.active.ssid
                         font.bold:true
-                        color: Color.surface
+                        color: Color.primary
                         font.pointSize:12
                     }
                     Text {
                         text:"Strength: " +Network.active.strength + "%"
-                        color: Color.surface_mid
+                        color: Color.primary_mid
                     }
                 }
             }

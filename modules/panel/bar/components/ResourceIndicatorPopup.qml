@@ -7,65 +7,61 @@ import qs.config
 import qs.services
 import qs.components
 
-PopupWindow {
+import "../components/"
+
+PopoutWindow {
     id:root
-    property var parent
+
     property bool hovered: hover.hovered
-    property bool visibility: parent.popupVisibility
-    Behavior on visibility {
-        SequentialAnimation {
-            ScriptAction { 
-                script: root.visible = true
-            }
-            PauseAnimation { 
-                duration: 400
-            }
-            ScriptAction { 
-                script: if (!visibility) root.visible = false
-            }
-        }
-    }
-    anchor.item: parent
-    anchor.edges: Edges.Left
-    anchor.gravity: Edges.Right
-    anchor.margins{
-        left: 35
-        right: 0
-        top:-20
-        bottom: -20
+
+    visibility: parent.popupVisibility
+
+    implicitWidth: 260 + (!Config.barOrientation ? -15 : 0)
+    implicitHeight: 120 + (!Config.barOrientation ? 15 : 0)
+
+    ItemShadow {
 
     }
-    implicitWidth: content.implicitWidth + 20+20 //margin + spacing
-    implicitHeight: content.implicitHeight + 30+40
-
-    visible: false
-    color:"transparent"
-    ItemShadow{}
     Rectangle {
-        anchors.fill:parent
-        anchors.leftMargin: root.visibility ? 5 : -310
-        anchors.rightMargin: root.visibility ? 20 : 300
+        anchors { 
+            fill:parent
+
+            margins: 20
+
+            leftMargin: Config.bar.position === 0 ? root.visibility ? 5 : -310
+            : (Config.bar.position === 2 ? root.visibility ? 20 : 300
+            : 20)
+            topMargin: Config.bar.position === 1 ? root.visibility ? 5 : -310
+            : (Config.bar.position === 3 ? root.visibility ? 20 : 300
+            : 20)
+            rightMargin: Config.bar.position === 2 ? root.visibility ? 5 : -310
+            : (Config.bar.position === 0 ? root.visibility ? 20 : 300
+            : 20)
+            bottomMargin: Config.bar.position === 3 ? root.visibility ? 5 : -310
+            : (Config.bar.position === 1 ? root.visibility ? 20 : 300
+            : 20)
+        }
+
+        component NumAnim: NumberAnimation { duration: 300; easing.type: Easing.InOutQuad }
+
+        Behavior on opacity { NumAnim {} }
+
+        Behavior on anchors.leftMargin { NumAnim {} }
+        Behavior on anchors.topMargin { NumAnim {} }
+        Behavior on anchors.rightMargin { NumAnim {} }
+        Behavior on anchors.bottomMargin { NumAnim {} }
+
         opacity: root.visibility ? 1 : 0
-        anchors.margins:20
-
-        Behavior on opacity {
-            NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
-        }
-        Behavior on anchors.rightMargin {
-            NumberAnimation { duration: 300; easing.type: Easing.InOutQuad }
-        }
-        Behavior on anchors.leftMargin {
-            NumberAnimation { duration: 300; easing.type: Easing.InOutQuad }
-        }
-
         color: Color.base
         radius:15
+
         HoverHandler {
             id:hover
             margin:5
             cursorShape: Qt.PointingHandCursor
             onHoveredChanged: console.log(hover.hovered, root.popupVisibility)
         }
+
         RowLayout {
             id:content
             spacing:5
@@ -95,7 +91,7 @@ PopupWindow {
                         text: "どうしたら良い"
                         font.family: "Noto Sans CJK JP"
                         font.bold: true
-                        color: Color.surface
+                        color: Color.primary
                         MouseArea {
                             anchors.fill: parent
                             onClicked: resman.state = "resman"
@@ -141,7 +137,7 @@ PopupWindow {
                         size: resourceUsageMeter.implicitWidth
                         Layout.alignment: Qt.AlignHCenter
                         value: ResourceUsage.cpuUsage
-                        colPrimary: Color.surface
+                        colPrimary: Color.primary
                         colSecondary: Color.base
                         lineWidth: 3
                         Item {
@@ -151,7 +147,7 @@ PopupWindow {
                                 fill: 1
                                 icon: "memory"
                                 font.pixelSize: 24
-                                color: Color.surface
+                                color: Color.primary
                             }
                         }
                     }
@@ -166,7 +162,7 @@ PopupWindow {
                             size: resourceUsageMeter.implicitWidth
                             Layout.alignment: Qt.AlignHCenter
                             value: ResourceUsage.memoryUsed / ResourceUsage.memoryTotal
-                            colPrimary: Color.surface
+                            colPrimary: Color.primary
                             colSecondary: "transparent"
                             lineWidth: 3
                             Item {
@@ -176,7 +172,7 @@ PopupWindow {
                                     fill: 0
                                     icon: "memory_alt"
                                     font.pixelSize: 22
-                                    color: Color.surface
+                                    color: Color.primary
                                 }
                             }
                         }
@@ -204,41 +200,41 @@ PopupWindow {
             Text{
                 text: `CPU USAGE:`
                 font.pixelSize:8
-                color: Color.surface
+                color: Color.primary
             }
             Text {
                 text: `${Math.floor(ResourceUsage.cpuUsage * 100)}%`
-                color: Color.surface
+                color: Color.primary
                 font.bold:true
             }
             Text{
                 text: `RAM USAGE:`
                 font.pixelSize:8
-                color: Color.surface
+                color: Color.primary
             }
             Text {
                 text: `${Math.floor(ResourceUsage.memoryUsed / ResourceUsage.memoryTotal * 100)}%`
-                color: Color.surface
+                color: Color.primary
                 font.bold:true
             }
             Text{
                 text: `RAM CACHE:`
                 font.pixelSize:8
-                color: Color.surface
+                color: Color.primary
             }
             Text {
                 text: `${Math.floor((ResourceUsage.memoryUsedCache - ResourceUsage.memoryUsed) / ResourceUsage.memoryTotal * 100)}%`
-                color: Color.surface
+                color: Color.primary
                 font.bold:true
             }
             Text{
                 text: `SWAP USAGE:`
                 font.pixelSize:8
-                color: Color.surface
+                color: Color.primary
             }
             Text {
                 text: `${Math.floor(ResourceUsage.swapUsedPercentage * 100)}%`
-                color: Color.surface
+                color: Color.primary
                 font.bold:true
             }
         }

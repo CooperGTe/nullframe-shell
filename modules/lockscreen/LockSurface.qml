@@ -155,7 +155,7 @@ WlSessionLockSurface {
                     spacing:-20
                     Text {
                         text: Time.format("hh:mm:ss")
-                        color: Color.surface
+                        color: Color.primary
                         font.pixelSize:50
                         font.family: "monospace"
                         font.bold:true
@@ -204,7 +204,7 @@ WlSessionLockSurface {
                             Text {
                                 Layout.alignment: Qt.AlignLeft
                                 text: Quickshell.env('USER')
-                                color: Color.surface
+                                color: Color.primary
                                 font.bold:true
                                 font.family:"monospace"
                                 font.pixelSize:16
@@ -213,7 +213,7 @@ WlSessionLockSurface {
                                 Layout.fillWidth:true
                                 Layout.alignment: Qt.AlignLeft
                                 text: "Uptime: " + root.time(System.uptime)
-                                color: Color.surface
+                                color: Color.primary
                                 font.pixelSize:10
                             }
                         }            
@@ -228,7 +228,7 @@ WlSessionLockSurface {
                         size: 50
                         anchors.centerIn:parent
                         value: Battery.percentage
-                        colPrimary: Color.surface
+                        colPrimary: Color.primary
                         colSecondary: Color.container
                         lineWidth: 5
                         Item {
@@ -239,7 +239,7 @@ WlSessionLockSurface {
                                 icon: Battery.isCharging ? "bolt" : "battery_android_5"
 
                                 font.pixelSize: 24
-                                color: Color.surface
+                                color: Color.primary
                             }
                         }
                     }
@@ -338,7 +338,7 @@ WlSessionLockSurface {
                             elide: Text.ElideRight
                             Layout.maximumWidth: 190
                             font.pixelSize: 12
-                            color:Color.surface
+                            color:Color.primary
                             font.bold:true
                         }
                         Text{
@@ -368,7 +368,7 @@ WlSessionLockSurface {
                                         anchors.centerIn: parent
                                         icon: "repeat_one"
                                         font.pixelSize: 20
-                                        color: Color.surface
+                                        color: Color.primary
                                         fill: 1
                                     }
                                 }
@@ -391,7 +391,7 @@ WlSessionLockSurface {
                                         anchors.centerIn: parent
                                         icon: "skip_previous"
                                         font.pixelSize: 20
-                                        color: Color.surface
+                                        color: Color.primary
                                         fill: parent.hovered ? 1 : 0
                                     }
                                     property bool hovered: false
@@ -409,7 +409,7 @@ WlSessionLockSurface {
                                 Layout.preferredWidth: 28
                                 Layout.preferredHeight: 28
                                 background: Rectangle { 
-                                    color: Color.surface 
+                                    color: Color.primary 
                                     radius:20
                                     anchors.fill:parent
                                 }
@@ -460,7 +460,7 @@ WlSessionLockSurface {
                                         icon: "skip_next"
                                         font.pixelSize: 20
                                         fill: parent.hovered ? 1 : 0
-                                        color: Color.surface
+                                        color: Color.primary
                                     }
                                     property bool hovered: false
                                     MouseArea {
@@ -491,7 +491,7 @@ WlSessionLockSurface {
                                         anchors.centerIn: parent
                                         icon: "shuffle"
                                         font.pixelSize: 20
-                                        color: Color.surface
+                                        color: Color.primary
                                         fill: 1
                                     }
                                 }
@@ -503,7 +503,7 @@ WlSessionLockSurface {
                             spacing:5
                             Text {
                                 text: root.formatTime(root.position)
-                                color:Color.surface
+                                color:Color.primary
                             }
                             Slider {
                                 // Stretches to fill all left-over space
@@ -526,7 +526,7 @@ WlSessionLockSurface {
                                             top: parent.top
                                             left: parent.left
                                         }
-                                        color: Color.surface
+                                        color: Color.primary
 
                                         implicitWidth: parent.width * (root.position / activePlayer.length)
                                         radius: 20
@@ -560,7 +560,7 @@ WlSessionLockSurface {
                             }
                             Text {
                                 text: root.formatTime(activePlayer.length)
-                                color:Color.surface
+                                color:Color.primary
                             }
                         }
                     }

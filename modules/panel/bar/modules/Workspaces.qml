@@ -130,7 +130,7 @@ Item {
             x: Config.barOrientation ? ((((Hyprland.activeWorkspace - 1) % root.workspaceLength) * 26) + 3) : 0
             //y: (root.monitor?.activeWorkspace?.id - 1 ?? 0) * 25 - 2
 
-            color: Hyprland.occupiedWorkspace ? Color.primary : Color.surface_low
+            color: Hyprland.occupiedWorkspace ? Color.primary : Color.secondary_container
             width: 26
             height: 26
 
@@ -194,7 +194,7 @@ Item {
                                 }; 
                                 return root.kanji ? (mapping[wsId] ?? wsId) : wsId
                             }
-                            color: active ? Color.container : toplevelCount ? Color.secondary : Color.surface_low
+                            color: active ? Color.on_secondary : toplevelCount ? Color.secondary : Color.secondary_container
                             Behavior on color {
                                 ColorAnimation { duration: 200; easing.type: Easing.OutQuad }
                             }
@@ -252,7 +252,7 @@ Item {
                                 }; 
                                 return root.kanji ? (mapping[wsId] ?? wsId) : wsId
                             }
-                            color: active ? Color.container : toplevelCount ? Color.secondary : Color.surface_low
+                            color: active ? Color.container : toplevelCount ? Color.secondary : Color.secondary_container
                             Behavior on color {
                                 ColorAnimation { duration: 200; easing.type: Easing.OutQuad }
                             }

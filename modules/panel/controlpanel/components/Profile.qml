@@ -50,7 +50,7 @@ Rectangle {
             Text {
                 Layout.alignment: Qt.AlignLeft
                 text: Quickshell.env('USER')
-                color: Color.surface
+                color: Color.primary
                 font.bold:true
                 font.family:"monospace"
                 font.pixelSize:16
@@ -59,13 +59,13 @@ Rectangle {
             Text {
                 Layout.alignment: Qt.AlignLeft
                 text: System.prettyName
-                color: Color.surface
+                color: Color.primary
                 font.pixelSize:10
             }
             Text {
                 Layout.alignment: Qt.AlignLeft
                 text: "Uptime: " + root.time(System.uptime)
-                color: Color.surface
+                color: Color.primary
                 font.pixelSize:10
             }
         }
@@ -80,7 +80,7 @@ Rectangle {
                     icon: "settings"
                     anchors.centerIn:parent
                     font.pixelSize: 20
-                    color: Color.surface
+                    color: Color.primary
                 }
             }
             Rectangle {
@@ -92,7 +92,7 @@ Rectangle {
                     icon: "power_settings_new"
                     anchors.centerIn:parent
                     font.pixelSize: 20
-                    color: Color.surface
+                    color: Color.primary
                 }
                 MouseArea {
                     anchors.fill:parent

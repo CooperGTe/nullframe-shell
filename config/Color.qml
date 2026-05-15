@@ -29,6 +29,7 @@ Singleton {
     property alias error_container: json.error_container
 
     property alias surface: json.surface
+    property alias on_surface: json.on_surface
     property alias surface_low: json.surface_low
     property alias surface_mid: json.surface_mid
     property alias surface_high: json.surface_high
@@ -61,6 +62,7 @@ Singleton {
             id:json
             property string base: "#080812"
             property string surface: "#DFDFFF"
+            property string on_surface: "#DFDFFF"
             property string surface_low: "#464755"
             property string surface_mid: "#8f8f9f"
             property string surface_high: "#DFDFFF"

@@ -51,7 +51,7 @@ Rectangle {
         }
         MaterialIcon {
             icon: "check"
-            font.pixelSize:20
+            font.pixelSize:16
             color: Color.secondary
             visible: if (root.reset) !MprisController.lock
             else if (!root.reset && MprisController.lock) (MprisController.trackedPlayer === root.mData)

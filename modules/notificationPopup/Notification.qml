@@ -236,7 +236,7 @@ PanelWindow {
                                 text: delegateFlick.modelData.appName
                                 font.pixelSize: 16
                                 font.weight: Font.Medium
-                                color: Color.surface
+                                color: Color.primary
                                 elide: Text.ElideRight
                             }
 
@@ -263,7 +263,7 @@ PanelWindow {
                             text: delegateFlick.modelData.summary
                             font.pixelSize: 10
                             font.weight: Font.DemiBold
-                            color: Color.surface
+                            color: Color.primary
                             elide: Text.ElideRight
                             wrapMode: Text.Wrap
                             maximumLineCount: 2
@@ -275,7 +275,7 @@ PanelWindow {
                             text: delegateFlick.modelData.body
                             font.pixelSize: 10
                             font.weight: Font.DemiBold
-                            color: Color.surface
+                            color: Color.primary
                             elide: Text.ElideRight
                             wrapMode: Text.Wrap
                             maximumLineCount: 2
@@ -310,7 +310,7 @@ PanelWindow {
             Rectangle {
                 id:transitionItem
 				anchors.fill: parent
-				color: Color.surface
+				color: Color.primary
 				radius: 0
                 anchors.margins: 0
                 anchors.leftMargin: tAnim ? 20 : 305

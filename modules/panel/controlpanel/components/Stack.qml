@@ -30,10 +30,10 @@ Rectangle {
                     implicitWidth:125
                     background: Rectangle {
                         radius:20
-                        color: stack.currentItem.objectName === "cal" ? Color.surface : Color.container_high
+                        color: stack.currentItem.objectName === "cal" ? Color.primary : Color.container_high
                     }
                     Text {
-                        color: stack.currentItem.objectName === "cal" ? Color.base: Color.surface
+                        color: stack.currentItem.objectName === "cal" ? Color.base: Color.primary
                         text:"Calendar"
                         anchors.centerIn:parent
                         font.bold:true
@@ -49,10 +49,10 @@ Rectangle {
                     implicitWidth:125
                     background: Rectangle {
                         radius:20
-                        color: stack.currentItem.objectName === "nc" ? Color.surface : Color.container_high
+                        color: stack.currentItem.objectName === "nc" ? Color.primary : Color.container_high
                     }
                     Text {
-                        color:stack.currentItem.objectName === "nc" ? Color.base : Color.surface
+                        color:stack.currentItem.objectName === "nc" ? Color.base : Color.primary
                         text:"Notification Center"
                         anchors.centerIn:parent
                         font.bold:true
@@ -74,7 +74,7 @@ Rectangle {
                         color: Color.container_high
                     }
                     Text {
-                        color:Color.surface
+                        color:Color.primary
                         text:"^"
                         anchors.centerIn:parent
                         font.bold:true

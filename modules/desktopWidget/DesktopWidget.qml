@@ -18,7 +18,7 @@ Variants {
         readonly property MprisPlayer activePlayer: MprisController.activePlayer
         readonly property real position: MprisController.visualPosition
         required property var modelData
-
+        
         LazyLoader {
             active: Hyprland.hasTiling ? false : true
             PanelWindow {
@@ -52,22 +52,22 @@ Variants {
                             Text {
                                 text: Time.format("hh:mm")
                                 Layout.alignment: Qt.AlignRight
-                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.surface
+                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.primary
                                 font.pixelSize: 50
                                 font.bold:true
                                 font.family: "monospace"
                                 style: Text.Raised
-                                styleColor: !Config.desktopWidget.invertClockColor ? Color.base : Color.surface
+                                styleColor: !Config.desktopWidget.invertClockColor ? Color.base : Color.primary
                             }
                             Text {
                                 text: Time.format("yyyy年MM月dd日")
                                 Layout.alignment: Qt.AlignRight
                                 Layout.topMargin: -10
-                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.surface
+                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.primary
                                 font.pixelSize: 15
                                 font.bold: false
                                 style: Text.Raised
-                                styleColor: !Config.desktopWidget.invertClockColor ? Color.base : Color.surface
+                                styleColor: !Config.desktopWidget.invertClockColor ? Color.base : Color.primary
                             }
                         }
                     }
@@ -103,7 +103,7 @@ Variants {
                                     elide: Text.ElideRight
                                     Layout.maximumWidth: 140
                                     font.pixelSize: 12
-                                    color:Color.surface
+                                    color:Color.primary
                                     font.bold:true
                                 }
                                 Text{
@@ -112,7 +112,7 @@ Variants {
                                     Layout.maximumWidth: 140
                                     Layout.topMargin: -5
                                     font.pixelSize: 8
-                                    color:Color.surface_mid
+                                    color:Color.primary
                                 }
                                 Rectangle {
                                     // Stretches to fill all left-over space
@@ -129,7 +129,7 @@ Variants {
                                             top: parent.top
                                             left: parent.left
                                         }
-                                        color: Color.surface
+                                        color: Color.primary
 
                                         implicitWidth: parent.width * (root.position / activePlayer.length)
                                         radius: parent.radius
@@ -247,7 +247,7 @@ Variants {
 
                                         radius: 12
 
-                                        color: model.today ? Color.surface : "transparent"
+                                        color: model.today ? Color.primary : "transparent"
                                         border.width: model.today ? 0 : 2
                                         // border.color: hover.hovered ? Theme.colors.bg_light : "transparent"
                                         border.color: {
@@ -319,7 +319,7 @@ Variants {
 
                                 color: "transparent"
                                 border.width: 2
-                                border.color: Color.surface
+                                border.color: Color.primary
 
                                 Behavior on x {
                                     NumberAnimation {

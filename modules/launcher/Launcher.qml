@@ -20,7 +20,9 @@ PanelWindow {
 
     onVisibilityChanged: {
         console.log(visibility)
-        if (root.visibility) grab.active = true
+        if (root.visibility) {
+            grab.active = true
+        }
         if (!root.visibility) grab.active=false
     }
     onSelectedIndexChanged: {
@@ -46,7 +48,7 @@ PanelWindow {
     }
 
 
-    WlrLayershell.layer: WlrLayer.Overlay
+    WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
     color: "transparent"
 
@@ -70,7 +72,7 @@ PanelWindow {
     GlobalShortcut {
         name: "launcher"
         onPressed: {
-            root.WlrLayershell.keyboardFocus= WlrKeyboardFocus.None
+            //root.WlrLayershell.keyboardFocus= WlrKeyboardFocus.None
             grab.active=false
             root.scope.launcherVisible = false
         }
@@ -96,6 +98,14 @@ PanelWindow {
         id: grab
         windows: [ root ]
         onActiveChanged: {
+            if (grab.active) {
+                // Compositor has actually granted focus NOW
+                search.forceActiveFocus()
+                // Defer to next frame so the window is active first
+                Qt.callLater(() => search.forceActiveFocus())
+
+                Qt.inputMethod.show()
+            }
             if (!grab.active) {
                 scope.launcherVisible = false
             }
@@ -152,7 +162,15 @@ PanelWindow {
             anchors.margins:10
             TextField {
                 id: search
-                focus: root.visibility
+                //focus: root.visibility
+
+                // these two are the key IME hints
+                inputMethodHints: Qt.ImhNone          // no restrictions
+                activeFocusOnTab: true
+
+                // ensure IME is not suppressed
+                readOnly: false
+                enabled: true
 
                 implicitHeight: 30
                 Layout.fillWidth:true
@@ -167,7 +185,7 @@ PanelWindow {
                 }
 
                 placeholderText: "Type to search"
-                color: Color.surface
+                color: Color.primary
             }
             
             Item {
@@ -186,7 +204,7 @@ PanelWindow {
                         }
                     }
                     text: "Result: " + calc(search.text)
-                    color: Color.surface
+                    color: Color.primary
                     font.pixelSize:12
                     anchors.verticalCenter:parent.verticalCenter
                     anchors.left: parent.left
@@ -259,7 +277,7 @@ PanelWindow {
                                 Layout.fillWidth: true
                                 text: itemList.modelData.name
                                 horizontalAlignment: Text.AlignLeft
-                                color: Color.surface
+                                color: Color.primary
                             }
                             Text {
                                 Layout.fillWidth: true
@@ -267,7 +285,7 @@ PanelWindow {
                                 text: itemList.modelData.comment
                                 horizontalAlignment: Text.AlignLeft
                                 font.pixelSize:8
-                                color: Color.surface_mid
+                                color: Color.on_surface
                             }
                         }
                     }
@@ -294,12 +312,12 @@ PanelWindow {
                         Text {
                             anchors.centerIn:parent
                             text: "↩"
-                            color: Color.surface
+                            color: Color.primary
                         }
                     }
                     Text {
                         text: "Action"
-                        color: Color.surface
+                        color: Color.primary
                     }
                     Rectangle {
                         color: Color.container
@@ -309,7 +327,7 @@ PanelWindow {
                         Text {
                             anchors.centerIn:parent
                             text: "⌃"
-                            color: Color.surface
+                            color: Color.primary
                         }
                     }
                     Rectangle {
@@ -320,12 +338,12 @@ PanelWindow {
                         Text {
                             anchors.centerIn:parent
                             text: "↩"
-                            color: Color.surface
+                            color: Color.primary
                         }
                     }
                     Text {
                         text: "Search/Open In Browser"
-                        color: Color.surface
+                        color: Color.primary
                     }
 
                 }

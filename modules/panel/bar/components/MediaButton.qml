@@ -35,7 +35,7 @@ Button {
                 anchors.centerIn: parent
                 icon: root.iconName
                 font.pixelSize: 20
-                color: Color.surface
+                color: Color.primary
                 fill: parent.hovered ? 1 : 0
             }
             property bool hovered: false
@@ -66,7 +66,7 @@ Button {
                         fill: 1
                         icon: activePlayer && activePlayer.isPlaying ? "pause" : "play_arrow"
                         font.pixelSize: activePlayer && activePlayer.isPlaying ? 15 : 18 //size patch
-                        color: Color.surface
+                        color: Color.primary
                     }
                 }
             }
@@ -95,7 +95,7 @@ Button {
                 anchors.centerIn: parent
                 icon: root.iconName
                 font.pixelSize: 20
-                color: Color.surface
+                color: Color.primary
                 fill: parent.hovered ? 1 : 0
             }
             WheelHandler {

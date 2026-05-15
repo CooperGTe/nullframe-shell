@@ -1,12 +1,14 @@
 import QtQuick
 import Quickshell
-import Quickshell.Wayland
 
 import qs.modules.panel.bar
+import qs.modules.panel.dock
 import qs.modules.panel.controlpanel
 import qs.modules.powerMenu
 import qs.modules.launcher
 import qs.modules.panel
+import qs.modules.lyricsEngine
+
 import qs.services
 import qs.config
 
@@ -98,19 +100,17 @@ Variants {
             barHug: scope.barHug
             scope: scope
         }
-        PanelWindow {
-            WlrLayershell.layer: WlrLayer.Top
-            exclusiveZone: (!scope.barHug && Config.bar.floating) ? Config.barTotalWidth + 5 : Config.barTotalWidth
+        Exclusion {
+            exclusion: (!scope.barHug && Config.bar.floating) ? Config.barTotalWidth + 5 : Config.barTotalWidth
+            screen: scope.modelData
+        }
 
-            color: "transparent"
-
-            anchors {
-                top: (Config.bar.position === 3) ? false : true
-                left: (Config.bar.position === 2) ? false : true
-                bottom: (Config.bar.position === 1)? false : true
-                right: (Config.bar.position === 0) ? false : true
-            }
-            mask: Region {}
+        Dock {
+            id: dock
+        }
+        // place here cuz i need reactivity with dock hover
+        LyricsEngine {
+            panelHovered: dock.panelHovered
         }
         Timer {
             id: controlPanelHide

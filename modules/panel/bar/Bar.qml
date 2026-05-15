@@ -82,9 +82,9 @@ PanelWindow {
         }
 
         implicitHeight: (Config.barOrientation) ? Config.barTotalWidth
-        : scope.modelData.height - (root.barHug ? 0 : Config.bar.edgeMargin * 2)
+        : scope.modelData.height - (root.barHug ? 0 : Config.barEdgeMargin * 2)
         implicitWidth: (!Config.barOrientation) ? Config.barTotalWidth 
-        : scope.modelData.width - (root.barHug ? 0 : Config.bar.edgeMargin * 2)
+        : scope.modelData.width - (root.barHug ? 0 : Config.barEdgeMargin * 2)
 
         // conditionally setting anchors like that can cause binding instability, fix: 
         states: [
@@ -143,16 +143,16 @@ PanelWindow {
         }
         topRightRadius: root.barHug ? 0 
         : ((Config.bar.position === 0 || Config.bar.position === 3) ? 20 
-        : root.floating ? 20 : 0)
+        : root.floating ? 15 : 0)
         bottomRightRadius: root.barHug ? 0 
         : ((Config.bar.position === 0 || Config.bar.position === 1) ? 20 
-        : root.floating ? 20 : 0)
+        : root.floating ? 15 : 0)
         topLeftRadius: root.barHug ? 0 
         : ((Config.bar.position === 2 || Config.bar.position === 3) ? 20 
-        : root.floating ? 20 : 0)
+        : root.floating ? 15 : 0)
         bottomLeftRadius: root.barHug ? 0 
         : ((Config.bar.position === 2 || Config.bar.position === 1) ? 20 
-        : root.floating ? 20 : 0)
+        : root.floating ? 15 : 0)
 
         component ColorAnim: ColorAnimation { duration: 200; easing.type: Easing.InOutQuad }
         component NumAnim: NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
@@ -215,8 +215,7 @@ PanelWindow {
             implicitWidth: !Config.barOrientation ? 30 : 1
             implicitHeight: Config.barOrientation ? 30 : 1
 
-            anchors.horizontalCenter: !Config.barOrientation ? parent.horizontalCenter : undefined
-            anchors.verticalCenter: Config.barOrientation ? parent.verticalCenter : undefined
+            Layout.alignment: Config.barOrientation ? Qt.AlignVCenter : Qt.AlignHCenter
         }
         //Dynamic Loader
         Loader {
@@ -299,7 +298,7 @@ PanelWindow {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: root.barHug ? 10 : 0
 
-                    Behavior on Layout.leftMargin {
+                    Behavior on anchors.leftMargin {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
 
@@ -331,7 +330,7 @@ PanelWindow {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.rightMargin: root.barHug ? 10 : 5
 
-                    Behavior on Layout.rightMargin {
+                    Behavior on anchors.rightMargin {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                     }
 

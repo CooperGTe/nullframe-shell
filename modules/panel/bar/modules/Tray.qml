@@ -49,7 +49,9 @@ Loader {
             }
             PopupWindow {
                 id:trayPopout
+
                 property bool visibility: hover.hovered || hover2.hovered || root.hoverBlocker
+
                 Behavior on visibility {
                     SequentialAnimation {
                         ScriptAction { 
@@ -65,38 +67,126 @@ Loader {
                         }
                     }
                 }
+
                 implicitWidth:30
                 implicitHeight:contentitem.implicitHeight + 60
-                anchor.item: parent
-                anchor.edges: Edges.Left
-                anchor.gravity: contentitem.implicitHeight <= 48 ? Edges.Right : Edges.Bottom
-                anchor.margins{
-                    left: contentitem.implicitHeight <= 40 ? 30 : 45
-                    right: 0
+
+                anchor.item: root
+                anchor.edges: Config.bar.position === 0 ? Edges.Left
+                : (Config.bar.position === 1 ? Edges.Top 
+                : (Config.bar.position === 2 ? Edges.Right
+                : Edges.Bottom))
+
+                anchor.gravity: contentitem.implicitHeight <= 48 ? (Config.bar.position === 2 ? Edges.Left : Edges.Right) : Edges.Bottom
+
+                anchor.margins {
+                    left: contentitem.implicitHeight <= 48 ? 30 
+                    : (Config.bar.position === 0 ? 45 : 0)
+                    right: contentitem.implicitHeight <= 48 ? 30 
+                    : (Config.bar.position === 2 ? 45 : 0)
                     top: contentitem.implicitHeight <= 48 ? -20 : -140
                     bottom: -20
                 }
+
                 color: "transparent"
+
                 HoverHandler {
                     id:hover2
                 }
+
                 component Anim: NumberAnimation {
                     duration: 400
                     easing.type: Easing.BezierSpline
                     easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
                 }
+
                 PopoutShape {
                     id:shape
-                    anchors.left:parent.left
-                    height: trayPopout.implicitHeight
-                    width: trayPopout.visibility ? 30 : 0
+
+                    side: Config.bar.position
+                    states: [
+                        State {
+                            name: "left"
+                            when: Config.bar.position === 0
+                            AnchorChanges {
+                                target: shape
+                                anchors.left: parent.left
+                            }
+                        },
+                        State {
+                            name: "top"
+                            when: Config.bar.position === 1
+                            AnchorChanges {
+                                target: shape
+                                anchors.top: parent.top
+                            }
+                        },
+                        State {
+                            name: "right"
+
+                            when: Config.bar.position === 2
+                            AnchorChanges {
+                                target: shape
+                                anchors.right: parent.right
+                            }
+                        },
+                        State {
+                            name: "bottom"
+                            when: Config.bar.position === 3
+                            AnchorChanges {
+                                target: shape
+                                anchors.bottom: parent.bottom
+                            }
+                        }
+                    ]
+
+                    implicitHeight: trayPopout.implicitHeight
+                    implicitWidth: trayPopout.visibility ? 30 : 0
 
                     ColumnLayout {
                         id:contentitem
+                        states: [
+                            State {
+                                name: "left"
+                                when: Config.bar.position === 0
+                                AnchorChanges {
+                                    target: contentitem
+                                    anchors.right: parent.right
+                                    anchors.verticalCenter:parent.verticalCenter
+                                }
+                            },
+                            State {
+                                name: "top"
+                                when: Config.bar.position === 1
+                                AnchorChanges {
+                                    target: contentitem
+                                    anchors.top: parent.top
+                                }
+                            },
+                            State {
+                                name: "right"
+
+                                when: Config.bar.position === 2
+                                AnchorChanges {
+                                    target: contentitem
+                                    anchors.left: parent.left
+                                    anchors.verticalCenter:parent.verticalCenter
+                                }
+                            },
+                            State {
+                                name: "bottom"
+                                when: Config.bar.position === 3
+                                AnchorChanges {
+                                    target: contentitem
+                                    anchors.bottom: parent.bottom
+                                }
+                            }
+                        ]
                         anchors {
-                            right:parent.right
-                            verticalCenter:parent.verticalCenter
-                            rightMargin:15/2
+                            rightMargin: Config.bar.position === 0 ? 15/2 : 0
+                            bottomMargin: Config.bar.position === 1 ? 15/2 : 0
+                            leftMargin: Config.bar.position === 2 ? 15/2 : 0
+                            topMargin: Config.bar.position === 3 ? 15/2 : 0
                         }
                         Content {}
                     }
@@ -128,7 +218,7 @@ Loader {
 
                 contentItem: Text {
                     text: toolTip.text
-                    color: Color.surface
+                    color: Color.primary
                 }
 
                 background: Rectangle {
@@ -156,18 +246,26 @@ Loader {
                     }
                 }
                 anchor.item: parent
-                anchor.edges: Edges.Left
-                anchor.gravity: Edges.Right
-                anchor.margins{
-                    left: 30
-                    right: 0
-                    top:-20
-                    bottom: -20
+                anchor.edges: Config.bar.position === 0 ? Edges.Left
+                : (Config.bar.position === 1 ? Edges.Top 
+                : (Config.bar.position === 2 ? Edges.Right
+                : Edges.Bottom))
 
+                anchor.gravity: Config.bar.position === 0 ? Edges.Right
+                : (Config.bar.position === 1 ? Edges.Bottom 
+                : (Config.bar.position === 2 ? Edges.Left
+                : Edges.Top))    
+
+                anchor.margins{
+                    left: (Config.bar.position === 0) ? Config.barTotalWidth : 0
+                    top: (Config.bar.position === 1) ? Config.barTotalWidth : 0
+                    right: (Config.bar.position === 2) ? Config.barTotalWidth : 0
+                    bottom: (Config.bar.position === 3) ? Config.barTotalWidth : 0
                 }
+
                 color: "transparent"
-                width: childColumn.implicitWidth + 10
-                height: childColumn.height + 10
+                implicitWidth: childColumn.implicitWidth + 10
+                implicitHeight: childColumn.height + 10
 
                 HyprlandFocusGrab {
                     id: grab
@@ -319,7 +417,7 @@ Loader {
                 source: itemRoot.modelData.icon
                 width: 15
                 height: 15
-                Component.onCompleted: console.log(itemRoot.modelData.buttonType)
+                //Component.onCompleted: console.log(itemRoot.modelData.buttonType)
             }
             // known bug, the text doesnt update?
             Text {

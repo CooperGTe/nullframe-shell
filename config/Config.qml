@@ -11,6 +11,7 @@ Singleton {
     property real barWidth: root.bar.width * root.bar.scale
     property real barSpacing: root.bar.moduleSpacing * root.bar.scale
     property real barMargin: root.bar.margin * root.bar.scale
+    property real barEdgeMargin: root.bar.edgeMargin + root.bar.borderWidth
 
     property alias bar: json.bar
     property alias launcher: json.launcher
@@ -72,6 +73,7 @@ Singleton {
                 property int edgeMargin: 5
                 property int moduleSpacing: 5
                 property int width: 30
+                property int borderWidth: 3
                 property bool floating: false
             }
             component Launcher: JsonObject {
@@ -86,15 +88,17 @@ Singleton {
             }
             component Dock: JsonObject {
                 property bool enable: false
+                property bool floating: false
                 property bool hideOnTile: true
                 property bool ignorePanel: true
                 property bool ignoreSpecialWorkspace:true
-                property real position: 0
+                property real position: 3
                 // 0 bottom
                 // 1 vertical (opposite of bar)
                 property bool onlyShowFloating: false
                 property list<string> pinnedApp: ["kitty","thunar"]
                 property bool autoHide: false
+                property real scale: 1
             }
         }
     }

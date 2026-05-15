@@ -31,6 +31,25 @@ PopupWindow {
 
     color: "transparent"
 
+    //track change popout
+    // [start]
+	Connections {
+		target: activePlayer
+
+		function onPostTrackChanged() {
+            popout.hoverBlocker = true
+            trackChanged.restart()
+        }
+    }
+    Timer {
+        id: trackChanged
+        interval: 1000
+        repeat: false
+        running: false
+        onTriggered: popout.hoverBlocker = false
+    }
+    // [end]
+
     property bool visibility: loaderParent.item.hovered || hover2.hovered || hoverBlocker
     property bool hoverBlocker: false
     Behavior on visibility {
@@ -68,19 +87,20 @@ PopupWindow {
     PopoutShape {
         id:shape
 
+        side: Config.bar.position
+
         anchors.left:parent.left
 
-        height: info.currentItem.objectName === "musicselect" ? 
-        info.implicitHeight + shape.radius * 3 :
-        loaderParent.item.rectsize + shape.radius * 3
+        implicitHeight: info.currentItem?.objectName === "musicselect"
+        ? info.implicitHeight + shape.radius * 3
+        : loaderParent.item?.rectsize + shape.radius * 3
 
-        width: popout.visibility ? Math.min(info.implicitWidth, 200) + 30 : 0
+        implicitWidth: popout.visibility ? Math.min(info.implicitWidth, 200) + 30 : 0
 
         HoverHandler {
             id: hover2
             onHoveredChanged: {
                 blockertimer.restart()
-                //console.log("[DEBUG] HOVER2: ", hover2.hovered, popout.hoverBlocker)
             }
         }
         Timer {
@@ -180,7 +200,7 @@ PopupWindow {
                     MaterialIcon {
                         icon: "music_video"
                         font.pixelSize: 20
-                        color: Color.surface
+                        color: Color.primary
                     }
                     StyledText {
                         text: "Player Selector"

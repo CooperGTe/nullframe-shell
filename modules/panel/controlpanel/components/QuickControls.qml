@@ -32,13 +32,13 @@ GridLayout {
                 implicitWidth:50
                 implicitHeight:50
                 radius: 15
-                color: Network.wifiEnabled ? Color.surface : Color.container_high
+                color: Network.wifiEnabled ? Color.primary : Color.container_high
                 MaterialIcon {
                     icon: "network_wifi"
                     font.pixelSize: 24
                     fill:1
                     anchors.centerIn:parent
-                    color: !Network.wifiEnabled ? Color.surface : Color.container
+                    color: !Network.wifiEnabled ? Color.primary : Color.container
                 }
             }
             ColumnLayout {
@@ -47,11 +47,12 @@ GridLayout {
                     text: Network.active ? Network.active.ssid : "Network"
                     font.family:"monospace"
                     font.bold:true
-                    color: Color.surface
+                    color: Color.primary
                 }
                 Text {
                     text: Network.active?.active ? "Connected" : "Disconnected"
-                    color: Color.surface_low
+                    color: Color.secondary
+                    opacity: 0.5
                 }
             }
         }
@@ -79,7 +80,7 @@ GridLayout {
                     font.pixelSize: 24
                     anchors.centerIn:parent
                     fill:1
-                    color:Color.surface
+                    color:Color.primary
                 }
             }
             ColumnLayout {
@@ -88,11 +89,12 @@ GridLayout {
                     text: "Bluetooth"
                     font.family:"monospace"
                     font.bold:true
-                    color:Color.surface
+                    color:Color.primary
                 }
                 Text {
                     text: "Disconnected"
-                    color:Color.surface_low
+                    color: Color.secondary
+                    opacity: 0.5
                 }
             }
         }
@@ -116,14 +118,14 @@ GridLayout {
                     icon: "coffee"
                     font.pixelSize: 18
                     fill:0
-                    color: Color.surface
+                    color: Color.primary
                 }
             }
             Rectangle { 
                 implicitHeight: 40; 
                 radius: 15
                 Layout.fillWidth:true
-                color: Color.surface
+                color: Color.primary
                 MaterialIcon {
                     icon: "dark_mode"
                     anchors.centerIn:parent
@@ -155,7 +157,7 @@ GridLayout {
                     font.pixelSize: 18
                     anchors.centerIn:parent
                     fill:0
-                    color: Color.surface
+                    color: Color.primary
                 }
             }
             ColumnLayout {
@@ -164,11 +166,12 @@ GridLayout {
                     text: "Night Light"
                     font.family:"monospace"
                     font.bold:true
-                    color:Color.surface
+                    color:Color.primary
                 }
                 Text {
                     text: "Off"
-                    color:Color.surface_low
+                    color:Color.secondary
+                    opacity: 0.5
                 }
             }
         }
@@ -215,7 +218,7 @@ GridLayout {
                     Text {
                         text: `${Math.floor(Pipewire.defaultAudioSink?.audio.volume * 100) ?? 0}%`
                         horizontalAlignment: Text.AlignRight
-                        color: Color.surface
+                        color: Color.primary
                         font.bold: true
                         anchors.rightMargin:10
                         opacity: volumeSlider.position < 0.8 ? 1 : 0
@@ -234,7 +237,7 @@ GridLayout {
                     height: parent.height - 5
                     anchors.verticalCenter:parent.verticalCenter
                     width: parent.width * (volumeSlider.position - 0.01)
-                    color: Color.surface
+                    color: Color.primary
                     radius: 10
                     MaterialIcon {
                         icon: "volume_up"
@@ -242,7 +245,7 @@ GridLayout {
                         anchors.right:parent.right
                         font.pixelSize: 20
                         fill:1
-                        color: volumeSlider.position > 0.1 ? Color.base : Color.surface
+                        color: volumeSlider.position > 0.1 ? Color.base : Color.primary
                         Behavior on anchors.rightMargin {
                             NumberAnimation { 
                                 duration: 300; 
@@ -281,7 +284,7 @@ GridLayout {
                 height: 30
                 radius: 8
                 x: volumeSlider.visualPosition * volumeSlider.width
-                color: Color.surface
+                color: Color.primary
             }
             WheelHandler {
                 acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
@@ -326,7 +329,7 @@ GridLayout {
                     Text {
                         text: `${Math.round(Brightness.value*100)}%`
                         horizontalAlignment: Text.AlignRight
-                        color: Color.surface
+                        color: Color.primary
                         font.bold: true
                         anchors.rightMargin:10
                         opacity: brightnessSlider.position < 0.8 ? 1 : 0
@@ -345,7 +348,7 @@ GridLayout {
                     height: parent.height - 5
                     anchors.verticalCenter:parent.verticalCenter
                     width: parent.width * (brightnessSlider.position - 0.01)
-                    color: Color.surface
+                    color: Color.primary
                     radius: 10
                     MaterialIcon {
                         icon: "brightness_medium"
@@ -353,7 +356,7 @@ GridLayout {
                         anchors.rightMargin: brightnessSlider.position > 0.1 ? 3 : -33
                         font.pixelSize: 20
                         fill:1
-                        color: brightnessSlider.position > 0.1 ? Color.base : Color.surface
+                        color: brightnessSlider.position > 0.1 ? Color.base : Color.primary
                         Behavior on anchors.rightMargin {
                             NumberAnimation { 
                                 duration: 300; 
@@ -392,7 +395,7 @@ GridLayout {
                 height: 30
                 radius: 8
                 x: brightnessSlider.visualPosition * brightnessSlider.width
-                color: Color.surface
+                color: Color.primary
             }
             WheelHandler {
                 acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad

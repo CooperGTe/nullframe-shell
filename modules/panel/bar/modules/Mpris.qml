@@ -26,24 +26,6 @@ Item {
         anchors.fill: parent
         sourceComponent: Config.barOrientation ? horizontal : vertical
     }
-    //track change popout
-    // [start]
-	Connections {
-		target: activePlayer
-
-		function onPostTrackChanged() {
-            popout.hoverBlocker = true
-            trackChanged.restart()
-        }
-    }
-    Timer {
-        id: trackChanged
-        interval: 1000
-        repeat: false
-        running: false
-        onTriggered: popout.hoverBlocker = false
-    }
-    // [end]
                                 
     MprisPopup {
         popupParent: root
@@ -113,50 +95,61 @@ Item {
     }
     Component {
         id: horizontal
-        RowLayout {
+        RowLayout { 
+            property bool hovered: hover.hovered
+            property real rectsize: box.implicitHeight
+
             spacing: 0
 
-            Rectangle {
-                color: Color.container
-                Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter
-                radius: 20
-                implicitHeight: 30
-                implicitWidth: musicctl.implicitWidth
+            RowLayout {
+                Layout.fillWidth:true
+                Layout.fillHeight:true
+                HoverHandler {
+                    id: hover
+                }
+                Rectangle {
+                    id:box
+                    color: Color.container
+                    Layout.fillWidth: true
+                    Layout.alignment: Qt.AlignHCenter
+                    radius: 20
+                    implicitHeight: 30
+                    implicitWidth: musicctl.implicitWidth
 
-                topLeftRadius: root.roundStart ? 30 : 8
-                topRightRadius: root.roundEnd ? 30 : 8
-                bottomLeftRadius: root.roundStart ? 30 : 8
-                bottomRightRadius: root.roundEnd ? 30 : 8
+                    topLeftRadius: root.roundStart ? 30 : 8
+                    topRightRadius: root.roundEnd ? 30 : 8
+                    bottomLeftRadius: root.roundStart ? 30 : 8
+                    bottomRightRadius: root.roundEnd ? 30 : 8
 
-                RowLayout {
-                    spacing: 0
-                    id: musicctl
-                    anchors.fill: parent
-                    MediaButton {
-                        iconName: "skip_previous"
-                        trigger: 0
-                        media: activePlayer
-                    }
+                    RowLayout {
+                        spacing: 0
+                        id: musicctl
+                        anchors.fill: parent
+                        MediaButton {
+                            iconName: "skip_previous"
+                            trigger: 0
+                            media: activePlayer
+                        }
 
-                    MediaButton {
-                        trigger: 2
-                        parentRoot: root
-                        media: activePlayer
-                    }
-                               
-                    MediaButton {
-                        iconName: "skip_next"
-                        trigger: 1
-                        media: activePlayer
+                        MediaButton {
+                            trigger: 2
+                            parentRoot: root
+                            media: activePlayer
+                        }
+
+                        MediaButton {
+                            iconName: "skip_next"
+                            trigger: 1
+                            media: activePlayer
+                        }
                     }
                 }
+                MediaButton {
+                    iconName: "music_note"
+                    trigger: 3
+                    media: activePlayer
+                }       
             }
-            MediaButton {
-                iconName: "music_note"
-                trigger: 3
-                media: activePlayer
-            }       
         }
     }
 }

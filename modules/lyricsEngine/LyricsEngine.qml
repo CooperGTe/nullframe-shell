@@ -10,10 +10,11 @@ import Quickshell.Services.Mpris
 
 import qs.config
 import qs.services
-import qs.modules.dock
 
 Variants {
+    id:variant
     model: Quickshell.screens
+    property bool panelHovered: false
     Scope {
         id: root
         required property var modelData
@@ -26,8 +27,6 @@ Variants {
         property int offset: 0
         property bool showLyrics: Config.showLyrics
         property string artist: root.activePlayer.trackArtist
-        property bool panelHovered: Dock.panelHovered
-        onPanelHoveredChanged: console.log(panelHovered)
 
         // lyrics fetch from local file
         FileView {
@@ -147,9 +146,9 @@ Variants {
                 }
                 margins { 
                     bottom: Config.dock.enable 
-                    ? (Config.dock.hideOnTile ? (Hyprland.hasMaximize ? 70 : (Hyprland.hasTiling ? 10 : 50))
+                    ? (Config.dock.hideOnTile ? (Hyprland.hasMaximize ? 70 : (Hyprland.hasTiling ? (variant.panelHovered ? 55 : 10) : 55))
                     : (Hyprland.hasMaximize ? 70 : 10))
-                    : (Hyprland.hasMaximize ? 70 : 10)               
+                    : (Hyprland.hasMaximize ? 70 : 10)
                 }
                 property bool showSubtitle: true
                 implicitWidth: root.currentLine != "" ? subtitle.implicitWidth + 20 : 0
@@ -190,7 +189,7 @@ Variants {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: root.currentLine
                         font.family: "monospace"
-                        color: Color.surface
+                        color: Color.primary
                         wrapMode: Text.Wrap
                         horizontalAlignment: Text.AlignHCenter
                         font.pixelSize: 20

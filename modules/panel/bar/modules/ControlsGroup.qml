@@ -65,7 +65,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 16
                 fill:1
-                color: Color.surface
+                color: Color.primary
             }
         }
         //Audio
@@ -90,7 +90,7 @@ Item {
                 }
                 font.pixelSize: 16
                 fill:1
-                color: Color.surface
+                color: Color.primary
             }
         }
         //Network
@@ -106,7 +106,7 @@ Item {
                 }
                 font.pixelSize: 16
                 fill:1
-                color: Color.surface
+                color: Color.primary
             }
         }
         // vertical variant

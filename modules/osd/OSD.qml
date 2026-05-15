@@ -132,7 +132,7 @@ Scope {
                             root.mode === "mpris" ?
                             `${Math.round(activePlayer.volume * 100) ?? 0}%` :
                             `${Math.round(brightnessFile.text()/maxBrightness.text.split("\n")[0] * 100) ?? 0}%`
-                        color: Color.surface
+                        color: Color.primary
                         font.pixelSize: 10
                         font.bold: true
                     }	
@@ -152,7 +152,7 @@ Scope {
                                 left: parent.left
                                 right: parent.right
 							}
-                            color: Color.surface
+                            color: Color.primary
 
                             implicitHeight: root.mode === "volume" ?
                                 parent.height * (Pipewire.defaultAudioSink?.audio.volume ?? 0) :
@@ -181,7 +181,7 @@ Scope {
                         Layout.alignment:Qt.AlignHCenter
                         icon: root.mode === "volume" ? "volume_up" : root.mode === "mpris" ? "music_note" : "brightness_4"
                         font.pixelSize: 25
-                        color: Color.surface
+                        color: Color.primary
                         fill: root.mode === "volume" | "mpris" ? 1 : 0
                     }
 				}
