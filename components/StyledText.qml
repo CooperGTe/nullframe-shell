@@ -9,10 +9,10 @@ Text {
     property int size: 12
 
     color: root.invert ? Color.base :
-        (root.surface === 0 ? Color.primary : 
-        (root.surface === 1 ? Color.primary :
+        (root.surface === 0 ? Color.on_surface : 
+        (root.surface === 1 ? Color.on_surface :
         (root.surface === 2 ? Color.secondary :
-        Color.surface_mid)))
+        Color.on_surface_variant)))
     font.bold: root.surface === 0
     font.pixelSize: root.size
 }
