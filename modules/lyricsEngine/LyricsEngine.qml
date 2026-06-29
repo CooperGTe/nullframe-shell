@@ -34,9 +34,9 @@ Variants {
             printErrors: true
             path: Quickshell.env("HOME") + 
             "/.lyrics/" + 
-            root.artist.replace(" feat. ", ", ").replace(" & ", ", ") + //inconsistent artist output patch
+            root.artist.replace(" feat. ", ", ").replace(" & ", ", ").replace("/", "_") + //inconsistent artist output patch
             " - " + 
-            root.activePlayer.trackTitle + 
+            root.activePlayer.trackTitle.replace("/", "") + 
             ".lrc"
             onLoaded: {
                 root.currentLine = ""; 
