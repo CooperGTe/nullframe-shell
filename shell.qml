@@ -4,8 +4,7 @@
 
 import Quickshell
 import qs.modules.panel
-import qs.modules.lyricsEngine
-import qs.modules.osd
+import qs.modules.popups.osd
 import qs.modules.desktopWidget
 import qs.modules.notificationPopup
 import qs.modules.lockscreen
