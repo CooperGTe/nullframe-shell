@@ -12,7 +12,7 @@ Text {
         (root.surface === 0 ? Color.on_surface : 
         (root.surface === 1 ? Color.on_surface :
         (root.surface === 2 ? Color.secondary :
-        Color.on_surface_variant)))
+        Color.outline)))
     font.bold: root.surface === 0
     font.pixelSize: root.size
 }

@@ -19,7 +19,7 @@ MouseArea {
 
         radius: Config.barWidth
 
-        color: Color.container_high
+        color: Color.on_tertiary
 
         MaterialIcon {
             icon: "moon_stars"

@@ -48,7 +48,7 @@ Item {
 
                     size: 24
                     value: ResourceUsage.cpuUsage
-                    colPrimary:  ResourceUsage.cpuUsage < 0.9 ? Color.secondary : Color.tertiary
+                    colPrimary:  ResourceUsage.cpuUsage < 0.9 ? Color.secondary : Color.on_surface
                     colSecondary: Color.container_highest
                     lineWidth: 3
                     Item {
@@ -58,7 +58,7 @@ Item {
                             icon: "memory"
                             fill:0
                             font.pixelSize: 16
-                            color: Color.primary
+                            color: Color.secondary
                         }
                     }
                 }
@@ -71,7 +71,7 @@ Item {
                         size: 24
                         value: ResourceUsage.memoryUsed / ResourceUsage.memoryTotal
                         colPrimary:  Color.secondary
-                        colSecondary: Color.container_highest
+                        colSecondary: Color.on_secondary
                         lineWidth: 3
                         sweepDegree: 270
                         Item {
@@ -81,7 +81,7 @@ Item {
                                 icon: "memory_alt"
                                 fill:0
                                 font.pixelSize: 14
-                                color: Color.primary
+                                color: Color.secondary
                             }
                         }
                     }
@@ -92,7 +92,7 @@ Item {
                         colPrimary:  ((ResourceUsage.memoryUsedCache - ResourceUsage.memoryUsed) 
                         / (ResourceUsage.memoryTotal - ResourceUsage.memoryUsed)) < 0.5 
                         ? Color.secondary
-                        : Color.tertiary
+                        : Color.on_surface
                         colSecondary: Color.container_highest
                         lineWidth: 3
                         sweepDegree: 60

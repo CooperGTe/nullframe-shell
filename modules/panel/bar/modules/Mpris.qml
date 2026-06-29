@@ -2,24 +2,26 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Shapes
 import Quickshell.Services.Mpris
 import Quickshell
 import qs.services
 import qs.config
+
 import "../components/"
 
 Item {
     id:root
-    Layout.alignment: Qt.AlignHCenter
-    implicitHeight: !Config.barOrientation ? player.implicitHeight : 40
-    implicitWidth: Config.barOrientation ? player.implicitWidth : 40
 
     readonly property MprisPlayer activePlayer: MprisController.activePlayer
     readonly property real position: MprisController.visualPosition
 
     property bool roundStart: false
     property bool roundEnd: true
+
+    Layout.alignment: Qt.AlignHCenter
+
+    implicitHeight: !Config.barOrientation ? player.implicitHeight : 40
+    implicitWidth: Config.barOrientation ? player.implicitWidth : 40
 
     Loader {
         id: player
@@ -34,6 +36,7 @@ Item {
 
     Component {
         id: vertical
+
         ColumnLayout {
             property bool hovered: hover.hovered
             property real rectsize: box.implicitHeight
@@ -43,17 +46,22 @@ Item {
             ColumnLayout {
                 Layout.fillWidth:true
                 Layout.fillHeight:true
+
                 HoverHandler {
                     id: hover
                 }
+
                 Rectangle {
                     id:box
-                    color: Color.container
+
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter
                     Layout.leftMargin: 5
                     Layout.rightMargin: 5 
+
+                    color: Color.container
                     radius: 20
+
                     implicitHeight: musicctl.implicitHeight
 
                     topLeftRadius: root.roundStart ? 30 : 8

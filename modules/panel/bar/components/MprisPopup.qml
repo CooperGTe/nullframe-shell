@@ -151,8 +151,9 @@ PopupWindow {
                     }
                     StyledText {
                         surface:3
-                        font.pixelSize: 10
+                        font.pixelSize: 12
                         text: activePlayer?.identity
+                        font.bold:true
                     }
                     Button {
                         text: "Select Player"
@@ -167,6 +168,7 @@ PopupWindow {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight
+                            font.bold:true
                         }
                         background: Rectangle {
                             radius: 10
@@ -205,7 +207,8 @@ PopupWindow {
                     StyledText {
                         text: "Player Selector"
                         surface: 3
-                        font.pixelSize: 10
+                        font.pixelSize: 12
+                        font.bold: true
                     }
                     Button {
                         text: "Back"
@@ -220,6 +223,7 @@ PopupWindow {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight
+                            font.bold:true
                         }
                         background: Rectangle {
                             radius: 10

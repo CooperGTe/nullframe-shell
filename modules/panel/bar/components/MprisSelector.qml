@@ -47,7 +47,7 @@ Rectangle {
             Layout.fillWidth: true
             horizontalAlignment: Text.Left
             text: root.text
-            surface: 2
+            surface: 1
         }
         MaterialIcon {
             icon: "check"

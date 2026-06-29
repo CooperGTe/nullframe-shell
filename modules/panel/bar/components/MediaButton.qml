@@ -35,7 +35,7 @@ Button {
                 anchors.centerIn: parent
                 icon: root.iconName
                 font.pixelSize: 20
-                color: Color.primary
+                color: Color.on_surface
                 fill: parent.hovered ? 1 : 0
             }
             property bool hovered: false
@@ -57,7 +57,7 @@ Button {
                 size: 28
                 value: parentRoot.position / root.media.length
                 colPrimary: Color.secondary
-                colSecondary: Color.container_highest
+                colSecondary: Color.on_secondary
                 lineWidth: 3
                 Item {
                     anchors.fill: parent
@@ -66,7 +66,7 @@ Button {
                         fill: 1
                         icon: activePlayer && activePlayer.isPlaying ? "pause" : "play_arrow"
                         font.pixelSize: activePlayer && activePlayer.isPlaying ? 15 : 18 //size patch
-                        color: Color.primary
+                        color: Color.secondary
                     }
                 }
             }

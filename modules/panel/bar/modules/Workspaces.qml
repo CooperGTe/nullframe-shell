@@ -71,7 +71,7 @@ Item {
                         Layout.alignment:Qt.AlignHCenter
                         implicitWidth: 26
                         implicitHeight: 26
-                        color: toplevelCount ?  Color.container_high : "transparent"
+                        color: toplevelCount ?  Color.on_secondary : "transparent"
 
                         bottomLeftRadius: topleveltop ? 0 : 12
                         bottomRightRadius: topleveltop ? 0 : 12
