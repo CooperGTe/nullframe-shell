@@ -181,6 +181,7 @@ PopupWindow {
                     text: activePlayer?.trackTitle
                     elide: Text.ElideRight
                     Layout.maximumWidth: 200
+                    lineHeightMode: Text.FixedHeight
                 }
                 StyledText {
                     Layout.bottomMargin: 20
@@ -188,6 +189,7 @@ PopupWindow {
                     surface:3
                     font.pixelSize: 10
                     text: activePlayer?.trackArtist
+                    lineHeightMode: Text.FixedHeight
                 }
             }
         }

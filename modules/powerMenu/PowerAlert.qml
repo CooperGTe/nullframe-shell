@@ -180,7 +180,7 @@ PanelWindow {
                     }
                     contentItem: Text {
                         text: parent.text
-                        color: !parent.hovered ? Color.primary : Color.container
+                        color: !parent.hovered ? Color.container : Color.container
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         Behavior on color {

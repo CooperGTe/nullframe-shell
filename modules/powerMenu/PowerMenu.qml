@@ -37,6 +37,7 @@ PanelWindow {
         top: true
     }
     function close() {
+        grab.active = false
         root.scope.powerMenuVisible = false 
     }
     HyprlandFocusGrab {
@@ -148,6 +149,7 @@ PanelWindow {
                     }
                 }
                 function clickAction() {
+                    grab.active = false
                     root.scope.powerAlert = this.alert
                     switch (this.actions) {
                         case 1: {

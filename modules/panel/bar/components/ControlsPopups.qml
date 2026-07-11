@@ -111,7 +111,7 @@ PopupWindow {
                 NumberAnimation {
                     property: "y"
                     from: 0
-                    to: root.direction ? -stack.height : stack.height*1.1
+                    to: root.direction ? -stack.height : stack.height*2
                     duration: 400
                     easing.type: Easing.OutQuart
                 }
@@ -170,7 +170,7 @@ PopupWindow {
                     }
                     Text {
                         text: Pipewire.defaultAudioSink?.name
-                        color: Color.primary_mid
+                        color: Color.outline
                         font.pointSize:6
                     }
                     Text {
@@ -232,7 +232,7 @@ PopupWindow {
                     }
                     Text {
                         text:"Strength: " +Network.active.strength + "%"
-                        color: Color.primary_mid
+                        color: Color.outline
                     }
                 }
             }
