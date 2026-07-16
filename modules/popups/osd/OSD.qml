@@ -16,7 +16,6 @@ import qs.config
 Scope {
 	id: root
 
-
     readonly property MprisPlayer activePlayer: MprisController.activePlayer
     property string mode: "volume"
     property bool visibility: false
@@ -143,6 +142,7 @@ Scope {
                         fill: parent
                         margins:8
                     }
+
                     MaterialIcon {
                         Layout.alignment:Qt.AlignHCenter
                         icon: root.mode === "volume" ? "volume_up" : root.mode === "mpris" ? "music_note" : "brightness_4"
@@ -150,78 +150,31 @@ Scope {
                         color: Color.primary
                         fill: root.mode === "volume" | "mpris" ? 1 : 0
                     }
+
                     ColumnLayout {
                         RowLayout {
                             StyledText {
+                                Layout.fillWidth: true
                                 text: root.mode === "volume" ? "Audio Master Volume" : root.mode === "mpris" ? "MPD-Mpris" : "Backlight"
                                 surface: 3
-                                Layout.fillWidth: true
                             }
 
                             StyledText {
                                 text: root.mode === "volume" ? 
                                 `${Math.round(Pipewire.defaultAudioSink?.audio.volume * 100) ?? 0}%` : 
                                 root.mode === "mpris" ?
-                                `${Math.round(activePlayer.volume * 100) ?? 0}%` :
+                                `${Math.round(root.activePlayer.volume * 100) ?? 0}%` :
                                 `${Math.round(brightnessFile.text()/maxBrightness.text.split("\n")[0] * 100) ?? 0}%`
                             }
                         }
-                        Rectangle {
+                        StyledProgressBar {
                             Layout.fillWidth: true
-                            Layout.leftMargin: 2
-                            Layout.rightMargin: 2
-                            Layout.bottomMargin: 2
 
-                            implicitHeight: 10
-                            radius: 20
-                            color: "transparent"
-
-                            Rectangle {
-                                anchors {
-                                    bottom: parent.bottom
-                                    top: parent.top
-                                    left: parent.left
-                                }
-
-                                implicitWidth: root.mode === "volume" ?
-                                parent.width * (Pipewire.defaultAudioSink?.audio.volume ?? 0) :
-                                root.mode === "mpris" ?
-                                parent.width * activePlayer.volume :
-                                parent.width * brightnessFile.text()/maxBrightness.text.split("\n")[0]
-
-                                color: Color.primary
-                                radius: parent.radius
-                            }
-
-                            Rectangle {
-                                anchors {
-                                    top: parent.top
-                                    bottom: parent.bottom
-                                    right: parent.right
-                                }
-
-                                implicitWidth: root.mode === "volume" ?
-                                parent.width * (1 - (Pipewire.defaultAudioSink?.audio.volume ?? 0)) - 3 :
-                                root.mode === "mpris" ?
-                                parent.width * (1 - (activePlayer.volume ?? 0)) - 3 :
-                                parent.width * (1 - brightnessFile.text()/maxBrightness.text.split("\n")[0]) - 3 
-                                color: Color.container_high
-                                radius: parent.radius
-                            }
-
-                            Rectangle {
-                                anchors {
-                                    right: parent.right
-                                    margins: 2.5
-                                    verticalCenter:parent.verticalCenter
-                                }
-
-                                implicitWidth: 5
-                                implicitHeight: 5
-
-                                color: Color.primary
-                                radius: parent.radius
-                            }
+                            value: root.mode === "volume" 
+                                ? (Pipewire.defaultAudioSink?.audio.volume ?? 0) 
+                                : (root.mode === "mpris" 
+                                ? root.activePlayer.volume 
+                                : (brightnessFile.text()/maxBrightness.text.split("\n")[0]))
                         }
                     }
                 }
