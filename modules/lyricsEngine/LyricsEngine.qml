@@ -1,7 +1,5 @@
 pragma ComponentBehavior: Bound
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Effects
 
 import Quickshell
 import Quickshell.Io
@@ -10,13 +8,16 @@ import Quickshell.Services.Mpris
 
 import qs.config
 import qs.services
+import qs.modules
 
 Variants {
     id:variant
+
     model: Quickshell.screens
-    property bool panelHovered: false
+
     Scope {
         id: root
+
         required property var modelData
 
         readonly property MprisPlayer activePlayer: MprisController.activePlayer
@@ -25,8 +26,13 @@ Variants {
         property var lrcParsed: []
         property string currentLine: ""
         property int offset: 0
-        property bool showLyrics: Config.showLyrics
+        property bool showLyrics: Global.get(root.modelData).hideLyrics ? false : Config.showLyrics
         property string artist: root.activePlayer.trackArtist
+        property bool panelHover: Global.get(root.modelData).panelHovered
+
+        onPanelHoverChanged: {
+            console.log(Global.get(root.modelData).panelHovered)
+        }
 
         // lyrics fetch from local file
         FileView {
@@ -134,19 +140,24 @@ Variants {
             active: root.showLyrics && (root.modelData.name === Hyprland.focusedMonitor)
             PanelWindow {
                 id: winroot
+
                 screen:root.modelData
+
                 WlrLayershell.namespace: "lyrics"
                 WlrLayershell.layer: WlrLayer.Overlay
+
                 exclusionMode: ExclusionMode.Ignore
 
                 color: "transparent"
+
                 //mask: Region {}
                 anchors {
                     bottom: true
                 }
+
                 margins { 
                     bottom: Config.dock.enable 
-                    ? (Config.dock.hideOnTile ? (Hyprland.hasMaximize ? 70 : (Hyprland.hasTiling ? (variant.panelHovered ? 55 : 10) : 55))
+                    ? (Config.dock.hideOnTile ? (Hyprland.hasMaximize ? 70 : (Hyprland.hasTiling ? (Global.get(root.modelData).panelHovered ? 55 : 10) : 55))
                     : (Hyprland.hasMaximize ? 70 : 10))
                     : (Hyprland.hasMaximize ? 70 : 10)
                 }
