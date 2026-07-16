@@ -8,10 +8,11 @@ import qs.modules.popups.osd
 import qs.modules.desktopWidget
 import qs.modules.notificationPopup
 import qs.modules.lockscreen
+import qs.modules.lyricsEngine
 
 ShellRoot {
     Panel {}
-    //LyricsEngine {}
+    LyricsEngine {}
     OSD {}
     OSDKeyboard {}
     DesktopWidget {}

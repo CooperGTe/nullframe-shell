@@ -22,13 +22,26 @@ Rectangle {
     property bool isSeparator: root.modelData.appId === "SEPARATOR"
     property real maxWindowPreviewHeight: 140
     property real maxWindowPreviewWidth: 240
+    
+    property int currentToplevelCount: root.modelData.toplevels.length
+    property int pendingToplevelCount: 0
 
     property bool previewHoverBlocker: false
     property bool previewHover: false
-    property bool hoverBlocker: iconHover.hovered || loader.previewHovered || root.previewHoverBlocker
-    onHoverBlockerChanged: {
-        parentPointer.hoverBlocker = root.hoverBlocker
+
+    property bool loaderHover: loader.previewHovered
+    property bool hoverBlocker: iconHover.hovered || root.loaderHover || root.previewHoverBlocker
+    //onHoverBlockerChanged: {
+    //    parentPointer.hoverBlocker = false
+    //}
+
+    Component.onCompleted: pendingToplevelCount = currentToplevelCount
+
+    onLoaderHoverChanged: {
+        parentPointer.hoverBlocker = true
+        console.log(parentPointer.hoverBlocker, root.hoverBlocker, "|", iconHover.hovered, root.loaderHover, root.previewHoverBlocker)
     }
+
     Timer {
         id:previewHoverBlocker
         interval:50
@@ -58,12 +71,40 @@ Rectangle {
         easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
     }
 
+    /*
+    ToolTip {
+        id: toolTip
+        popupType: Popup.Item
+        delay: 500
+
+        text: root.modelData.appId
+        visible: iconHover.hovered
+
+        contentItem: Text {
+            text: toolTip.text
+            color: Color.primary
+        }
+
+        background: Rectangle {
+            color: Color.base
+            radius: 6
+        }
+    }
+    DragHandler {
+        id: dragHandler
+    }
+    DropArea {
+        anchors.fill: parent
+        onEntered: (drag) => console.log("something entered")
+        onDropped: (drop) => console.log("dropped")
+    }*/
+
     // active indicator
     Rectangle {
         anchors.fill:parent
         anchors.margins: 1
         radius: 5
-        color: Color.container_high
+        color: Color.on_secondary
         opacity: root.modelData.toplevels.some(function(t) {
             return t.hypr.activated
         }) ? 1 : 0
@@ -84,22 +125,50 @@ Rectangle {
             width:5
             height:5
             radius:5
-            color:Color.secondary
+            color:Color.on_surface
             visible: root.modelData.toplevels.length > 0
         }
         Rectangle {
             width:5
             height:5
             radius:5
-            color:Color.secondary
+            color:Color.on_surface
             visible: root.modelData.toplevels.length > 1
         }
     }
     IconImage {
+        id:icon
+
         anchors.centerIn:parent
+        anchors.verticalCenterOffset: iconHover.hovered ? -2 : 0
+
         visible: root.modelData.appId !== "SEPARATOR"
-        source: Quickshell.iconPath(DesktopEntries.heuristicLookup(modelData.appId)?.icon, "image-missing")                        
+        source: Quickshell.iconPath(DesktopEntries.heuristicLookup(modelData.appId)?.icon, "image-missing")
+        
         implicitSize: 30
+
+        Behavior on anchors.verticalCenterOffset {Anim{}}
+
+        SequentialAnimation {
+            id: pulseAnim
+            running: root.pendingToplevelCount > root.currentToplevelCount
+            loops: Animation.Infinite
+
+            NumberAnimation {
+                target: icon
+                property: "anchors.verticalCenterOffset"
+                to: -4
+                duration: 400
+                easing.type: Easing.InOutBounce
+            }
+            NumberAnimation {
+                target: icon
+                property: "anchors.verticalCenterOffset"
+                to: 0
+                duration: 200
+                easing.type: Easing.InOutBounce
+            }
+        }
     }
 
     MouseArea {
@@ -121,8 +190,11 @@ Rectangle {
                     best = t;
                 }
             }
+            //exec if nothing exist
             if (root.modelData.toplevels.length === 0) {
                 DesktopEntries.heuristicLookup(root.modelData.appId).execute()
+                root.pendingToplevelCount++
+                console.log(root.pendingToplevelCount, root.currentToplevelCount)
             }
 
             if (best && best.wl && !best.min) {
@@ -155,7 +227,8 @@ Rectangle {
 
         property bool previewHovered: item?.previewHovered ?? false
 
-        active: root.modelData.toplevels.length > 0
+        //active: root.modelData.toplevels.length > 0
+        active: false
         PopupWindow {
             id: popup
 
@@ -167,7 +240,7 @@ Rectangle {
             anchor.gravity: Edges.Top
 
             implicitWidth:previewgrid.implicitWidth
-            implicitHeight:previewgrid.implicitHeight
+            implicitHeight:previewgrid.implicitHeight + 5
 
             visible: root.hoverBlocker
             color:"transparent"
@@ -175,9 +248,11 @@ Rectangle {
             HoverHandler {
                 id: previewHover
             }
+            
             RowLayout {
                 id:previewgrid
                 anchors.fill:parent
+                anchors.bottomMargin: 10
                 spacing:5
                 Repeater {
                     model: root.modelData.toplevels

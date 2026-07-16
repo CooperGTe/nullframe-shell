@@ -4,13 +4,13 @@ import Quickshell
 import qs.modules.panel.bar
 import qs.modules.panel.dock
 import qs.modules.panel.controlpanel
+import qs.modules.panel.launcher
 import qs.modules.powerMenu
-import qs.modules.launcher
 import qs.modules.panel
-import qs.modules.lyricsEngine
 
 import qs.services
 import qs.config
+import qs.modules
 
 import Quickshell.Hyprland as Hypr
 
@@ -19,14 +19,34 @@ Variants {
 
     Scope {
         id:scope
+
         required property var modelData
+
         property real cornerRadius: 15
 
         //visibility state
         property bool controlPanelVisible: false
         property bool powerMenuVisible: false
-        property bool launcherVisible: false
 
+        // Launcher Helper  ------------
+        Connections {
+            target: Global.get(scope.modelData)
+
+            function onLauncherVisibilityChanged() {
+                console.log(Global.get(scope.modelData).launcherVisibility, "glboal")
+                if (Global.get(scope.modelData).launcherVisibility) {
+                    launcherClose.stop()
+                    launcher.active = true
+                    launcher.item.visibility = true
+                } else {
+                    launcherClose.restart()
+                    launcher.item.visibility = false
+                    launcher.item.allowUngrab = false
+                }
+            }
+        }
+
+        // POWER MENU ? ----------------
         //popup warning state
         property real powerAlert: 2
 
@@ -45,14 +65,7 @@ Variants {
                 poweralert.active = true
             } else poweralert.active = false
         }
-        onLauncherVisibleChanged: {
-            launcher.active = !launcher.active
-            if (!scope.launcherVisible) {
-                launcherHide.restart()
-                launcher.item.visibility = false
-            }
-        }
-        
+
         property bool internalcontrolPanelVisible: bar.controlPanelVisible
         property bool barHug:  Hyprland.hasMaximize || scope.controlPanelVisible || 
         (Config.bar.hug === 0 ? false 
@@ -77,8 +90,9 @@ Variants {
         Hypr.GlobalShortcut {
             name: "launcher"
             onPressed: {
-                if (scope.modelData.name === Hyprland.focusedMonitor && !scope.launcherVisible)
-                scope.launcherVisible = !scope.launcherVisible
+                if (scope.modelData.name === Hyprland.focusedMonitor) {
+                    Global.get(scope.modelData).launcherVisibility = !Global.get(scope.modelData).launcherVisibility
+                }
             }
         }
 
@@ -107,11 +121,10 @@ Variants {
 
         Dock {
             id: dock
+            //launcherVisible: scope.launcherVisible
+            screen: scope.modelData
         }
-        // place here cuz i need reactivity with dock hover
-        LyricsEngine {
-            panelHovered: dock.panelHovered
-        }
+
         Timer {
             id: controlPanelHide
             interval: 500
@@ -127,13 +140,12 @@ Variants {
             onTriggered: powermenu.active = false
         }
         Timer {
-            id: launcherHide
+            id: launcherClose
             interval: 300
             running: false
             repeat: false
             onTriggered: launcher.active = false
         }
-
 
         LazyLoader {
             id: powermenu
@@ -164,8 +176,9 @@ Variants {
                 if (active && item && scope) {
                     item.scope = scope
                     item.screen = scope.modelData
-                    item.visibility = true
+                    item.visibility = false
                 }
+                Global.get(scope.modelData).hideLyrics = launcher.active
             }
         }
     }

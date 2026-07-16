@@ -1,22 +1,20 @@
-pragma ComponentBehavior: Bound
 import Quickshell
-import QtQuick.Shapes
 import Quickshell.Hyprland as Hypr
 import Quickshell.Wayland
 import QtQuick
-import QtQuick.Layouts
 
 import qs.config
 import qs.services
 import qs.components
+import qs.modules
 
 PanelWindow{
     id:root
 
+    property bool launcherVisible: Global.get(root.screen).launcherVisibility
+
     property real showPreviewIndex: 0
     property int floatingHeight: 5
-    property bool panelHovered: panelHover.hovered //for lyrics
-    property bool hoverBlocker: false
 
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "dock"
@@ -31,7 +29,7 @@ PanelWindow{
     exclusionMode: Config.dock.ignorePanel ? ExclusionMode.Ignore : ExclusionMode.Normal
     color:"transparent"
 
-    property bool isShowed: (Config.dock.hideOnTile ? !Hyprland.hasTiling : false) || panelHover.hovered || root.hoverBlocker
+    property bool isShowed: (Config.dock.hideOnTile ? !Hyprland.hasTiling : false) || panelHover.hovered || root.launcherVisible
 
     margins.bottom: root.isShowed
         ? 0
@@ -118,13 +116,13 @@ PanelWindow{
         return values;
     }
 
-
     component TaskbarAppEntry: QtObject {
         id: wrapper
         required property string appId
         required property list<var> toplevels
         required property bool pinned
     }
+
     Component {
         id: appEntryComp
         TaskbarAppEntry {}
@@ -140,9 +138,7 @@ PanelWindow{
         running:false
         onTriggered: root.showPreviewIndex = 0
     }
-    HoverHandler {
-        id: panelHover
-    }
+
 
     ItemShadow {
         transparency: 0.8
@@ -151,46 +147,39 @@ PanelWindow{
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         anchors.topMargin: root.isShowed && Config.dock.floating ? (20 - root.floatingHeight - Config.bar.borderWidth) : 20 //shadow
-        width: repeater.implicitWidth + 60 //round edge padding
+
+        // if launcher on and size < 400
+        width: !root.launcherVisible 
+        ? content.implicitWidth + 60 
+        : ((content.implicitWidth + 60) < 440 ? 400 + (Config.dock.floating ? 40 : 60) : content.implicitWidth + 60) //round edge padding
         height: 40
+
         side: 3
         radius:20
+
         baseColor: Config.dock.floating ? "transparent" : Color.base
 
-        Behavior on height {
-            Anim{}        
+        Behavior on height { Anim{} }
+        Behavior on width { Anim{} }
+
+        HoverHandler {
+            id: panelHover
+            margin:10
+            onHoveredChanged: {
+                Global.get(root.screen).panelHovered = panelHover.hovered
+                console.log(panelHover.hovered, Global.get(root.screen).panelHovered)
+            }
         }
+
         Rectangle {
             radius: 15
             color: Config.dock.floating ? Color.base : "transparent"
             anchors.fill:parent
             anchors.leftMargin: 20
             anchors.rightMargin: 20
-            RowLayout {
-                id:repeater
-                spacing: 0
-                anchors {
-                    top:parent.top
-                    horizontalCenter:parent.horizontalCenter
-                    topMargin:1
-                }
-                Item {
-                    implicitWidth: 35
-                    implicitHeight: 35
-                    MaterialIcon {
-                        icon: "apps"
-                        color: Color.secondary
-                        font.pixelSize: 32
-                    }
-                }
-                Repeater {
-                    model: root.apps
-
-                    delegate: AppIcon  {
-                        id: appIcon
-                        parentPointer: root
-                    }
-                }
+            Content {
+                id: content
+                parentroot: root
             }
         }
     }
