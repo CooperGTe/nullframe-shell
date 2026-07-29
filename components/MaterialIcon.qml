@@ -1,5 +1,6 @@
 // a thin wrapper for Material Symbols
 import QtQuick
+import qs.config
 
 Text {
     id: root
@@ -7,6 +8,8 @@ Text {
     property real fill: 0
     property int grad: 0
     required property string icon
+
+    color: Color.secondary
 
     font.family: "Material Symbols Rounded"
     font.hintingPreference: Font.PreferFullHinting
