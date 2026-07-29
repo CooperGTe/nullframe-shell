@@ -18,7 +18,8 @@ Singleton {
     property alias desktopWidget: json.desktopWidget
     property alias dock: json.dock
     property alias showLyrics: json.showLyrics
-    onBarChanged: console.log(bar.hug)
+    property alias widgetPanel: json.widgetPanel
+    property alias weatherLocationName: json.weatherLocationName
 
     Timer {
         id: fileReloadTimer
@@ -52,8 +53,10 @@ Singleton {
             property Launcher launcher: Launcher {}
             property DesktopWidget desktopWidget: DesktopWidget {}
             property Dock dock: Dock {}
+            property WidgetPanel widgetPanel: WidgetPanel {}
 
             property bool showLyrics: true
+            property string weatherLocationName: ""
 
             component Bar: JsonObject {
                 property real hug: 0
@@ -99,6 +102,9 @@ Singleton {
                 property list<string> pinnedApp: ["kitty","thunar"]
                 property bool autoHide: false
                 property real scale: 1
+            }
+            component WidgetPanel: JsonObject {
+                property bool floating: false
             }
         }
     }
