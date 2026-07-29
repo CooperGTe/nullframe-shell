@@ -1,0 +1,312 @@
+import QtQuick    
+import QtQuick.Controls
+import QtQuick.Layouts
+import qs.components
+import qs.services
+import qs.config
+
+Rectangle {
+    id:root
+    property int currentMonth: Number(Time.format("MM")) - 1
+    property int currentYear:  Number(Time.format("yyyy"))
+    Layout.fillWidth:true
+    color: Color.container
+    radius:10
+    implicitHeight:180
+    implicitWidth:300
+    RowLayout {
+        anchors.fill:parent
+        anchors.margins:10
+
+        ColumnLayout {
+            id: monthColumn
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+
+            DayOfWeekRow {
+                id: dayOfWeek
+                Layout.fillWidth: true
+                locale: Qt.locale("ja_JP")
+
+                delegate: Item {
+                    id: dayOfWeekItem
+                    required property var model
+
+                    implicitWidth: implicitHeight
+                    implicitHeight: text1.implicitHeight
+
+                    Text {
+                        id: text1
+                        text: model.narrowName
+                        anchors.centerIn: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        color: Color.primary
+                        font.pixelSize: 12
+                    }
+                }
+            }
+            Item {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                Layout.minimumHeight: 100
+                MonthGrid {
+                    id: grid
+                    anchors.fill: parent 
+
+                    property date todayOverride: Time.date
+
+                    month: root.currentMonth
+                    year:  root.currentYear
+                    locale: Qt.locale("en_US")
+
+                    onClicked: date => todayOverride = date
+
+                    delegate: Item {
+                        id: dayItem
+
+                        required property var model
+                        property bool overrideDate: model.date === grid.todayOverride
+
+                        width: 20
+                        height: 20
+
+                        Rectangle {
+                            id: todayPanel
+                            anchors.fill: parent
+
+                            radius: 12
+
+                            color: model.today ? Color.primary : "transparent"
+                            border.width: model.today ? 0 : 2
+                            // border.color: hover.hovered ? Theme.colors.bg_light : "transparent"
+                            border.color: {
+                                if (hover.hovered) return Color.container_high
+                                return "transparent"
+                            }
+
+                            HoverHandler {
+                                id: hover
+                            }
+                        }
+
+                        Text {
+                            id: text
+                            anchors.fill: parent
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                            text: grid.locale.toString(dayItem.model.day)
+
+                            color: {
+                                if (model.today) return Color.base
+
+                                const dayOfWeek = dayItem.model.date.getUTCDay()
+                                if (dayOfWeek === 5 || dayOfWeek === 6)
+                                return Color.tertiary
+                                return Color.primary
+                            }
+                            opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : 0.3
+                            font.pixelSize: 12
+                            font.weight: Font.Light
+                            // font.bold: true
+                        }
+                    }
+                }
+                Rectangle {
+                    id: todayIndicator
+
+                    readonly property Item todayInGrid: grid.contentItem.children.find(c => {
+                        const d1 = c.model.date
+                        const d2 = grid.todayOverride
+
+                        return d1.getFullYear() === d2.getFullYear()
+                        && d1.getMonth() === d2.getMonth()
+                        && d1.getDate() === d2.getDate()
+                    }) ?? null
+                    property Item t: todayInGrid
+
+                    // Component.onCompleted: {
+                    //   console.log(grid.todayOverride)
+                    //   console.log(t)
+                    // }
+
+                    // Connections {
+                    //   target: grid
+                    //   function onTodayOverrideChanged() {
+                    //     // todayIndicator.t = grid.contentItem.children.find(c => +c.model.date === +grid.todayOverride) ?? null
+                    //     // console.log(todayIndicator.t)
+                    //     console.log(grid.todayOverride)
+                    //   }
+                    // }
+
+                    x: t?.x ?? 0
+                    y: t?.y ?? 0
+
+                    width: t?.width ?? 0
+                    height: t?.height ?? 0
+
+                    radius: 10
+
+                    color: "transparent"
+                    border.width: 2
+                    border.color: Color.primary
+
+                    Behavior on x {
+                        NumberAnimation {
+                            duration: 250
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
+
+                    Behavior on y {
+                        NumberAnimation {
+                            duration: 250
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
+                }
+            }
+        }
+        ColumnLayout {
+            Layout.fillHeight: true
+            Layout.preferredWidth: 140
+            spacing:0
+            Text {
+                text: Time.format("MMM. d")
+                font.bold:true
+                font.pointSize:30
+                Layout.alignment:Qt.AlignRight
+                color: Color.primary
+            }
+            Text {
+                text:Time.format("dddd")
+                font.bold:true
+                color: Color.primary
+                Layout.alignment:Qt.AlignRight
+            }
+            //moonclock
+            Canvas {
+                id: moonCanvas
+                implicitWidth: 30
+                implicitHeight: 30
+                Layout.alignment: Qt.AlignRight
+                Layout.topMargin: 10
+                Layout.bottomMargin: 30
+
+                antialiasing: true
+
+                property real phase: Time.synodicDays / 29.53059 // 0 = new, 0.5 = full, 1 = new again
+                property color shadowColor: Color.container
+                property color litColor: Color.primary
+
+                onPhaseChanged: requestPaint()
+                Component.onCompleted: requestPaint()
+
+                onPaint: {
+                    var ctx = getContext("2d");
+                    var w = width, h = height;
+                    var cx = w / 2, cy = h / 2;
+                    var r = Math.min(w, h) / 2;
+
+                    ctx.reset();
+
+                    // base disc = dark side
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+                    ctx.fillStyle = shadowColor;
+                    ctx.fill();
+
+                    var theta = phase * 2 * Math.PI;
+                    var a = -r * Math.cos(theta);   // signed horizontal semi-axis of the terminator ellipse
+                    var waxing = phase < 0.5;
+
+                    ctx.save();
+                    ctx.translate(cx, cy);
+                    if (!waxing) ctx.scale(-1, 1); // mirror: waning grows on the left instead
+
+                    ctx.beginPath();
+                    ctx.arc(0, 0, r, -Math.PI / 2, Math.PI / 2, false); // outer limb (true circle)
+                    ctx.scale(a / r, 1);
+                    ctx.arc(0, 0, r, Math.PI / 2, 1.5 * Math.PI, false); // terminator (circle squashed into an ellipse)
+                    ctx.closePath();
+
+                    ctx.fillStyle = litColor;
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }         
+            RowLayout {
+                id: monthSelector
+                Layout.margins: 0
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                Button {
+                    Layout.alignment: Qt.AlignRight
+                    Layout.rightMargin: 10
+                    implicitHeight: monthText.height
+                    implicitWidth: implicitHeight
+                    background: Rectangle {
+                        color:  "transparent"
+                        radius:5
+                        border.width:2
+                        border.color: Color.container_high
+                        anchors.fill:parent
+                    }
+                    onClicked: {
+                        root.currentMonth--
+                        if (root.currentMonth < 0) {
+                            root.currentMonth = 11
+                            root.currentYear--
+                        }
+                    }
+                    MaterialIcon {
+                        anchors.centerIn: parent
+                        icon: "keyboard_arrow_left"
+                        font.pixelSize: 24
+                        color: Color.primary
+                    }
+                }
+
+                Button {
+                    Layout.alignment: Qt.AlignRight
+                    Layout.rightMargin: 10
+                    implicitHeight: monthText.height
+                    implicitWidth: implicitHeight
+                    background: Rectangle {
+                        color:  "transparent"
+                        radius:5
+                        border.width:2
+                        border.color: Color.container_high
+                        anchors.fill:parent
+                    }
+                    onClicked: {
+                        root.currentMonth++
+                        if (root.currentMonth > 11) {
+                            root.currentMonth = 0
+                            root.currentYear++
+                        }
+                    }
+
+                    MaterialIcon {
+                        anchors.centerIn: parent
+                        icon: "keyboard_arrow_right"
+                        font.pixelSize: 24
+                        color: Color.primary
+                    }
+                }
+
+                Text {
+                    id: monthText
+                    Layout.alignment: Qt.AlignLeft
+                    Layout.fillWidth: true
+                    horizontalAlignment: Text.AlignRight
+
+                    text: `${root.currentYear} ${Qt.formatDateTime(new Date(root.currentYear, root.currentMonth, 1), "MMM")}(${root.currentMonth})`
+
+                    font.pointSize: 10
+                    color: Color.primary
+                }
+            }
+        }
+    }
+}

@@ -29,7 +29,7 @@ PanelWindow{
     exclusionMode: Config.dock.ignorePanel ? ExclusionMode.Ignore : ExclusionMode.Normal
     color:"transparent"
 
-    property bool isShowed: (Config.dock.hideOnTile ? !Hyprland.hasTiling : false) || panelHover.hovered || root.launcherVisible
+    property bool isShowed: (Config.dock.hideOnTile ? (Compositor.isNiri ? !Compositor.hasTiling || Compositor.overview : !Compositor.hasTiling) : false) || panelHover.hovered || root.launcherVisible
 
     margins.bottom: root.isShowed
         ? 0

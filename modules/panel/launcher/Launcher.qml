@@ -10,13 +10,13 @@ import Quickshell.Wayland
 import qs.config
 import qs.components
 import qs.modules
+import qs.services
 
 
 PanelWindow {
     id:root
 
     property var scope
-    property var screen
     property var visibility
 
     property int selectedIndex: 0
@@ -26,7 +26,7 @@ PanelWindow {
     property bool listview: true
 
     WlrLayershell.keyboardFocus : root.visibility 
-        ? (root.focusStealer ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand)
+        ? (root.focusStealer ? WlrKeyboardFocus.Exclusive : (Compositor.isNiri ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.OnDemand)) //ondemand is just not work on niri
         : WlrKeyboardFocus.None
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "launcher"

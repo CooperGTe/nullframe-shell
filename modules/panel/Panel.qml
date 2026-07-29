@@ -1,9 +1,11 @@
 import QtQuick
 import Quickshell
+import Quickshell.Io
 
 import qs.modules.panel.bar
 import qs.modules.panel.dock
 import qs.modules.panel.controlpanel
+import qs.modules.panel.widgetpanel
 import qs.modules.panel.launcher
 import qs.modules.powerMenu
 import qs.modules.panel
@@ -11,8 +13,6 @@ import qs.modules.panel
 import qs.services
 import qs.config
 import qs.modules
-
-import Quickshell.Hyprland as Hypr
 
 Variants {
     model: Quickshell.screens
@@ -73,24 +73,19 @@ Variants {
         : (Config.bar.hug === 2 ? Hyprland.occupiedWorkspace 
         : true)))
 
-        Hypr.GlobalShortcut {
-            name: "controlpanel"
-            onReleased: {
-                if (scope.modelData.name === Hyprland.focusedMonitor)
+        IpcHandler {
+            target: "panel"
+
+            function toggleControlPanel(): void {
+                if (scope.modelData.name === Compositor.focusedMonitor)
                 scope.controlPanelVisible = !scope.controlPanelVisible
             }
-        }
-        Hypr.GlobalShortcut {
-            name: "powermenu"
-            onPressed: {
-                if (scope.modelData.name === Hyprland.focusedMonitor)
+            function togglePowerMenu(): void {
+                if (scope.modelData.name === Compositor.focusedMonitor)
                 scope.powerMenuVisible = !scope.powerMenuVisible
             }
-        }
-        Hypr.GlobalShortcut {
-            name: "launcher"
-            onPressed: {
-                if (scope.modelData.name === Hyprland.focusedMonitor) {
+            function toggleLauncher(): void {
+                if (scope.modelData.name === Compositor.focusedMonitor) {
                     Global.get(scope.modelData).launcherVisibility = !Global.get(scope.modelData).launcherVisibility
                 }
             }
@@ -102,6 +97,12 @@ Variants {
             scope: scope
             screen: scope.modelData
             controlPanelVisible: scope.controlPanelVisible
+        }
+        WidgetPanel {
+            id: widgetpanel
+            barRoot: bar
+            scope: scope
+            screen: scope.modelData
         }
 
         Border {

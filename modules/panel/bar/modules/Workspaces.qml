@@ -22,9 +22,9 @@ Item {
         acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
         onWheel: (event) => {
             if (event.angleDelta.y < 0)
-                Hyprland.dispatch("workspace r+1")
-            else if (event.angleDelta.y > 0 && Hyprland.activeWorkspace > 1)
-                Hyprland.dispatch("workspace r-1")
+                Compositor.focusWorkspace(+1, true)
+            else if (event.angleDelta.y > 0 && Compositor.activeWorkspace > 1)
+                Compositor.focusWorkspace(-1, true)
         }
     }
     
@@ -56,17 +56,10 @@ Item {
                     model: root.workspaceLength
                     Rectangle {
                         required property int index
-                        property int wsId: index + (1 + (root.workspaceLength * Math.floor((Hyprland.activeWorkspace - 1) / root.workspaceLength)))
-                        property int toplevelCount: Hyprland.topLevel
-                        .filter(t => t.workspace && t.workspace.id === wsId)
-                        .length
-                        property int topleveltop: Hyprland.topLevel
-                        .filter(t => t.workspace && t.workspace.id === wsId + 1)
-                        .length
-                        property int toplevelbottom: Hyprland.topLevel
-                        .filter(t => t.workspace && t.workspace.id === wsId - 1)
-                        .length
-
+                        property int wsId: index + (1 + (root.workspaceLength * Math.floor((Compositor.activeWorkspace - 1) / root.workspaceLength)))
+                        property int toplevelCount: Compositor.getOccupiedws(wsId)
+                        property int topleveltop: Compositor.getOccupiedws(wsId + 1)
+                        property int toplevelbottom: Compositor.getOccupiedws(wsId - 1)
 
                         Layout.alignment:Qt.AlignHCenter
                         implicitWidth: 26
@@ -90,17 +83,10 @@ Item {
                     model: root.workspaceLength
                     Rectangle {
                         required property int index
-                        property int wsId: index + (1 + (root.workspaceLength * Math.floor((Hyprland.activeWorkspace - 1) / root.workspaceLength)))
-                        property int toplevelCount: Hyprland.topLevel
-                        .filter(t => t.workspace && t.workspace.id === wsId)
-                        .length
-                        property int topleveltop: Hyprland.topLevel
-                        .filter(t => t.workspace && t.workspace.id === wsId + 1)
-                        .length
-                        property int toplevelbottom: Hyprland.topLevel
-                        .filter(t => t.workspace && t.workspace.id === wsId - 1)
-                        .length
-
+                        property int wsId: index + (1 + (root.workspaceLength * Math.floor((Compositor.activeWorkspace - 1) / root.workspaceLength)))
+                        property int toplevelCount: Compositor.getOccupiedws(wsId)
+                        property int topleveltop: Compositor.getOccupiedws(wsId + 1)
+                        property int toplevelbottom: Compositor.getOccupiedws(wsId - 1)
 
                         Layout.alignment:Qt.AlignHCenter
                         implicitWidth: 26
@@ -126,11 +112,11 @@ Item {
                 verticalCenter: Config.barOrientation ? parent.verticalCenter : undefined
             }
 
-            y: !Config.barOrientation ? ((((Hyprland.activeWorkspace - 1) % root.workspaceLength) * 26) + 2) : 0
-            x: Config.barOrientation ? ((((Hyprland.activeWorkspace - 1) % root.workspaceLength) * 26) + 3) : 0
+            y: !Config.barOrientation ? ((((Compositor.activeWorkspace - 1) % root.workspaceLength) * 26) + 2) : 0
+            x: Config.barOrientation ? ((((Compositor.activeWorkspace - 1) % root.workspaceLength) * 26) + 3) : 0
             //y: (root.monitor?.activeWorkspace?.id - 1 ?? 0) * 25 - 2
 
-            color: Hyprland.occupiedWorkspace ? Color.primary : Color.secondary_container
+            color: Compositor.occupiedWorkspace ? Color.primary : Color.secondary_container
             width: 26
             height: 26
 
@@ -163,11 +149,9 @@ Item {
                     model: root.workspaceLength
                     Rectangle {
                         required property int index
-                        property int wsId: index + (1 + (root.workspaceLength * Math.floor((Hyprland.activeWorkspace - 1) / root.workspaceLength)))
-                        property bool active: Hyprland.activeWorkspace === wsId
-                        property int toplevelCount: Hyprland.topLevel
-                        .filter(t => t.workspace && t.workspace.id === wsId)
-                        .length
+                        property int wsId: index + (1 + (root.workspaceLength * Math.floor((Compositor.activeWorkspace - 1) / root.workspaceLength)))
+                        property bool active: Compositor.activeWorkspace === wsId
+                        property int toplevelCount: Compositor.getOccupiedws(wsId)
 
                         implicitWidth: 26
                         implicitHeight: 26
@@ -204,7 +188,7 @@ Item {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
                             hoverEnabled: true
-                            onClicked: Hyprland.dispatch(`workspace ${wsId}`)
+                            onClicked: Compositor.focusWorkspace(parent.wsId)
                         }
                     }
                 }
@@ -221,11 +205,9 @@ Item {
                     model: root.workspaceLength
                     Rectangle {
                         required property int index
-                        property int wsId: index + (1 + (root.workspaceLength * Math.floor((Hyprland.activeWorkspace - 1) / root.workspaceLength)))
-                        property bool active: Hyprland.activeWorkspace === wsId
-                        property int toplevelCount: Hyprland.topLevel
-                        .filter(t => t.workspace && t.workspace.id === wsId)
-                        .length
+                        property int wsId: index + (1 + (root.workspaceLength * Math.floor((Compositor.activeWorkspace - 1) / root.workspaceLength)))
+                        property bool active: Compositor.activeWorkspace === wsId
+                        property int toplevelCount: Compositor.getOccupiedws(wsId)
 
                         implicitWidth: 26
                         implicitHeight: 26
@@ -262,7 +244,7 @@ Item {
                             anchors.fill: parent
                             acceptedButtons: Qt.LeftButton
                             hoverEnabled: true
-                            onClicked: Hyprland.dispatch(`workspace ${wsId}`)
+                            onClicked: Compositor.focusWorkspace(parent.wsId)
                         }
                     }
                 }

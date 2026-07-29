@@ -20,7 +20,8 @@ PanelWindow {
     property real shadowRange: 16
 
     WlrLayershell.layer: WlrLayer.Top
-    exclusiveZone:Config.barTotalWidth
+    exclusionMode: ExclusionMode.Ignore
+
     color: "transparent"
 
     anchors {

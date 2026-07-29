@@ -6,7 +6,7 @@ import qs.config
 
 Rectangle {
     id:root
-    property bool extend: false
+    property bool extend: true
 
     Layout.fillHeight:true 
     Layout.fillWidth:true
@@ -85,7 +85,7 @@ Rectangle {
         }
         StackView {
             id: stack
-            initialItem: cal
+            initialItem: nc
             Layout.fillWidth: true
             Layout.fillHeight: true
             clip:true

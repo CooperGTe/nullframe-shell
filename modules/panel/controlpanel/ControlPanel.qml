@@ -1,14 +1,17 @@
 pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Effects
+
 import Quickshell
 import Quickshell.Hyprland as Hypr
 import Quickshell.Wayland
+
 import qs.config
 import qs.services
 
 import "components"
+import qs.components
 
 PanelWindow {
     id:root
@@ -18,18 +21,21 @@ PanelWindow {
     property bool controlPanelVisible: false
     property bool visible: scope.controlPanelVisible
     property bool anim: false
+    property real wsch: Hyprland.activeWorkspace
+
+    onWschChanged: {
+        if (scope) root.scope.controlPanelVisible = false
+    }
+
     onVisibleChanged: { 
         if (scope.controlPanelVisible) loader.active = true;
         root.anim = scope.controlPanelVisible
         if (scope.controlPanelVisible) grab.active = true
         if (!scope.controlPanelVisible) grab.active = false
     }
-    property real wsch: Hyprland.activeWorkspace
-    onWschChanged: {
-        if (scope) root.scope.controlPanelVisible = false
-    }
 
-    WlrLayershell.layer: WlrLayer.Top
+   WlrLayershell.layer: WlrLayer.Top
+
     implicitWidth: 320+40//margin
     exclusiveZone:0
 
@@ -39,7 +45,6 @@ PanelWindow {
         bottom: -20
         top: -20
     }
-
 
     Behavior on margins.left {
         SequentialAnimation {
@@ -75,30 +80,16 @@ PanelWindow {
             }
         }
     }
-    Connections {
-        target: grab
-    }
-    Item {
-        Component.onCompleted: {
-            parent.layer.enabled = true;
-            parent.layer.effect = effectComponent;
-        }
 
-        Component {
-            id: effectComponent
-            MultiEffect {
-                shadowEnabled: true
-                shadowOpacity: 1
-                shadowColor: "black"
-                shadowBlur: 1
-                shadowScale: 1
-            }
-        }
-    }
+    ItemShadow {}
+
     Loader {
         id:loader
+
         active:true
+
         anchors.fill: parent
+
         sourceComponent: Rectangle {
             color: Color.base
             radius:13

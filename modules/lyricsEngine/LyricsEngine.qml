@@ -50,6 +50,7 @@ Variants {
                 const raw = lrcFile.text()
                 root.lrcRaw = raw
                 root.lrcParsed = root.parseLrc(raw)
+                console.log(root.artist.replace(" feat. ", ", ").replace(" & ", ", "), "-", root.activePlayer.trackTitle + ".lrc")
             }
             onLoadFailed: {
                 const raw = "";
@@ -137,9 +138,12 @@ Variants {
             onTriggered: root.showLyrics = true
         }
         LazyLoader {
-            active: root.showLyrics && (root.modelData.name === Hyprland.focusedMonitor)
+            //active: root.showLyrics && (root.modelData.name === Hyprland.focusedMonitor)
+            active: root.showLyrics
             PanelWindow {
                 id: winroot
+
+                property bool showSubtitle: true
 
                 screen:root.modelData
 
@@ -148,26 +152,39 @@ Variants {
 
                 exclusionMode: ExclusionMode.Ignore
 
+                implicitWidth: root.currentLine != "" ? subtitle.implicitWidth + 20 : 0
+                implicitHeight: subtitle.implicitHeight
+
                 color: "transparent"
 
-                //mask: Region {}
                 anchors {
                     bottom: true
                 }
 
-                margins { 
-                    bottom: Config.dock.enable 
-                    ? (Config.dock.hideOnTile ? (Hyprland.hasMaximize ? 70 : (Hyprland.hasTiling ? (Global.get(root.modelData).panelHovered ? 55 : 10) : 55))
-                    : (Hyprland.hasMaximize ? 70 : 10))
-                    : (Hyprland.hasMaximize ? 70 : 10)
+                margins {
+                    bottom: {
+                        if (!Config.dock.enable) return -60
+                        if (!Config.dock.hideOnTile) return 55
+
+                        const hovered = Global.get(root.modelData).panelHovered
+                        const tiling = Compositor.hasTiling
+                        const overview = Compositor.overview
+
+                        if (overview) return 55
+                        if (tiling) return hovered ? 55 : 10
+                        return 55
+                    }
+                }                
+                
+                Behavior on margins.bottom {
+                    NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
                 }
-                property bool showSubtitle: true
-                implicitWidth: root.currentLine != "" ? subtitle.implicitWidth + 20 : 0
-                implicitHeight: subtitle.implicitHeight
+
+
                 Rectangle {
                     id:subbox
                     implicitHeight: subtitle.implicitHeight
-                    implicitWidth: subtitle.implicitWidth + 20
+                    implicitWidth: subtitle.implicitWidth < 1 ? 0 : subtitle.implicitWidth + 20 //fix 1 pixel width on niri
                     opacity: winroot.showSubtitle ? 1 : 0.2
                     border {
                         width:1

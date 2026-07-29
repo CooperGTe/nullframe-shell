@@ -1,40 +1,49 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
-import Quickshell
-import Quickshell.Widgets
 import QtQuick.Layouts
 import QtQuick.Controls
+
+import Quickshell
+import Quickshell.Widgets
 import Quickshell.Wayland
+import Quickshell.Services.Mpris
+
 import qs.services
 import qs.components
 import qs.config
-import Quickshell.Services.Mpris
 
 Variants {
     model: Quickshell.screens
+
     Scope {
         id: root
+
         readonly property MprisPlayer activePlayer: MprisController.activePlayer
         readonly property real position: MprisController.visualPosition
         required property var modelData
         
         LazyLoader {
-            active: Hyprland.hasTiling ? false : true
+            active: Compositor.hasTiling ? false : true
+
             PanelWindow {
                 id:wgRoot
+
                 // Layer props
                 screen: root.modelData
                 exclusionMode: ExclusionMode.Normal
                 WlrLayershell.layer: WlrLayer.Bottom
+
                 color: "transparent"
 
                 anchors {
                     bottom: true
                     right: true
                 }
+
                 implicitWidth:content.implicitWidth + 30
                 implicitHeight:content.implicitHeight + 30
+
                 ColumnLayout {
                     id:content
                     spacing:0
@@ -52,7 +61,7 @@ Variants {
                             Text {
                                 text: Time.format("hh:mm")
                                 Layout.alignment: Qt.AlignRight
-                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.primary
+                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.secondary
                                 font.pixelSize: 50
                                 font.bold:true
                                 font.family: "monospace"
@@ -63,7 +72,7 @@ Variants {
                                 text: Time.format("yyyy年MM月dd日")
                                 Layout.alignment: Qt.AlignRight
                                 Layout.topMargin: -10
-                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.primary
+                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.secondary
                                 font.pixelSize: 15
                                 font.bold: false
                                 style: Text.Raised
@@ -103,7 +112,7 @@ Variants {
                                     elide: Text.ElideRight
                                     Layout.maximumWidth: 140
                                     font.pixelSize: 12
-                                    color:Color.primary
+                                    color:Color.on_surface
                                     font.bold:true
                                 }
                                 Text{
@@ -112,7 +121,7 @@ Variants {
                                     Layout.maximumWidth: 140
                                     Layout.topMargin: -5
                                     font.pixelSize: 8
-                                    color:Color.primary
+                                    color:Color.outline
                                 }
                                 Rectangle {
                                     // Stretches to fill all left-over space
@@ -142,7 +151,19 @@ Variants {
                                         }
                                         color: Color.container_high
 
-                                        implicitWidth: parent.width * (1 - (root.position / activePlayer.length)) - 1
+                                        implicitWidth: parent.width * (1 - (root.position / activePlayer.length)) - 3
+                                        radius: parent.radius
+                                    }
+                                    Rectangle {
+                                        anchors {
+                                            right: parent.right
+                                            margins: 2.5
+                                            verticalCenter:parent.verticalCenter
+                                        }
+                                        color: Color.primary
+
+                                        implicitWidth: 5
+                                        implicitHeight: 5
                                         radius: parent.radius
                                     }
                                 }
@@ -153,7 +174,8 @@ Variants {
             }
         }
         LazyLoader {
-            active: Hyprland.hasTiling ? false : true
+            //active: Hyprland.hasTiling ? false : true
+            active: false
 
             PanelWindow {
                 id:calroot
@@ -177,18 +199,19 @@ Variants {
                 Rectangle {
                     anchors.fill: parent
                     //color: "transparent"
-                    color: Qt.rgba(Qt.color(Color.base).r,
+                    color: Color.base
+                    /*color: Qt.rgba(Qt.color(Color.base).r,
                     Qt.color(Color.base).g,
                     Qt.color(Color.base).b,
-                    0.5)
+                    0.5)*/
                     radius: 10
-                    border{
+                    /*border{
                         width: 1
                         color: Qt.rgba(Qt.color(Color.container_high).r,
                         Qt.color(Color.container_high).g,
                         Qt.color(Color.container_high).b,
-                        0.4)                     
-                    }
+                        0.4)
+                    }*/
                     ColumnLayout {
                         id: monthColumn
                         anchors.fill: parent
@@ -197,7 +220,7 @@ Variants {
                         DayOfWeekRow {
                             id: dayOfWeek
                             Layout.fillWidth: true
-                            locale: Qt.locale("en_US")
+                            locale: Qt.locale("ja_JP")
 
                             delegate: Item {
                                 id: dayOfWeekItem
@@ -230,24 +253,24 @@ Variants {
                                 year:  root.currentYear
                                 locale: Qt.locale("en_US")
 
-                                onClicked: date => todayOverride = date
-
                                 delegate: Item {
                                     id: dayItem
 
                                     required property var model
                                     property bool overrideDate: model.date === grid.todayOverride
 
-                                    width: 20
-                                    height: 20
 
                                     Rectangle {
                                         id: todayPanel
-                                        anchors.fill: parent
 
+                                        anchors.centerIn:parent
+                                        width: parent.width
+                                        height: parent.width
+
+                                        color: model.today 
+                                            ? Color.primary 
+                                            : (hover.hovered ? Color.surface_container_high : "transparent")
                                         radius: 12
-
-                                        color: model.today ? Color.primary : "transparent"
                                         border.width: model.today ? 0 : 2
                                         // border.color: hover.hovered ? Theme.colors.bg_light : "transparent"
                                         border.color: {
@@ -282,66 +305,14 @@ Variants {
                                     }
                                 }
                             }
-                            Rectangle {
-                                id: todayIndicator
-
-                                readonly property Item todayInGrid: grid.contentItem.children.find(c => {
-                                    const d1 = c.model.date
-                                    const d2 = grid.todayOverride
-
-                                    return d1.getFullYear() === d2.getFullYear()
-                                    && d1.getMonth() === d2.getMonth()
-                                    && d1.getDate() === d2.getDate()
-                                }) ?? null
-                                property Item t: todayInGrid
-
-                                // Component.onCompleted: {
-                                //   console.log(grid.todayOverride)
-                                //   console.log(t)
-                                // }
-
-                                // Connections {
-                                //   target: grid
-                                //   function onTodayOverrideChanged() {
-                                //     // todayIndicator.t = grid.contentItem.children.find(c => +c.model.date === +grid.todayOverride) ?? null
-                                //     // console.log(todayIndicator.t)
-                                //     console.log(grid.todayOverride)
-                                //   }
-                                // }
-
-                                x: t?.x ?? 0
-                                y: t?.y ?? 0
-
-                                width: t?.width ?? 0
-                                height: t?.height ?? 0
-
-                                radius: 10
-
-                                color: "transparent"
-                                border.width: 2
-                                border.color: Color.primary
-
-                                Behavior on x {
-                                    NumberAnimation {
-                                        duration: 250
-                                        easing.type: Easing.InOutQuad
-                                    }
-                                }
-
-                                Behavior on y {
-                                    NumberAnimation {
-                                        duration: 250
-                                        easing.type: Easing.InOutQuad
-                                    }
-                                }
-                            }
                         }
                     }
                 }
             }
         }
         LazyLoader {
-            active: Hyprland.hasTiling ? false : true
+            //active: Hyprland.hasTiling ? false : true
+            active: false
 
             PanelWindow {
                 id:clockroot
