@@ -7,6 +7,9 @@ Item {
 
     required property real value
 
+    property var color: Color.primary
+    property var baseColor: Color.container_high
+
     implicitHeight: 10
 
     Rectangle {
@@ -18,7 +21,7 @@ Item {
 
         implicitWidth: (parent.width - 10) * root.value +10
 
-        color: Color.primary
+        color: root.color
         radius: 20
     }
 
@@ -30,7 +33,7 @@ Item {
         }
 
         implicitWidth: (parent.width - 10) * (1 - root.value) - 3
-        color: Color.container_high
+        color: root.baseColor
         radius: 20
     }
 
@@ -44,7 +47,7 @@ Item {
         implicitWidth: 5
         implicitHeight: 5
 
-        color: Color.primary
+        color: root.color
         radius: 20
     }
 }

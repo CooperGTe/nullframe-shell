@@ -55,6 +55,7 @@ Rectangle {
         StyledProgressBar {
             value: root.timeProgress
             implicitWidth: parent.width
+            color: Color.tertiary
         }
         StyledText {
             text: (Math.trunc(root.timeProgress * 10000) / 100).toFixed(2) + "% day has passed 〜"
