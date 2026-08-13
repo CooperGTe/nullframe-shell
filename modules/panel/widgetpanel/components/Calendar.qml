@@ -301,7 +301,7 @@ Rectangle {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
 
-                    text: `${root.currentYear} ${Qt.formatDateTime(new Date(root.currentYear, root.currentMonth, 1), "MMM")}(${root.currentMonth})`
+                    text: `${root.currentYear} ${Qt.formatDateTime(new Date(root.currentYear, root.currentMonth, 1), "MMM")}(${root.currentMonth+1})`
 
                     font.pointSize: 10
                     color: Color.primary
