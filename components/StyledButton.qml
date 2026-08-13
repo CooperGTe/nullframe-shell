@@ -30,6 +30,7 @@ Rectangle {
             icon: root.icon
             font.pixelSize: 16
             anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: root.text != "" ? null : parent.horizontalCenter
         }
 
         StyledText {
