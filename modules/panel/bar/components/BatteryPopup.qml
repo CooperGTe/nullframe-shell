@@ -163,7 +163,7 @@ PopupWindow {
                     font.pixelSize: 16
                 }
                 StyledText {
-                    text: "Battery Health: " + root.batteryHealth * 100 + "%"
+                    text: "Battery Health: " + (root.batteryHealth * 100).toFixed(2) + "%"
                     surface: 3
                 }
             }
