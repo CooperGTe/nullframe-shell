@@ -105,7 +105,7 @@ PopupWindow {
             NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
         }
 
-        color: Color.base
+        color: Colors.base
         radius:20
 
         ColumnLayout {
@@ -123,14 +123,14 @@ PopupWindow {
                 ClippedFilledCircularProgress {
                     size: 30
                     value: root.percentage / 100
-                    colPrimary: Color.primary
-                    colSecondary: Color.surface_container
+                    colPrimary: Colors.primary
+                    colSecondary: Colors.surface_container
                     lineWidth: 5
 
                     MaterialIcon {
                         id: boltIcon
                         anchors.centerIn:parent
-                        color: Color.secondary
+                        color: Colors.secondary
                         fill: 1
                         icon: root.isCharging ? "bolt" : "battery_android_5"
                         font.pixelSize: 16
@@ -140,7 +140,7 @@ PopupWindow {
                     spacing: -5
                     StyledText {
                         text: root.percentage + "%"
-                        color: Color.primary
+                        color: Colors.primary
                         font.bold:true
                         font.pixelSize: 20
                     }
@@ -148,7 +148,7 @@ PopupWindow {
                         text: "Est: " 
                             + (root.isCharging ? root.formatTime(root.timeToFull) : root.formatTime(root.timeToEmpty))
                             + (root.isCharging ? " To Full" : " To Empty") 
-                        color: Color.outline
+                        color: Colors.outline
                     }
                 }
             }
@@ -159,7 +159,7 @@ PopupWindow {
                 Layout.bottomMargin: -5
                 MaterialIcon {
                     icon: "pulse_alert"
-                    color: Color.secondary
+                    color: Colors.secondary
                     font.pixelSize: 16
                 }
                 StyledText {
@@ -182,8 +182,8 @@ PopupWindow {
         property real value: 0.5
         property int segmentCount: 40
         property real segmentSpacing: 2
-        property color filledColor: Color.tertiary
-        property color emptyColor: Color.surface_container
+        property color filledColor: Colors.tertiary
+        property color emptyColor: Colors.surface_container
 
         width: 200
         height: 20

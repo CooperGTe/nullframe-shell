@@ -13,7 +13,7 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Color.base
+        color: Colors.base
 
         layer.enabled: true
         layer.effect: MultiEffect {

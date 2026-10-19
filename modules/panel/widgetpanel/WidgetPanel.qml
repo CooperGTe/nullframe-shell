@@ -132,10 +132,10 @@ PanelWindow {
                 side:2
                 implicitWidth: drag.open ? parent.width : 0
                 implicitHeight: parent.height
-                baseColor: Config.widgetPanel.floating ? "transparent" : Color.base
+                baseColor: Config.widgetPanel.floating ? "transparent" : Colors.base
 
                 Rectangle {
-                    color: Config.widgetPanel.floating ? Color.base : "transparent"
+                    color: Config.widgetPanel.floating ? Colors.base : "transparent"
                     radius:13
 
                     implicitHeight:parent.height - 30

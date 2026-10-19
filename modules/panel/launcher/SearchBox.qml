@@ -15,7 +15,7 @@ Rectangle {
 
     property var searchPointer: search
     
-    color: Color.base
+    color: Colors.base
     radius: 15
     Layout.fillWidth: true
     Layout.bottomMargin: 5 + Config.bar.borderWidth
@@ -30,7 +30,7 @@ Rectangle {
             height: 20
             width: parent.width
 
-            color: Color.surface_container
+            color: Colors.surface_container
             radius: 10
 
             Rectangle {
@@ -56,7 +56,7 @@ Rectangle {
 
                 anchors.verticalCenter:parent.verticalCenter
 
-                color: Color.secondary
+                color: Colors.secondary
                 radius: 10
             }
 
@@ -70,31 +70,31 @@ Rectangle {
                 StyledText {
                     id:app
                     text: "Apps"
-                    color: root.parentRoot.modeIndex === 0 ? Color.on_secondary : Color.on_surface
+                    color: root.parentRoot.modeIndex === 0 ? Colors.on_secondary : Colors.on_surface
                     Behavior on color { CAnim{} }
                 }
                 StyledText {
                     id:web
                     text: "Web"
-                    color: root.parentRoot.modeIndex === 1 ? Color.on_secondary : Color.on_surface
+                    color: root.parentRoot.modeIndex === 1 ? Colors.on_secondary : Colors.on_surface
                     Behavior on color { CAnim{} }
                 }
                 StyledText {
                     id:cb
                     text: "Clipboard"
-                    color: root.parentRoot.modeIndex === 2 ? Color.on_secondary : Color.on_surface
+                    color: root.parentRoot.modeIndex === 2 ? Colors.on_secondary : Colors.on_surface
                     Behavior on color { CAnim{} }
                 }
                 StyledText {
                     id:emoji
                     text: "Emoji"
-                    color: root.parentRoot.modeIndex === 3 ? Color.on_secondary : Color.on_surface
+                    color: root.parentRoot.modeIndex === 3 ? Colors.on_secondary : Colors.on_surface
                     Behavior on color { CAnim{} }
                 }
                 StyledText {
                     id:cmd
                     text: "Command"
-                    color: root.parentRoot.modeIndex === 4 ? Color.on_secondary : Color.on_surface
+                    color: root.parentRoot.modeIndex === 4 ? Colors.on_secondary : Colors.on_surface
                     Behavior on color { CAnim{} }
                 }
 
@@ -106,20 +106,20 @@ Rectangle {
                     implicitWidth:40
                     implicitHeight:20
                     radius:18
-                    color: Color.surface_container_high
+                    color: Colors.surface_container_high
                     Row {
                         anchors.centerIn:parent
                         Button {
                             focusPolicy: Qt.NoFocus
                             implicitHeight:20
                             background: Rectangle {
-                                color: !root.parentRoot.listview ? Color.surface_container_high : Color.secondary
+                                color: !root.parentRoot.listview ? Colors.surface_container_high : Colors.secondary
                                 radius: 16
                             }
                             contentItem: Row {
                                 MaterialIcon {
                                     icon: "lists"
-                                    color: !root.parentRoot.listview ? Color.secondary : Color.surface_container
+                                    color: !root.parentRoot.listview ? Colors.secondary : Colors.surface_container
                                     font.pixelSize: 16
                                     anchors.verticalCenter:parent.verticalCenter
                                 }
@@ -130,13 +130,13 @@ Rectangle {
                             focusPolicy: Qt.NoFocus
                             implicitHeight:20
                             background: Rectangle {
-                                color: root.parentRoot.listview ? Color.surface_container_high : Color.secondary
+                                color: root.parentRoot.listview ? Colors.surface_container_high : Colors.secondary
                                 radius: 16
                             }
                             contentItem: Row {
                                 MaterialIcon {
                                     icon: "grid_view"
-                                    color: root.parentRoot.listview ? Color.secondary : Color.surface_container
+                                    color: root.parentRoot.listview ? Colors.secondary : Colors.surface_container
                                     font.pixelSize: 16
                                     anchors.verticalCenter:parent.verticalCenter
                                 }
@@ -158,12 +158,12 @@ Rectangle {
                 width: parent.width - (math.visible ? math.implicitWidth + 5 : 0)
 
                 background: Rectangle {
-                    color: Color.surface_container
+                    color: Colors.surface_container
                     radius: 10
                 }
 
                 placeholderText: " Type to search | 󰃬 Type Math Expression"
-                color: Color.on_surface
+                color: Colors.on_surface
 
                 onTextChanged: {
                     root.parentRoot.selectedIndex = 0
@@ -178,7 +178,7 @@ Rectangle {
 
                 anchors.right:parent.right
 
-                color: Color.tertiary
+                color: Colors.tertiary
                 radius: 10
 
                 visible: mathResult.text !== "󰃬 "
@@ -194,7 +194,7 @@ Rectangle {
                     text: "󰃬 " + math.evaluateExpression(search.text)
                     font.pixelSize: 16
                     font.bold: true
-                    color: Color.on_tertiary
+                    color: Colors.on_tertiary
                 }
 
                 function evaluateExpression(expr) {

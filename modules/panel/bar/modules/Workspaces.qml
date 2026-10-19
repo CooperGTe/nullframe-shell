@@ -36,11 +36,9 @@ Item {
             topMargin: Config.barOrientation ? 5 : 0
             bottomMargin:  Config.barOrientation ? 5 : 0
         }
-        topLeftRadius: !Config.barOrientation ? (root.roundStart ? 30 : 8) : (root.roundStart ? 30 : 8)
-        topRightRadius: !Config.barOrientation ? (root.roundStart ? 30 : 8) : (root.roundEnd ? 30 : 8)
-        bottomLeftRadius: !Config.barOrientation ? (root.roundEnd ? 30 : 8) : (root.roundStart ? 30 : 8)
-        bottomRightRadius: ! Config.barOrientation ? (root.roundEnd ? 30 : 8) : (root.roundEnd ? 30 : 8)
-        color: Color.container
+
+        radius: 30
+        color: "transparent"
         // occupation indicator
         Loader {
             anchors.horizontalCenter:parent.horizontalCenter
@@ -58,13 +56,15 @@ Item {
                         required property int index
                         property int wsId: index + (1 + (root.workspaceLength * Math.floor((Compositor.activeWorkspace - 1) / root.workspaceLength)))
                         property int toplevelCount: Compositor.getOccupiedws(wsId)
-                        property int topleveltop: Compositor.getOccupiedws(wsId + 1)
-                        property int toplevelbottom: Compositor.getOccupiedws(wsId - 1)
+                        property int topleveltop: if (index % root.workspaceLength != root.workspaceLength - 1) { return Compositor.getOccupiedws(wsId + 1) }
+                        property int toplevelbottom: if (index % root.workspaceLength != 0) { return Compositor.getOccupiedws(wsId - 1) }
+
+                        //Component.onCompleted: console.log("wsadads: ", Compositor.getOccupiedws(wsId), index,)
 
                         Layout.alignment:Qt.AlignHCenter
                         implicitWidth: 26
                         implicitHeight: 26
-                        color: toplevelCount ?  Color.on_secondary : "transparent"
+                        color: toplevelCount ?  Colors.on_secondary : "transparent"
 
                         bottomLeftRadius: topleveltop ? 0 : 12
                         bottomRightRadius: topleveltop ? 0 : 12
@@ -91,7 +91,7 @@ Item {
                         Layout.alignment:Qt.AlignHCenter
                         implicitWidth: 26
                         implicitHeight: 26
-                        color: toplevelCount ?  Color.container_high : "transparent"
+                        color: toplevelCount ?  Colors.container_high : "transparent"
 
                         bottomLeftRadius: toplevelbottom ? 0 : 12
                         topLeftRadius: toplevelbottom ? 0 : 12
@@ -111,14 +111,16 @@ Item {
                 horizontalCenter: !Config.barOrientation ? parent.horizontalCenter : undefined
                 verticalCenter: Config.barOrientation ? parent.verticalCenter : undefined
             }
+            property int size: Compositor.occupiedWorkspace ? 26 : 18
+            property int inversesize: Compositor.occupiedWorkspace ? 0 : 4
 
-            y: !Config.barOrientation ? ((((Compositor.activeWorkspace - 1) % root.workspaceLength) * 26) + 2) : 0
-            x: Config.barOrientation ? ((((Compositor.activeWorkspace - 1) % root.workspaceLength) * 26) + 3) : 0
+            y: !Config.barOrientation ? ((((Compositor.activeWorkspace - 1) % root.workspaceLength) * 26) + 2 + inversesize) : 0
+            x: Config.barOrientation ? ((((Compositor.activeWorkspace - 1) % root.workspaceLength) * 26) + 3 + inversesize) : 0
             //y: (root.monitor?.activeWorkspace?.id - 1 ?? 0) * 25 - 2
 
-            color: Compositor.occupiedWorkspace ? Color.primary : Color.secondary_container
-            width: 26
-            height: 26
+            color: Compositor.occupiedWorkspace ? Colors.primary : Colors.on_secondary
+            width: size
+            height: size
 
             Behavior on y {
                 NumberAnimation { duration: 150; easing.type: Easing.OutSine }
@@ -128,6 +130,12 @@ Item {
             }
             Behavior on color {
                 ColorAnimation { duration: 200; easing.type: Easing.OutQuad }
+            }
+            Behavior on width {
+                NumberAnimation { duration: 150; easing.type: Easing.OutSine }
+            }
+            Behavior on height {
+                NumberAnimation { duration: 150; easing.type: Easing.OutSine }
             }
         }
 
@@ -178,7 +186,7 @@ Item {
                                 }; 
                                 return root.kanji ? (mapping[wsId] ?? wsId) : wsId
                             }
-                            color: active ? Color.on_secondary : toplevelCount ? Color.secondary : Color.secondary_container
+                            color: active ? Colors.on_secondary : toplevelCount ? Colors.secondary : Colors.secondary_container
                             Behavior on color {
                                 ColorAnimation { duration: 200; easing.type: Easing.OutQuad }
                             }
@@ -234,7 +242,7 @@ Item {
                                 }; 
                                 return root.kanji ? (mapping[wsId] ?? wsId) : wsId
                             }
-                            color: active ? Color.container : toplevelCount ? Color.secondary : Color.secondary_container
+                            color: active ? Colors.container : toplevelCount ? Colors.secondary : Colors.secondary_container
                             Behavior on color {
                                 ColorAnimation { duration: 200; easing.type: Easing.OutQuad }
                             }

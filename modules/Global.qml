@@ -24,4 +24,6 @@ Singleton {
     function get(name) {
         return ensure(name)
     }
+
+    property bool settingVisibility: false
 }

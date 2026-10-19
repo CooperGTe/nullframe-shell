@@ -15,7 +15,7 @@ Rectangle {
     implicitHeight: 80
     Layout.fillWidth: true
 
-    color: Color.surface_container
+    color: Colors.surface_container
     radius: 10
 
     Column {
@@ -55,7 +55,7 @@ Rectangle {
         StyledProgressBar {
             value: root.timeProgress
             implicitWidth: parent.width
-            color: Color.tertiary
+            color: Colors.tertiary
         }
         StyledText {
             text: (Math.trunc(root.timeProgress * 10000) / 100).toFixed(2) + "% day has passed 〜"

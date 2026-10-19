@@ -7,8 +7,8 @@ Item {
 
     required property real value
 
-    property string color: Color.primary
-    property string baseColor: Color.container_high
+    property string color: Colors.primary
+    property string baseColor: Colors.container_high
 
     implicitHeight: 10
 

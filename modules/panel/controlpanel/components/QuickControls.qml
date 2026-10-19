@@ -19,7 +19,7 @@ GridLayout {
         Layout.fillWidth:true
         implicitHeight: 60; 
         radius:20
-        color: Color.container
+        color: Colors.container
         MouseArea {
             anchors.fill:parent
             onClicked: Network.toggleWifi()
@@ -32,13 +32,13 @@ GridLayout {
                 implicitWidth:50
                 implicitHeight:50
                 radius: 15
-                color: Network.wifiEnabled ? Color.primary : Color.container_high
+                color: Network.wifiEnabled ? Colors.primary : Colors.container_high
                 MaterialIcon {
                     icon: "network_wifi"
                     font.pixelSize: 24
                     fill:1
                     anchors.centerIn:parent
-                    color: !Network.wifiEnabled ? Color.primary : Color.container
+                    color: !Network.wifiEnabled ? Colors.primary : Colors.container
                 }
             }
             ColumnLayout {
@@ -47,11 +47,11 @@ GridLayout {
                     text: Network.active ? Network.active.ssid : "Network"
                     font.family:"monospace"
                     font.bold:true
-                    color: Color.primary
+                    color: Colors.primary
                 }
                 Text {
                     text: Network.active?.active ? "Connected" : "Disconnected"
-                    color: Color.secondary
+                    color: Colors.secondary
                     opacity: 0.5
                 }
             }
@@ -62,7 +62,7 @@ GridLayout {
         Layout.fillWidth:true
         implicitHeight: 60; 
         radius:20
-        color: Color.container
+        color: Colors.container
         MouseArea {
             anchors.fill:parent
         }
@@ -74,13 +74,13 @@ GridLayout {
                 implicitWidth:50
                 implicitHeight:50
                 radius: 15
-                color: Color.container_high
+                color: Colors.container_high
                 MaterialIcon {
                     icon: "bluetooth"
                     font.pixelSize: 24
                     anchors.centerIn:parent
                     fill:1
-                    color:Color.primary
+                    color:Colors.primary
                 }
             }
             ColumnLayout {
@@ -89,11 +89,11 @@ GridLayout {
                     text: "Bluetooth"
                     font.family:"monospace"
                     font.bold:true
-                    color:Color.primary
+                    color:Colors.primary
                 }
                 Text {
                     text: "Disconnected"
-                    color: Color.secondary
+                    color: Colors.secondary
                     opacity: 0.5
                 }
             }
@@ -104,34 +104,34 @@ GridLayout {
         radius:20
         Layout.columnSpan:2
         Layout.fillWidth:true
-        color: Color.container
+        color: Colors.container
         RowLayout {
             anchors.margins:5
             anchors.fill:parent
             Rectangle { 
                 implicitHeight: 40
                 radius:15
-                color: Color.container_high
+                color: Colors.container_high
                 Layout.fillWidth:true
                 MaterialIcon {
                     anchors.centerIn:parent
                     icon: "coffee"
                     font.pixelSize: 18
                     fill:0
-                    color: Color.primary
+                    color: Colors.primary
                 }
             }
             Rectangle { 
                 implicitHeight: 40; 
                 radius: 15
                 Layout.fillWidth:true
-                color: Color.primary
+                color: Colors.primary
                 MaterialIcon {
                     icon: "dark_mode"
                     anchors.centerIn:parent
                     font.pixelSize: 18
                     fill:1
-                    color: Color.base
+                    color: Colors.base
                 }
             }
         }
@@ -141,7 +141,7 @@ GridLayout {
         radius:20
         Layout.columnSpan:2
         Layout.fillWidth:true
-        color: Color.container
+        color: Colors.container
         implicitWidth: root.implicitWidth/12
         RowLayout {
             spacing:0
@@ -150,14 +150,14 @@ GridLayout {
                 Layout.leftMargin: 5
                 implicitWidth: 50
                 implicitHeight: 40
-                color:Color.container_high
+                color:Colors.container_high
                 radius: 15
                 MaterialIcon {
                     icon: "nightlight"
                     font.pixelSize: 18
                     anchors.centerIn:parent
                     fill:0
-                    color: Color.primary
+                    color: Colors.primary
                 }
             }
             ColumnLayout {
@@ -166,11 +166,11 @@ GridLayout {
                     text: "Night Light"
                     font.family:"monospace"
                     font.bold:true
-                    color:Color.primary
+                    color:Colors.primary
                 }
                 Text {
                     text: "Off"
-                    color:Color.secondary
+                    color:Colors.secondary
                     opacity: 0.5
                 }
             }
@@ -181,7 +181,7 @@ GridLayout {
         Layout.columnSpan:4
         implicitHeight:1
         Layout.fillWidth:true
-        color: Color.container
+        color: Colors.container
     }
 
     ColumnLayout {
@@ -213,12 +213,12 @@ GridLayout {
                     anchors.verticalCenter:parent.verticalCenter
                     anchors.right:parent.right
                     width: parent.width * (1 - volumeSlider.position -0.024)
-                    color: Color.container
+                    color: Colors.container
                     radius: 10
                     Text {
                         text: `${Math.floor(Pipewire.defaultAudioSink?.audio.volume * 100) ?? 0}%`
                         horizontalAlignment: Text.AlignRight
-                        color: Color.primary
+                        color: Colors.primary
                         font.bold: true
                         anchors.rightMargin:10
                         opacity: volumeSlider.position < 0.8 ? 1 : 0
@@ -237,7 +237,7 @@ GridLayout {
                     height: parent.height - 5
                     anchors.verticalCenter:parent.verticalCenter
                     width: parent.width * (volumeSlider.position - 0.01)
-                    color: Color.primary
+                    color: Colors.primary
                     radius: 10
                     MaterialIcon {
                         icon: "volume_up"
@@ -245,7 +245,7 @@ GridLayout {
                         anchors.right:parent.right
                         font.pixelSize: 20
                         fill:1
-                        color: volumeSlider.position > 0.1 ? Color.base : Color.primary
+                        color: volumeSlider.position > 0.1 ? Colors.base : Colors.primary
                         Behavior on anchors.rightMargin {
                             NumberAnimation { 
                                 duration: 300; 
@@ -262,7 +262,7 @@ GridLayout {
                     Text {
                         text: `${Math.floor(Pipewire.defaultAudioSink?.audio.volume * 100) ?? 0}%`
                         horizontalAlignment: Text.AlignRight
-                        color: Color.base
+                        color: Colors.base
                         font.bold: true
                         anchors.leftMargin:10
                         opacity: volumeSlider.position > 0.8 ? 1 : 0
@@ -284,7 +284,7 @@ GridLayout {
                 height: 30
                 radius: 8
                 x: volumeSlider.visualPosition * volumeSlider.width
-                color: Color.primary
+                color: Colors.primary
             }
             WheelHandler {
                 acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
@@ -324,12 +324,12 @@ GridLayout {
                     anchors.verticalCenter:parent.verticalCenter
                     anchors.right:parent.right
                     width: parent.width * (1 - brightnessSlider.position -0.024)
-                    color: Color.container
+                    color: Colors.container
                     radius: 10
                     Text {
                         text: `${Math.round(Brightness.value*100)}%`
                         horizontalAlignment: Text.AlignRight
-                        color: Color.primary
+                        color: Colors.primary
                         font.bold: true
                         anchors.rightMargin:10
                         opacity: brightnessSlider.position < 0.8 ? 1 : 0
@@ -348,7 +348,7 @@ GridLayout {
                     height: parent.height - 5
                     anchors.verticalCenter:parent.verticalCenter
                     width: parent.width * (brightnessSlider.position - 0.01)
-                    color: Color.primary
+                    color: Colors.primary
                     radius: 10
                     MaterialIcon {
                         icon: "brightness_medium"
@@ -356,7 +356,7 @@ GridLayout {
                         anchors.rightMargin: brightnessSlider.position > 0.1 ? 3 : -33
                         font.pixelSize: 20
                         fill:1
-                        color: brightnessSlider.position > 0.1 ? Color.base : Color.primary
+                        color: brightnessSlider.position > 0.1 ? Colors.base : Colors.primary
                         Behavior on anchors.rightMargin {
                             NumberAnimation { 
                                 duration: 300; 
@@ -373,7 +373,7 @@ GridLayout {
                     Text {
                         text: `${Math.round(Brightness.value*100)}%`
                         horizontalAlignment: Text.AlignRight
-                        color: Color.base
+                        color: Colors.base
                         font.bold: true
                         anchors.leftMargin:10
                         opacity: brightnessSlider.position > 0.8 ? 1 : 0
@@ -395,7 +395,7 @@ GridLayout {
                 height: 30
                 radius: 8
                 x: brightnessSlider.visualPosition * brightnessSlider.width
-                color: Color.primary
+                color: Colors.primary
             }
             WheelHandler {
                 acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad

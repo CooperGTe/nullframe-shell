@@ -16,6 +16,8 @@ PanelWindow{
     property real showPreviewIndex: 0
     property int floatingHeight: 5
 
+    property real size: (40 - 5) * Config.dock.scale
+
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "dock"
     
@@ -25,7 +27,7 @@ PanelWindow{
         right: true
     }
 
-    implicitHeight: 40 + 20//20 for shadow
+    implicitHeight: (40*Config.dock.scale) + 20//20 for shadow
     exclusionMode: Config.dock.ignorePanel ? ExclusionMode.Ignore : ExclusionMode.Normal
     color:"transparent"
 
@@ -33,7 +35,7 @@ PanelWindow{
 
     margins.bottom: root.isShowed
         ? 0
-        : -35 - Config.bar.borderWidth
+        : -root.size - Config.bar.borderWidth
 
     component Anim: NumberAnimation {
         duration: 400
@@ -157,7 +159,7 @@ PanelWindow{
         side: 3
         radius:20
 
-        baseColor: Config.dock.floating ? "transparent" : Color.base
+        baseColor: Config.dock.floating ? "transparent" : Colors.base
 
         Behavior on height { Anim{} }
         Behavior on width { Anim{} }
@@ -173,7 +175,7 @@ PanelWindow{
 
         Rectangle {
             radius: 15
-            color: Config.dock.floating ? Color.base : "transparent"
+            color: Config.dock.floating ? Colors.base : "transparent"
             anchors.fill:parent
             anchors.leftMargin: 20
             anchors.rightMargin: 20

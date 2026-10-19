@@ -35,7 +35,7 @@ Button {
                 anchors.centerIn: parent
                 icon: root.iconName
                 font.pixelSize: 20
-                color: Color.on_surface
+                color: Colors.on_surface
                 fill: parent.hovered ? 1 : 0
             }
             property bool hovered: false
@@ -56,8 +56,8 @@ Button {
             ClippedFilledCircularProgress {
                 size: 28
                 value: parentRoot.position / root.media.length
-                colPrimary: Color.secondary
-                colSecondary: Color.on_secondary
+                colPrimary: Colors.secondary
+                colSecondary: Colors.on_secondary
                 lineWidth: 3
                 Item {
                     anchors.fill: parent
@@ -66,7 +66,7 @@ Button {
                         fill: 1
                         icon: activePlayer && activePlayer.isPlaying ? "pause" : "play_arrow"
                         font.pixelSize: activePlayer && activePlayer.isPlaying ? 15 : 18 //size patch
-                        color: Color.secondary
+                        color: Colors.secondary
                     }
                 }
             }
@@ -95,7 +95,7 @@ Button {
                 anchors.centerIn: parent
                 icon: root.iconName
                 font.pixelSize: 20
-                color: Color.primary
+                color: Colors.primary
                 fill: parent.hovered ? 1 : 0
             }
             WheelHandler {

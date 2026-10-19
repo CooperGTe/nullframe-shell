@@ -31,8 +31,8 @@ Item {
         value: percentage
         valueBarWidth: Config.barOrientation ? 40 : 24
         valueBarHeight: Config.barOrientation ? 24 : 40
-        highlightColor: (isLow && !isCharging) ? Color.tertiary : Color.secondary
-        trackColor: Color.container_high
+        highlightColor: (isLow && !isCharging) ? Colors.tertiary : Colors.secondary
+        trackColor: Colors.container_high
 
         Item {
             anchors.centerIn: parent

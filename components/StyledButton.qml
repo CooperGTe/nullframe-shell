@@ -14,7 +14,7 @@ Rectangle {
     implicitWidth: contentItem.implicitWidth + (contentItem.anchors.margins * 4)
     implicitHeight: contentItem.implicitHeight + (contentItem.anchors.margins * 2)
 
-    color: Color.surface_container_high
+    color: Colors.surface_container_high
     radius: 10
 
     opacity: root.hovered ? 0.8 : 1

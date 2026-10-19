@@ -31,13 +31,13 @@ ColumnLayout {
         MaterialIcon {
             icon: "music_video"
             font.pixelSize: 18
-            color: Color.primary
+            color: Colors.primary
             fill: 0
         }
         Text {
             text: "Media"
             Layout.fillWidth:true
-            color: Color.primary
+            color: Colors.primary
             font.pixelSize:12
             font.bold: true
         }
@@ -46,7 +46,7 @@ ColumnLayout {
             implicitHeight:20
             onClicked: Config.showLyrics = !Config.showLyrics
             background: Rectangle {
-                color: Config.showLyrics ? Color.primary : Color.container
+                color: Config.showLyrics ? Colors.primary : Colors.container
                 radius:20
             }
             RowLayout {
@@ -58,12 +58,12 @@ ColumnLayout {
                     icon: "lyrics"
                     font.pixelSize: 16
                     Layout.bottomMargin: -2//patch uneven symbol
-                    color: !Config.showLyrics ? Color.primary : Color.container
+                    color: !Config.showLyrics ? Colors.primary : Colors.container
                     fill: 0
                 }
                 Text {
                     text: "Lyrics"
-                    color:  !Config.showLyrics ? Color.primary : Color.container
+                    color:  !Config.showLyrics ? Colors.primary : Colors.container
                     font.pixelSize:10
                     font.bold: true
                 }
@@ -79,7 +79,7 @@ ColumnLayout {
         spacing:5
         delegate: ClippingRectangle {
             required property var modelData
-            color: Color.container
+            color: Colors.container
             radius:20
             implicitHeight: 90
             implicitWidth: parent.width
@@ -153,7 +153,7 @@ ColumnLayout {
                     implicitHeight:80
                     radius:17
                     clip: true
-                    color: Color.container_high
+                    color: Colors.container_high
                     Image {
                         anchors.fill: parent
                         source: modelData.trackArtUrl ?? ""
@@ -168,7 +168,7 @@ ColumnLayout {
                         elide: Text.ElideRight
                         Layout.maximumWidth: 190
                         font.pixelSize: 12
-                        color:Color.primary
+                        color:Colors.primary
                         font.bold:true
                     }
                     Text{
@@ -177,7 +177,7 @@ ColumnLayout {
                         Layout.maximumWidth: 140
                         Layout.topMargin: modelData.trackArtist !== "" ? -5 : -10
                         font.pixelSize: 10
-                        color:Color.secondary
+                        color:Colors.secondary
                     }
                     RowLayout {
                         spacing: 5
@@ -189,7 +189,7 @@ ColumnLayout {
                             Layout.preferredHeight: 24
                             visible: modelData.shuffleSupported
                             background: Rectangle { 
-                                color: Color.container 
+                                color: Colors.container 
                                 radius:10
                                 opacity:0.5
                             }
@@ -200,7 +200,7 @@ ColumnLayout {
                                     anchors.centerIn: parent
                                     icon: "repeat_one"
                                     font.pixelSize: 20
-                                    color: Color.primary
+                                    color: Colors.primary
                                     fill: 1
                                 }
                             }
@@ -215,7 +215,7 @@ ColumnLayout {
                             Layout.preferredHeight: 24
                             visible: modelData.canGoPrevious
                             background: Rectangle { 
-                                color: Color.container 
+                                color: Colors.container 
                                 radius:10
                                 opacity:0.5
                             }
@@ -225,7 +225,7 @@ ColumnLayout {
                                     anchors.centerIn: parent
                                     icon: "skip_previous"
                                     font.pixelSize: 20
-                                    color: Color.primary
+                                    color: Colors.primary
                                     fill: parent.hovered ? 1 : 0
                                 }
                                 property bool hovered: false
@@ -244,7 +244,7 @@ ColumnLayout {
                             Layout.preferredHeight: 28
                             visible: modelData.canTogglePlaying
                             background: Rectangle { 
-                                color: Color.primary
+                                color: Colors.primary
                                 radius:20
                                 anchors.fill:parent
                             }
@@ -256,7 +256,7 @@ ColumnLayout {
                                     icon: modelData.isPlaying ? "pause" : "play_arrow"
                                     font.pixelSize: 20
                                     fill: 1
-                                    color: Color.container_high
+                                    color: Colors.container_high
                                 }
                                 property bool hovered: false
                                 MouseArea {
@@ -284,7 +284,7 @@ ColumnLayout {
                             Layout.preferredHeight: 24
                             visible: modelData.canGoNext
                             background: Rectangle { 
-                                color: Color.container 
+                                color: Colors.container 
                                 radius:10
                                 opacity:0.5
                             }
@@ -297,7 +297,7 @@ ColumnLayout {
                                     icon: "skip_next"
                                     font.pixelSize: 20
                                     fill: parent.hovered ? 1 : 0
-                                    color: Color.primary
+                                    color: Colors.primary
                                 }
                                 property bool hovered: false
                                 MouseArea {
@@ -319,7 +319,7 @@ ColumnLayout {
                             Layout.preferredHeight: 24
                             visible: modelData.shuffleSupported
                             background: Rectangle { 
-                                color: Color.container 
+                                color: Colors.container 
                                 radius:10
                                 opacity:0.5
                             }
@@ -330,7 +330,7 @@ ColumnLayout {
                                     anchors.centerIn: parent
                                     icon: "shuffle"
                                     font.pixelSize: 20
-                                    color: Color.primary
+                                    color: Colors.primary
                                     fill: 1
                                 }
                             }
@@ -341,7 +341,7 @@ ColumnLayout {
                         spacing:5
                         Text {
                             text: root.formatTime(visualPosition)
-                            color:Color.primary
+                            color:Colors.primary
                         }
                         Slider {
                             // Stretches to fill all left-over space
@@ -362,7 +362,7 @@ ColumnLayout {
                                         top: parent.top
                                         left: parent.left
                                     }
-                                    color: Color.primary
+                                    color: Colors.primary
 
                                     implicitWidth: parent.width * (visualPosition / modelData.length)
                                     radius: 20
@@ -397,7 +397,7 @@ ColumnLayout {
                         }
                         Text {
                             text: root.formatTime(modelData.length)
-                            color:Color.primary
+                            color:Colors.primary
                         }
                     }
                 }

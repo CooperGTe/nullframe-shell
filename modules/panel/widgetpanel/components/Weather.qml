@@ -24,7 +24,7 @@ Item {
             implicitHeight:24
             Layout.fillWidth: true
 
-            color: Color.surface_container
+            color: Colors.surface_container
             radius:10
 
             Row {
@@ -51,7 +51,7 @@ Item {
             }
         }
         Rectangle {
-            color: Color.surface_container
+            color: Colors.surface_container
             radius:10
             implicitHeight: 100
             Layout.fillWidth: true
@@ -64,7 +64,7 @@ Item {
                     spacing: 5
                     MaterialIcon {
                         icon: Weather.icon
-                        color: Color.secondary
+                        color: Colors.secondary
                         font.pixelSize: 64
                     }
                     Column {
@@ -140,7 +140,7 @@ Item {
         implicitWidth: (hourlyw.width-15)/4
         Layout.fillWidth:true
 
-        color:Color.surface_container
+        color:Colors.surface_container
         radius:10
 
         Item {

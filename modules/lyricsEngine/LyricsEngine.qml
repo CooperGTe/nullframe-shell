@@ -188,7 +188,7 @@ Variants {
                     opacity: winroot.showSubtitle ? 1 : 0.2
                     border {
                         width:1
-                        color:Color.container_high
+                        color:Colors.container_high
                     }
                     Behavior on opacity {
                         NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
@@ -198,8 +198,8 @@ Variants {
                         horizontalCenter: parent.horizontalCenter
                     }
 
-                    //color: Hyprland.hasMaximize ? Qt.rgba(0.031,0.031,0.070,0.3) : Color.base
-                    color: Color.base
+                    //color: Hyprland.hasMaximize ? Qt.rgba(0.031,0.031,0.070,0.3) : Colors.base
+                    color: Colors.base
                     radius: 10
                     MouseArea {
                         anchors.fill: parent
@@ -217,7 +217,7 @@ Variants {
                         anchors.horizontalCenter: parent.horizontalCenter
                         text: root.currentLine
                         font.family: "monospace"
-                        color: Color.primary
+                        color: Colors.primary
                         wrapMode: Text.Wrap
                         horizontalAlignment: Text.AlignHCenter
                         font.pixelSize: 20

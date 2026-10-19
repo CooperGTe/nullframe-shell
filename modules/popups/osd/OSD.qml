@@ -126,12 +126,12 @@ Scope {
                 anchors.fill: parent
                 anchors.margins: 20
 
-				color: Color.base
+				color: Colors.base
 				radius: 15
                 opacity:  root.visibility ? 1 : -0
 
                 border.width: 1
-                border.color: Color.container
+                border.color: Colors.container
 
                 Behavior on opacity {
                     NumberAnimation { duration: 200; easing.type: Easing.InOutQuad }
@@ -147,7 +147,7 @@ Scope {
                         Layout.alignment:Qt.AlignHCenter
                         icon: root.mode === "volume" ? "volume_up" : root.mode === "mpris" ? "music_note" : "brightness_4"
                         font.pixelSize: 24
-                        color: Color.primary
+                        color: Colors.primary
                         fill: root.mode === "volume" | "mpris" ? 1 : 0
                     }
 

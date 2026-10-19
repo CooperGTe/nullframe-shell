@@ -22,8 +22,8 @@ Item {
     
     StyledRect {
         anchors.fill: parent
-        border.width: 1
-        border.color: Color.container_highest
+        border.width: 0
+        border.color: Colors.container_highest
         anchors.margins: Config.barMargin
 
         Loader {
@@ -48,8 +48,8 @@ Item {
 
                     size: 24
                     value: ResourceUsage.cpuUsage
-                    colPrimary:  ResourceUsage.cpuUsage < 0.9 ? Color.secondary : Color.on_surface
-                    colSecondary: Color.container_highest
+                    colPrimary:  ResourceUsage.cpuUsage < 0.9 ? Colors.secondary : Colors.on_surface
+                    colSecondary: Colors.container_highest
                     lineWidth: 3
                     Item {
                         anchors.fill: parent
@@ -58,7 +58,7 @@ Item {
                             icon: "memory"
                             fill:0
                             font.pixelSize: 16
-                            color: Color.secondary
+                            color: Colors.secondary
                         }
                     }
                 }
@@ -70,8 +70,8 @@ Item {
                     ClippedFilledCircularProgress {
                         size: 24
                         value: ResourceUsage.memoryUsed / ResourceUsage.memoryTotal
-                        colPrimary:  Color.secondary
-                        colSecondary: Color.on_secondary
+                        colPrimary:  Colors.secondary
+                        colSecondary: Colors.on_secondary
                         lineWidth: 3
                         sweepDegree: 270
                         Item {
@@ -81,7 +81,7 @@ Item {
                                 icon: "memory_alt"
                                 fill:0
                                 font.pixelSize: 14
-                                color: Color.secondary
+                                color: Colors.secondary
                             }
                         }
                     }
@@ -91,9 +91,9 @@ Item {
                         / (ResourceUsage.memoryTotal - ResourceUsage.memoryUsed)
                         colPrimary:  ((ResourceUsage.memoryUsedCache - ResourceUsage.memoryUsed) 
                         / (ResourceUsage.memoryTotal - ResourceUsage.memoryUsed)) < 0.5 
-                        ? Color.secondary
-                        : Color.on_surface
-                        colSecondary: Color.container_highest
+                        ? Colors.secondary
+                        : Colors.on_surface
+                        colSecondary: Colors.container_highest
                         lineWidth: 3
                         sweepDegree: 60
                         startAngle: 180
@@ -114,11 +114,11 @@ Item {
                             width: pgswap.width  * pgswap.visualPosition
                             height: pgswap.height
                             radius: 4
-                            color: (ResourceUsage.swapUsed / ResourceUsage.swapTotal) < 0.8 ? Color.tertiary : Color.error
+                            color: (ResourceUsage.swapUsed / ResourceUsage.swapTotal) < 0.8 ? Colors.tertiary : Colors.error
                         }
                     }
                     background: Rectangle {
-                        color: Color.container_highest
+                        color: Colors.container_highest
                         radius: 4
                     }
                 }
@@ -135,8 +135,8 @@ Item {
 
                     size: 24
                     value: ResourceUsage.cpuUsage
-                    colPrimary:  ResourceUsage.cpuUsage < 0.9 ? Color.primary : Color.tertiary
-                    colSecondary: Color.container_highest
+                    colPrimary:  ResourceUsage.cpuUsage < 0.9 ? Colors.primary : Colors.tertiary
+                    colSecondary: Colors.container_highest
                     lineWidth: 3
                     Item {
                         anchors.fill: parent
@@ -145,7 +145,7 @@ Item {
                             icon: "memory"
                             fill:0
                             font.pixelSize: 16
-                            color: Color.primary
+                            color: Colors.primary
                         }
                     }
                 }
@@ -157,8 +157,8 @@ Item {
                     ClippedFilledCircularProgress {
                         size: 24
                         value: ResourceUsage.memoryUsed / ResourceUsage.memoryTotal
-                        colPrimary:  Color.secondary
-                        colSecondary: Color.container_highest
+                        colPrimary:  Colors.secondary
+                        colSecondary: Colors.container_highest
                         lineWidth: 3
                         sweepDegree: 270
                         Item {
@@ -168,7 +168,7 @@ Item {
                                 icon: "memory_alt"
                                 fill:0
                                 font.pixelSize: 14
-                                color: Color.primary
+                                color: Colors.primary
                             }
                         }
                     }
@@ -179,9 +179,9 @@ Item {
                         / (ResourceUsage.memoryTotal - ResourceUsage.memoryUsed)
                         colPrimary:  ((ResourceUsage.memoryUsedCache - ResourceUsage.memoryUsed) 
                         / (ResourceUsage.memoryTotal - ResourceUsage.memoryUsed)) < 0.5 
-                        ? Color.secondary
-                        : Color.tertiary
-                        colSecondary: Color.container_highest
+                        ? Colors.secondary
+                        : Colors.tertiary
+                        colSecondary: Colors.container_highest
                         lineWidth: 3
                         sweepDegree: 60
                         startAngle: 180
@@ -200,11 +200,11 @@ Item {
                             height: pgswap1.height  * pgswap1.visualPosition
                             width: pgswap1.width
                             radius: 4
-                            color: (ResourceUsage.swapUsed / ResourceUsage.swapTotal) < 0.8 ? Color.tertiary : Color.error
+                            color: (ResourceUsage.swapUsed / ResourceUsage.swapTotal) < 0.8 ? Colors.tertiary : Colors.error
                         }
                     }
                     background: Rectangle {
-                        color: Color.container_highest
+                        color: Colors.container_highest
                         radius: 4
                     }
                 }

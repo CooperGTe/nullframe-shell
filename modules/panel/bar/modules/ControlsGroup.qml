@@ -32,8 +32,8 @@ Item {
             bottomMargin:Config.barOrientation ? 5 : 0
         }
 
-        border.width: 1
-        border.color: Color.container_highest
+        border.width: 0
+        border.color: Colors.container_highest
 
         Loader {
             id:ctlctl
@@ -65,7 +65,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 font.pixelSize: 16
                 fill:1
-                color: Color.on_surface
+                color: Colors.on_surface
             }
         }
         //Audio
@@ -90,7 +90,7 @@ Item {
                 }
                 font.pixelSize: 16
                 fill:1
-                color: Color.on_surface
+                color: Colors.on_surface
             }
         }
         //Network
@@ -106,7 +106,7 @@ Item {
                 }
                 font.pixelSize: 16
                 fill:1
-                color: Color.on_surface
+                color: Colors.on_surface
             }
         }
         // vertical variant
@@ -137,6 +137,10 @@ Item {
                         cursorShape: Qt.PointingHandCursor
                     }
                 }
+
+                BarSeparator{}
+
+                BatteryIndicator{}
             }
         }
         //horizontal variant
@@ -188,4 +192,14 @@ Item {
             }      
         }
     }
+    component BarSeparator: Rectangle {
+        color: Colors.surface_container_highest
+
+        implicitWidth: !Config.barOrientation ? 28 : 1
+        implicitHeight: Config.barOrientation ? 28 : 1
+
+        Layout.alignment: Config.barOrientation ? Qt.AlignVCenter : Qt.AlignHCenter
+        Layout.margins: 5
+    }
+
 }

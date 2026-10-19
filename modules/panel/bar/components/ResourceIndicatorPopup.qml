@@ -52,7 +52,7 @@ PopoutWindow {
         Behavior on anchors.bottomMargin { NumAnim {} }
 
         opacity: root.visibility ? 1 : 0
-        color: Color.base
+        color: Colors.base
         radius:15
 
         HoverHandler {
@@ -91,7 +91,7 @@ PopoutWindow {
                         text: "どうしたら良い"
                         font.family: "Noto Sans CJK JP"
                         font.bold: true
-                        color: Color.primary
+                        color: Colors.primary
                         MouseArea {
                             anchors.fill: parent
                             onClicked: resman.state = "resman"
@@ -103,7 +103,7 @@ PopoutWindow {
                         implicitHeight: 30
                         background: Rectangle{
                             anchors.fill:parent
-                            color: Color.container
+                            color: Colors.container
                             radius: 12
                         }
                         onClicked: Quickshell.execDetached([
@@ -116,14 +116,14 @@ PopoutWindow {
                         implicitHeight: 30
                         background: Rectangle{
                             anchors.fill:parent
-                            color: Color.container
+                            color: Colors.container
                             radius: 12
                         }
                     }
                 }
             }
             Rectangle {
-                color: Color.container
+                color: Colors.container
                 radius:15
                 implicitWidth: resourceUsageMeter.implicitWidth + 10 + resourceUsageMeter.spacing
                 Layout.fillHeight:true
@@ -137,8 +137,8 @@ PopoutWindow {
                         size: resourceUsageMeter.implicitWidth
                         Layout.alignment: Qt.AlignHCenter
                         value: ResourceUsage.cpuUsage
-                        colPrimary: Color.primary
-                        colSecondary: Color.base
+                        colPrimary: Colors.primary
+                        colSecondary: Colors.base
                         lineWidth: 3
                         Item {
                             anchors.fill: parent
@@ -147,7 +147,7 @@ PopoutWindow {
                                 fill: 1
                                 icon: "memory"
                                 font.pixelSize: 24
-                                color: Color.primary
+                                color: Colors.primary
                             }
                         }
                     }
@@ -156,13 +156,13 @@ PopoutWindow {
                         Layout.alignment: Qt.AlignHCenter
                         value: ResourceUsage.memoryUsedCache / ResourceUsage.memoryTotal
                         colPrimary: "#ffafaf"
-                        colSecondary: Color.base
+                        colSecondary: Colors.base
                         lineWidth: 3
                         ClippedFilledCircularProgress {
                             size: resourceUsageMeter.implicitWidth
                             Layout.alignment: Qt.AlignHCenter
                             value: ResourceUsage.memoryUsed / ResourceUsage.memoryTotal
-                            colPrimary: Color.primary
+                            colPrimary: Colors.primary
                             colSecondary: "transparent"
                             lineWidth: 3
                             Item {
@@ -172,7 +172,7 @@ PopoutWindow {
                                     fill: 0
                                     icon: "memory_alt"
                                     font.pixelSize: 22
-                                    color: Color.primary
+                                    color: Colors.primary
                                 }
                             }
                         }
@@ -182,7 +182,7 @@ PopoutWindow {
             Rectangle { //swap progressbar
             Layout.fillHeight:true
             implicitWidth:15
-            color:Color.container
+            color:Colors.container
             radius: 15
             Rectangle {
                 width: parent.width
@@ -200,41 +200,41 @@ PopoutWindow {
             Text{
                 text: `CPU USAGE:`
                 font.pixelSize:8
-                color: Color.primary
+                color: Colors.primary
             }
             Text {
                 text: `${Math.floor(ResourceUsage.cpuUsage * 100)}%`
-                color: Color.primary
+                color: Colors.primary
                 font.bold:true
             }
             Text{
                 text: `RAM USAGE:`
                 font.pixelSize:8
-                color: Color.primary
+                color: Colors.primary
             }
             Text {
                 text: `${Math.floor(ResourceUsage.memoryUsed / ResourceUsage.memoryTotal * 100)}%`
-                color: Color.primary
+                color: Colors.primary
                 font.bold:true
             }
             Text{
                 text: `RAM CACHE:`
                 font.pixelSize:8
-                color: Color.primary
+                color: Colors.primary
             }
             Text {
                 text: `${Math.floor((ResourceUsage.memoryUsedCache - ResourceUsage.memoryUsed) / ResourceUsage.memoryTotal * 100)}%`
-                color: Color.primary
+                color: Colors.primary
                 font.bold:true
             }
             Text{
                 text: `SWAP USAGE:`
                 font.pixelSize:8
-                color: Color.primary
+                color: Colors.primary
             }
             Text {
                 text: `${Math.floor(ResourceUsage.swapUsedPercentage * 100)}%`
-                color: Color.primary
+                color: Colors.primary
                 font.bold:true
             }
         }

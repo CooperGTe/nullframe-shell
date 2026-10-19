@@ -8,6 +8,6 @@ Rectangle {
     anchors {
         fill:parent
     }
-    color: root.style === "container" ? Color.container :
-        (root.style === "highcontainer" ? Color.container_high : "white") 
+    color: root.style === "container" ? Colors.container :
+        (root.style === "highcontainer" ? Colors.container_high : "white") 
 }

@@ -164,7 +164,7 @@ PopupWindow {
                         contentItem: Text {
                             text: parent.text
                             opacity: enabled ? 1.0 : 0.3
-                            color: Color.secondary
+                            color: Colors.secondary
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight
@@ -173,7 +173,7 @@ PopupWindow {
                         background: Rectangle {
                             radius: 10
                             opacity: enabled ? 1.0 : 0.3
-                            color: parent.down ? Color.container_high : Color.on_secondary
+                            color: parent.down ? Colors.container_high : Colors.on_secondary
                         }
                     }
                 }
@@ -204,7 +204,7 @@ PopupWindow {
                     MaterialIcon {
                         icon: "music_video"
                         font.pixelSize: 20
-                        color: Color.primary
+                        color: Colors.primary
                     }
                     StyledText {
                         text: "Player Selector"
@@ -221,7 +221,7 @@ PopupWindow {
                         contentItem: Text {
                             text: parent.text
                             opacity: enabled ? 1.0 : 0.3
-                            color: Color.secondary
+                            color: Colors.secondary
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
                             elide: Text.ElideRight
@@ -230,7 +230,7 @@ PopupWindow {
                         background: Rectangle {
                             radius: 10
                             opacity: enabled ? 1.0 : 0.3
-                            color: parent.down ? Color.container_high : Color.on_secondary
+                            color: parent.down ? Colors.container_high : Colors.on_secondary
                         }
                     }
                 }

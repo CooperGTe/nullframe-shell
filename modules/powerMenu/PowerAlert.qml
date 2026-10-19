@@ -99,7 +99,7 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         anchors.margins: 20
-        color: Color.base
+        color: Colors.base
         radius: 20
         ColumnLayout {
             anchors.fill:parent
@@ -112,7 +112,7 @@ PanelWindow {
                     case 3: "Logout"; break;
                     default: ""; break;
                 }
-                color:Color.primary
+                color:Colors.primary
                 font.bold:true
                 font.pixelSize:16
             }
@@ -126,7 +126,7 @@ PanelWindow {
                     default: ""; break;
                 }
                 wrapMode:Text.Wrap
-                color:Color.primary
+                color:Colors.primary
                 font.pixelSize:12
             }
             RowLayout {
@@ -139,7 +139,7 @@ PanelWindow {
                     text: "Cancel"
                     contentItem: Text {
                         text: parent.text
-                        color: !parent.hovered ? Color.primary : Color.container
+                        color: !parent.hovered ? Colors.primary : Colors.container
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         Behavior on color {
@@ -147,10 +147,10 @@ PanelWindow {
                         }
                     }
                     background: Rectangle {
-                        color: parent.hovered ? Color.primary : Color.container
+                        color: parent.hovered ? Colors.primary : Colors.container
                         radius: parent.hovered ? 20 : 10
                         border.width: parent.activeFocus ? 2 : 0
-                        border.color: Color.primary
+                        border.color: Colors.primary
                         Behavior on color {
                             ColorAnimation { duration: 100 }
                         }
@@ -180,7 +180,7 @@ PanelWindow {
                     }
                     contentItem: Text {
                         text: parent.text
-                        color: !parent.hovered ? Color.container : Color.container
+                        color: !parent.hovered ? Colors.container : Colors.container
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                         Behavior on color {
@@ -188,10 +188,10 @@ PanelWindow {
                         }
                     }
                     background: Rectangle {
-                        color: parent.hovered ? Color.primary : Color.secondary
+                        color: parent.hovered ? Colors.primary : Colors.secondary
                         radius: parent.hovered ? 20 : 10
                         border.width: parent.activeFocus ? 2 : 0
-                        border.color: Color.primary
+                        border.color: Colors.primary
                         Behavior on color {
                             ColorAnimation { duration: 100 }
                         }

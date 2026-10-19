@@ -61,22 +61,22 @@ Variants {
                             Text {
                                 text: Time.format("hh:mm")
                                 Layout.alignment: Qt.AlignRight
-                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.secondary
+                                color: Config.desktopWidget.invertClockColor ? Colors.base : Colors.secondary
                                 font.pixelSize: 50
                                 font.bold:true
                                 font.family: "monospace"
                                 style: Text.Raised
-                                styleColor: !Config.desktopWidget.invertClockColor ? Color.base : Color.primary
+                                styleColor: !Config.desktopWidget.invertClockColor ? Colors.base : Colors.primary
                             }
                             Text {
                                 text: Time.format("yyyy年MM月dd日")
                                 Layout.alignment: Qt.AlignRight
                                 Layout.topMargin: -10
-                                color: Config.desktopWidget.invertClockColor ? Color.base : Color.secondary
+                                color: Config.desktopWidget.invertClockColor ? Colors.base : Colors.secondary
                                 font.pixelSize: 15
                                 font.bold: false
                                 style: Text.Raised
-                                styleColor: !Config.desktopWidget.invertClockColor ? Color.base : Color.primary
+                                styleColor: !Config.desktopWidget.invertClockColor ? Colors.base : Colors.primary
                             }
                         }
                     }
@@ -84,7 +84,7 @@ Variants {
                         visible: Config.desktopWidget.media
                         Layout.alignment: Qt.AlignRight
                         Layout.topMargin: 10
-                        color: Color.base
+                        color: Colors.base
                         implicitHeight: 70
                         implicitWidth: 230
                         radius:50
@@ -96,7 +96,7 @@ Variants {
                                 Layout.leftMargin:5
                                 radius:60
                                 clip: true
-                                color: Color.container
+                                color: Colors.container
                                 Image {
                                     anchors.fill: parent
                                     source: root.activePlayer?.trackArtUrl ?? ""
@@ -112,7 +112,7 @@ Variants {
                                     elide: Text.ElideRight
                                     Layout.maximumWidth: 140
                                     font.pixelSize: 12
-                                    color:Color.on_surface
+                                    color:Colors.on_surface
                                     font.bold:true
                                 }
                                 Text{
@@ -121,7 +121,7 @@ Variants {
                                     Layout.maximumWidth: 140
                                     Layout.topMargin: -5
                                     font.pixelSize: 8
-                                    color:Color.outline
+                                    color:Colors.outline
                                 }
                                 Rectangle {
                                     // Stretches to fill all left-over space
@@ -138,7 +138,7 @@ Variants {
                                             top: parent.top
                                             left: parent.left
                                         }
-                                        color: Color.primary
+                                        color: Colors.primary
 
                                         implicitWidth: parent.width * (root.position / activePlayer.length)
                                         radius: parent.radius
@@ -149,7 +149,7 @@ Variants {
                                             bottom: parent.bottom
                                             right: parent.right
                                         }
-                                        color: Color.container_high
+                                        color: Colors.container_high
 
                                         implicitWidth: parent.width * (1 - (root.position / activePlayer.length)) - 3
                                         radius: parent.radius
@@ -160,7 +160,7 @@ Variants {
                                             margins: 2.5
                                             verticalCenter:parent.verticalCenter
                                         }
-                                        color: Color.primary
+                                        color: Colors.primary
 
                                         implicitWidth: 5
                                         implicitHeight: 5
@@ -199,17 +199,17 @@ Variants {
                 Rectangle {
                     anchors.fill: parent
                     //color: "transparent"
-                    color: Color.base
-                    /*color: Qt.rgba(Qt.color(Color.base).r,
-                    Qt.color(Color.base).g,
-                    Qt.color(Color.base).b,
+                    color: Colors.base
+                    /*color: Qt.rgba(Qt.color(Colors.base).r,
+                    Qt.color(Colors.base).g,
+                    Qt.color(Colors.base).b,
                     0.5)*/
                     radius: 10
                     /*border{
                         width: 1
-                        color: Qt.rgba(Qt.color(Color.container_high).r,
-                        Qt.color(Color.container_high).g,
-                        Qt.color(Color.container_high).b,
+                        color: Qt.rgba(Qt.color(Colors.container_high).r,
+                        Qt.color(Colors.container_high).g,
+                        Qt.color(Colors.container_high).b,
                         0.4)
                     }*/
                     ColumnLayout {
@@ -234,7 +234,7 @@ Variants {
                                     text: model.narrowName
                                     anchors.centerIn: parent
                                     horizontalAlignment: Text.AlignHCenter
-                                    color: Color.secondary
+                                    color: Colors.secondary
                                     font.pixelSize: 12
                                 }
                             }
@@ -268,13 +268,13 @@ Variants {
                                         height: parent.width
 
                                         color: model.today 
-                                            ? Color.primary 
-                                            : (hover.hovered ? Color.surface_container_high : "transparent")
+                                            ? Colors.primary 
+                                            : (hover.hovered ? Colors.surface_container_high : "transparent")
                                         radius: 12
                                         border.width: model.today ? 0 : 2
                                         // border.color: hover.hovered ? Theme.colors.bg_light : "transparent"
                                         border.color: {
-                                            if (hover.hovered) return Color.container_high
+                                            if (hover.hovered) return Colors.container_high
                                             return "transparent"
                                         }
 
@@ -291,12 +291,12 @@ Variants {
                                         text: grid.locale.toString(dayItem.model.day)
 
                                         color: {
-                                            if (model.today) return Color.base
+                                            if (model.today) return Colors.base
 
                                             const dayOfWeek = dayItem.model.date.getUTCDay()
                                             if (dayOfWeek === 5 || dayOfWeek === 6)
-                                            return Color.tertiary
-                                            return Color.secondary
+                                            return Colors.tertiary
+                                            return Colors.secondary
                                         }
                                         opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : 0.3
                                         font.pixelSize: 12
@@ -336,16 +336,16 @@ Variants {
                 Rectangle {
                     anchors.fill: parent
                     //color: "transparent"
-                    color: Qt.rgba(Qt.color(Color.base).r,
-                    Qt.color(Color.base).g,
-                    Qt.color(Color.base).b,
+                    color: Qt.rgba(Qt.color(Colors.base).r,
+                    Qt.color(Colors.base).g,
+                    Qt.color(Colors.base).b,
                     0.5)
                     radius: 10
                     border{
                         width: 1
-                        color: Qt.rgba(Qt.color(Color.container_high).r,
-                        Qt.color(Color.container_high).g,
-                        Qt.color(Color.container_high).b,
+                        color: Qt.rgba(Qt.color(Colors.container_high).r,
+                        Qt.color(Colors.container_high).g,
+                        Qt.color(Colors.container_high).b,
                         0.4) 
                     }
                     ColumnLayout {
@@ -361,9 +361,9 @@ Variants {
                                 Layout.fillWidth: true
                             }
                             Rectangle  {
-                                color: Qt.rgba(Qt.color(Color.container_high).r,
-                                Qt.color(Color.container_high).g,
-                                Qt.color(Color.container_high).b,
+                                color: Qt.rgba(Qt.color(Colors.container_high).r,
+                                Qt.color(Colors.container_high).g,
+                                Qt.color(Colors.container_high).b,
                                 0.4) 
                                 radius: 20
                                 implicitHeight: 20
@@ -382,12 +382,12 @@ Variants {
                                 text: "256"+"°"
                                 font.bold:true
                                 font.pixelSize: 30
-                                color: Color.secondary
+                                color: Colors.secondary
                             }
                             MaterialIcon {
                                 icon: "partly_cloudy_day"
                                 font.pixelSize: 40
-                                color: Color.secondary
+                                color: Colors.secondary
                             }
                         }
                         StyledText {

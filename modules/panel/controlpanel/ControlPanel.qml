@@ -2,15 +2,11 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
-
 import Quickshell
-import Quickshell.Hyprland as Hypr
 import Quickshell.Wayland
 
 import qs.config
-import qs.services
-
-import "components"
+import qs.modules.panel.controlpanel.components
 import qs.components
 
 PanelWindow {
@@ -18,47 +14,35 @@ PanelWindow {
 
     property var scope
     property var barRoot
-    property bool controlPanelVisible: false
-    property bool visible: scope.controlPanelVisible
-    property bool anim: false
-    property real wsch: Hyprland.activeWorkspace
+    property bool visibility: false
 
-    onWschChanged: {
-        if (scope) root.scope.controlPanelVisible = false
-    }
-
-    onVisibleChanged: { 
-        if (scope.controlPanelVisible) loader.active = true;
-        root.anim = scope.controlPanelVisible
-        if (scope.controlPanelVisible) grab.active = true
-        if (!scope.controlPanelVisible) grab.active = false
-    }
-
-   WlrLayershell.layer: WlrLayer.Top
-
-    implicitWidth: 320+40//margin
-    exclusiveZone:0
+    WlrLayershell.layer: WlrLayer.Top
 
     margins {
-        left: root.anim ? -20 : -320-40-40
-        right: -20
-        bottom: -20
-        top: -20
+        right:-10
+        left: loader.active ? -10 : -320-40-Config.barTotalWidth
+        bottom:-10
+        top:-10
     }
 
-    Behavior on margins.left {
+    //color: "transparent"
+    implicitWidth: 320+40 //margin
+    exclusiveZone:0
+
+    Behavior on visibility {
         SequentialAnimation {
-            PauseAnimation { 
-                id:pause
-                duration: (scope.controlPanelVisible && !Hyprland.hasMaximize && !Config.bar.hug) ? 200 : 0
+            ScriptAction { 
+                script: {
+                    loader.active = true
+                }
             }
-            NumberAnimation { 
-                duration: 150; 
-                easing.type: Easing.Bezier
-                easing.bezierCurve: [0.05, 0.9, 0.1, 1.0]
+            PauseAnimation { 
+                duration: 400
             }
             ScriptAction { 
-                script: if (!scope.controlPanelVisible) loader.active = false 
+                script: if (!root.visibility) {
+                    loader.active = false
+                }
             }
         }
     }
@@ -69,35 +53,28 @@ PanelWindow {
         bottom: true
     }
 
-    color:"transparent"
-
-    Hypr.HyprlandFocusGrab {
-        id: grab
-        windows: [ root, barRoot ]
-        onActiveChanged: {
-            if (!grab.active) {
-                scope.controlPanelVisible = false
-            }
-        }
-    }
-
     ItemShadow {}
 
     Loader {
         id:loader
 
-        active:true
-
+        active:false
         anchors.fill: parent
 
         sourceComponent: Rectangle {
-            color: Color.base
+            color: Colors.base
             radius:13
 
             anchors {
                 fill: parent
-                margins: 23
-            }
+                margins: 10 + Config.bar.borderWidth
+                leftMargin: root.visibility ? this.anchors.margins : -parent.width
+                rightMargin: root.visibility ? this.anchors.margins : parent.width
+            } 
+            
+            Behavior on anchors.leftMargin { Anim {} }
+            Behavior on anchors.rightMargin { Anim {} }
+
             ColumnLayout {
                 anchors.fill:parent
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -113,5 +90,10 @@ PanelWindow {
                 Stack {}
             }
         }
+    }
+    component Anim: NumberAnimation {
+        duration: 400
+        easing.type: Easing.BezierSpline
+        easing.bezierCurve: [0.05, 0, 2 / 15, 0.06, 1 / 6, 0.4, 5 / 24, 0.82, 0.25, 1, 1, 1]
     }
 }

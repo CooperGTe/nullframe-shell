@@ -89,7 +89,7 @@ PopupWindow {
             NumberAnimation { duration: 300; easing.type: Easing.InOutQuad }
         }
 
-        color: Color.base
+        color: Colors.base
         radius:15
         
         StackView {
@@ -125,8 +125,8 @@ PopupWindow {
                     size: 80
                     anchors.centerIn:parent
                     value: Brightness.value
-                    colPrimary: Color.primary
-                    colSecondary: Color.container_high
+                    colPrimary: Colors.primary
+                    colSecondary: Colors.container_high
                     lineWidth: 5
                     startAngle: -225
                     startAngleSpace: 0
@@ -139,7 +139,7 @@ PopupWindow {
                             fill: 1
                             icon: "brightness_2"
                             font.pixelSize: 24
-                            color: Color.primary
+                            color: Colors.primary
                         }
                     }
                 }
@@ -150,7 +150,7 @@ PopupWindow {
                         horizontalCenter:parent.horizontalCenter
                         bottomMargin: 5
                     }
-                    color: Color.primary
+                    color: Colors.primary
                     font.bold: true
                 }
             }
@@ -165,17 +165,17 @@ PopupWindow {
                     anchors.fill:parent
                     Text {
                         text: Pipewire.defaultAudioSink?.description
-                        color: Color.primary
+                        color: Colors.primary
                         font.bold:true
                     }
                     Text {
                         text: Pipewire.defaultAudioSink?.name
-                        color: Color.outline
+                        color: Colors.outline
                         font.pointSize:6
                     }
                     Text {
                         text: "Volume: " + Math.round(Pipewire.defaultAudioSink?.audio.volume * 100) + "%"
-                        color: Color.secondary
+                        color: Colors.secondary
                     }
                     Slider {
                         Layout.fillWidth:true
@@ -190,7 +190,7 @@ PopupWindow {
                                     top: parent.top
                                     left: parent.left
                                 }
-                                color: Color.primary
+                                color: Colors.primary
 
                                 implicitWidth: parent.width * Pipewire.defaultAudioSink?.audio.volume
                                 radius: 20
@@ -201,7 +201,7 @@ PopupWindow {
                                     bottom: parent.bottom
                                     right: parent.right
                                 }
-                                color: Color.container_high
+                                color: Colors.container_high
                                 opacity:0.5
 
                                 implicitWidth: parent.width * (1 - Pipewire.defaultAudioSink?.audio.volume) - 1
@@ -222,17 +222,17 @@ PopupWindow {
                     spacing:0
                     Text {
                         text:`Wifi: ${Network.wifiEnabled ? 'On' : 'Off'}`
-                        color: Color.secondary
+                        color: Colors.secondary
                     }
                     Text {
                         text:Network.active.ssid
                         font.bold:true
-                        color: Color.primary
+                        color: Colors.primary
                         font.pointSize:12
                     }
                     Text {
                         text:"Strength: " +Network.active.strength + "%"
-                        color: Color.outline
+                        color: Colors.outline
                     }
                 }
             }

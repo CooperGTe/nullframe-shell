@@ -18,7 +18,7 @@ Button {
         anchors.fill:parent
         anchors.margins: 1
 
-        color: Color.surface_container
+        color: Colors.surface_container
         radius:5
         opacity: root.hovered ? 1 : 0
 
@@ -28,7 +28,7 @@ Button {
     MaterialIcon {
         anchors.centerIn:parent
         icon: "apps"
-        color: Color.secondary
+        color: Colors.secondary
         font.pixelSize: 32
     }
 

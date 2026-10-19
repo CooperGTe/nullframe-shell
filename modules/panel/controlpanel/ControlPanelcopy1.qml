@@ -100,7 +100,7 @@ PanelWindow {
         active:true
         anchors.fill: parent
         sourceComponent: Rectangle {
-            color: Color.base
+            color: Colors.base
             radius:13
 
             anchors {

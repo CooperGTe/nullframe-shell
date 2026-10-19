@@ -19,14 +19,14 @@ MouseArea {
 
         radius: Config.barWidth
 
-        color: Color.on_tertiary
+        color: Colors.on_tertiary
 
         MaterialIcon {
             icon: "moon_stars"
             anchors.centerIn: parent
             font.pixelSize: 16 * Config.bar.scale
             fill:1
-            color: Color.tertiary
+            color: Colors.tertiary
         }
     }
 }

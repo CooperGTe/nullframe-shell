@@ -14,7 +14,7 @@ Rectangle {
     property var stack
     property var stackTarget
     property var mData
-    color: Color.container
+    color: Colors.container
     radius: 5
     implicitHeight: 20
     Layout.fillWidth: true
@@ -32,7 +32,7 @@ Rectangle {
         MaterialIcon {
             icon: "autorenew"
             font.pixelSize:16
-            color: Color.secondary
+            color: Colors.secondary
             visible: !root.icon
             Layout.leftMargin: 10
         }
@@ -52,7 +52,7 @@ Rectangle {
         MaterialIcon {
             icon: "check"
             font.pixelSize:16
-            color: Color.secondary
+            color: Colors.secondary
             visible: if (root.reset) !MprisController.lock
             else if (!root.reset && MprisController.lock) (MprisController.trackedPlayer === root.mData)
             else false

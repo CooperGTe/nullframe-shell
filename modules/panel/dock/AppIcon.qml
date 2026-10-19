@@ -17,7 +17,8 @@ Rectangle {
     required property var parentPointer
 
     property bool hovered
-    property real size: 40 - 5
+    property real size: (40 - 5) * Config.dock.scale
+    property real iconSize: 30 * Config.dock.scale
 
     property bool isSeparator: root.modelData.appId === "SEPARATOR"
     property real maxWindowPreviewHeight: 140
@@ -57,12 +58,12 @@ Rectangle {
         onTriggered:root.previewHoverBlocker = false
     }
 
-    implicitWidth: !isSeparator ? 35 : 1
-    implicitHeight: !isSeparator ? 35 : 25
+    implicitWidth: !isSeparator ? root.size : 1
+    implicitHeight: !isSeparator ? root.size : 25
 
     radius: 10
 
-    color: !isSeparator ? "transparent" : Color.container_high
+    color: !isSeparator ? "transparent" : Colors.container_high
     //Component.onCompleted: console.log(modelData.toplevels)
 
     component Anim: NumberAnimation {
@@ -82,11 +83,11 @@ Rectangle {
 
         contentItem: Text {
             text: toolTip.text
-            color: Color.primary
+            color: Colors.primary
         }
 
         background: Rectangle {
-            color: Color.base
+            color: Colors.base
             radius: 6
         }
     }
@@ -104,7 +105,7 @@ Rectangle {
         anchors.fill:parent
         anchors.margins: 1
         radius: 5
-        color: Color.on_secondary
+        color: Colors.on_secondary
         opacity: root.modelData.toplevels.some(function(t) {
             return t.hypr.activated
         }) ? 1 : 0
@@ -125,14 +126,14 @@ Rectangle {
             width:5
             height:5
             radius:5
-            color:Color.on_surface
+            color:Colors.on_surface
             visible: root.modelData.toplevels.length > 0
         }
         Rectangle {
             width:5
             height:5
             radius:5
-            color:Color.on_surface
+            color:Colors.on_surface
             visible: root.modelData.toplevels.length > 1
         }
     }
@@ -143,9 +144,18 @@ Rectangle {
         anchors.verticalCenterOffset: iconHover.hovered ? -2 : 0
 
         visible: root.modelData.appId !== "SEPARATOR"
-        source: Quickshell.iconPath(DesktopEntries.heuristicLookup(modelData.appId)?.icon, "image-missing")
+        source: {
+            // touch a bindable property so this binding re-evaluates
+            // when DesktopEntries finishes populating
+            DesktopEntries.applications.values.length
+            return Quickshell.iconPath(
+                DesktopEntries.heuristicLookup(modelData.appId)?.icon,
+                "image-missing"
+            )
+        }
         
-        implicitSize: 30
+        implicitSize: root.iconSize
+        asynchronous: true
 
         Behavior on anchors.verticalCenterOffset {Anim{}}
 
@@ -262,9 +272,9 @@ Rectangle {
                         required property var index
                         implicitWidth:screencopyView.implicitWidth
                         implicitHeight:screencopyView.implicitHeight
-                        color:Color.base
+                        color:Colors.base
                         border.width: modelData.min ? 3 : 0
-                        border.color: Color.primary
+                        border.color: Colors.primary
                         radius:10
                         /*Component.onCompleted: console.log("hyprctl dispatch movetoworkspacesilent "
                         + previewitem.index + ",address:0x"

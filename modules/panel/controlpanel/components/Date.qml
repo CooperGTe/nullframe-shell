@@ -10,7 +10,7 @@ Rectangle {
     property int currentMonth: Number(Time.format("MM")) - 1
     property int currentYear:  Number(Time.format("yyyy"))
     Layout.fillWidth:true
-    color: Color.container
+    color: Colors.container
     radius:10
     implicitHeight:180
     implicitWidth:300
@@ -40,7 +40,7 @@ Rectangle {
                         text: model.narrowName
                         anchors.centerIn: parent
                         horizontalAlignment: Text.AlignHCenter
-                        color: Color.primary
+                        color: Colors.primary
                         font.pixelSize: 12
                     }
                 }
@@ -76,11 +76,11 @@ Rectangle {
 
                             radius: 12
 
-                            color: model.today ? Color.primary : "transparent"
+                            color: model.today ? Colors.primary : "transparent"
                             border.width: model.today ? 0 : 2
                             // border.color: hover.hovered ? Theme.colors.bg_light : "transparent"
                             border.color: {
-                                if (hover.hovered) return Color.container_high
+                                if (hover.hovered) return Colors.container_high
                                 return "transparent"
                             }
 
@@ -97,12 +97,12 @@ Rectangle {
                             text: grid.locale.toString(dayItem.model.day)
 
                             color: {
-                                if (model.today) return Color.base
+                                if (model.today) return Colors.base
 
                                 const dayOfWeek = dayItem.model.date.getUTCDay()
                                 if (dayOfWeek === 5 || dayOfWeek === 6)
-                                return Color.tertiary
-                                return Color.primary
+                                return Colors.tertiary
+                                return Colors.primary
                             }
                             opacity: dayItem.model.today || dayItem.model.month === grid.month ? 1 : 0.3
                             font.pixelSize: 12
@@ -148,7 +148,7 @@ Rectangle {
 
                     color: "transparent"
                     border.width: 2
-                    border.color: Color.primary
+                    border.color: Colors.primary
 
                     Behavior on x {
                         NumberAnimation {
@@ -174,12 +174,12 @@ Rectangle {
                 font.bold:true
                 font.pointSize:30
                 Layout.alignment:Qt.AlignRight
-                color: Color.primary
+                color: Colors.primary
             }
             Text {
                 text:Time.format("dddd")
                 font.bold:true
-                color: Color.primary
+                color: Colors.primary
                 Layout.alignment:Qt.AlignRight
             }
             //moonclock
@@ -193,14 +193,14 @@ Rectangle {
                 Rectangle {
                     anchors.fill: parent
                     radius: width / 2
-                    color: Color.primary
+                    color: Colors.primary
                     clip: true
 
                     Rectangle {
                         width: parent.width
                         height: parent.height
                         radius: width / 2
-                        color: Color.container
+                        color: Colors.container
                         property real phase: Time.synodicDays / 29.53059
                         property real dir: phase < 0.5 ? -1 : 1
 
@@ -223,7 +223,7 @@ Rectangle {
                         color:  "transparent"
                         radius:5
                         border.width:2
-                        border.color: Color.container_high
+                        border.color: Colors.container_high
                         anchors.fill:parent
                     }
                     onClicked: {
@@ -237,7 +237,7 @@ Rectangle {
                         anchors.centerIn: parent
                         icon: "keyboard_arrow_left"
                         font.pixelSize: 24
-                        color: Color.primary
+                        color: Colors.primary
                     }
                 }
 
@@ -250,7 +250,7 @@ Rectangle {
                         color:  "transparent"
                         radius:5
                         border.width:2
-                        border.color: Color.container_high
+                        border.color: Colors.container_high
                         anchors.fill:parent
                     }
                     onClicked: {
@@ -265,7 +265,7 @@ Rectangle {
                         anchors.centerIn: parent
                         icon: "keyboard_arrow_right"
                         font.pixelSize: 24
-                        color: Color.primary
+                        color: Colors.primary
                     }
                 }
 
@@ -278,7 +278,7 @@ Rectangle {
                     text:root.currentYear + "年 " + Qt.locale("ja_JP").monthName(root.currentMonth)
 
                     font.pointSize: 10
-                    color: Color.primary
+                    color: Colors.primary
                 }
             }
         }

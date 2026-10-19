@@ -9,7 +9,7 @@ Text {
     property int grad: 0
     required property string icon
 
-    color: Color.secondary
+    color: Colors.secondary
 
     font.family: "Material Symbols Rounded"
     font.hintingPreference: Font.PreferFullHinting

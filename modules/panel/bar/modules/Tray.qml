@@ -31,14 +31,14 @@ Loader {
             MaterialIcon {
                 icon: "settings"
                 font.pixelSize: 16
-                color: Color.secondary
+                color: Colors.secondary
                 Layout.alignment: Qt.AlignHCenter
                 fill: 1
             }
             Text {
                 text: "Tray"
                 Layout.alignment: Qt.AlignHCenter
-                color: Color.secondary
+                color: Colors.secondary
                 font.bold: true
                 rotation:90
                 Layout.bottomMargin: 10
@@ -218,11 +218,11 @@ Loader {
 
                 contentItem: Text {
                     text: toolTip.text
-                    color: Color.primary
+                    color: Colors.primary
                 }
 
                 background: Rectangle {
-                    color: Color.base
+                    color: Colors.base
                     radius: 6
                 }
             }
@@ -280,10 +280,10 @@ Loader {
 
                 Rectangle {
                     anchors.fill:parent
-                    color: Color.base
+                    color: Colors.base
                     radius:10
                     border.width: 1
-                    border.color: Color.container
+                    border.color: Colors.container
                     scale: popout.visibility ? 1 : 0.9
                     opacity: popout.visibility ? 1 : 0
 
@@ -381,8 +381,8 @@ Loader {
             opacity: itemRoot.modelData.isSeparator ? 0.5 : 1
             radius: 5
             color: itemRoot.modelData.isSeparator
-            ? Color.container_highest
-            : hover.containsMouse ? Color.container : "transparent"
+            ? Colors.container_highest
+            : hover.containsMouse ? Colors.container : "transparent"
         }
 
         RowLayout {
@@ -422,7 +422,7 @@ Loader {
             // known bug, the text doesnt update?
             Text {
                 text: itemRoot.modelData.text
-                color: Color.secondary
+                color: Colors.secondary
             }
 
             MaterialIcon {

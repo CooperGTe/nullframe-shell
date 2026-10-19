@@ -9,7 +9,7 @@ Item {
     id:root
 
     property int side: 0
-    property string baseColor: Color.base
+    property string baseColor: Colors.base
     property real radius:15
     property bool flatten: ((side === 0 || side === 2) ? root.width : root.height) < root.radius * 2
     property real radiusRounding: root.flatten ? ((side === 0 || side === 2) ? root.width : root.height) / 2 : root.radius

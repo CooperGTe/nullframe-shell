@@ -50,7 +50,7 @@ Rectangle {
 
     implicitWidth: 400
 
-    color: Color.base
+    color: Colors.base
     radius: 15
 
     Item {
@@ -134,8 +134,8 @@ Rectangle {
                 radius: 10
 
                 color: root.index === index 
-                ? Color.on_secondary
-                : Color.surface_container
+                ? Colors.on_secondary
+                : Colors.surface_container
 
                 Behavior on color { CAnim{} }
 
@@ -157,7 +157,7 @@ Rectangle {
                     Rectangle {
                         implicitHeight: 25
                         implicitWidth: root.index === itemList.index ? 3 : 0
-                        color: root.index === itemList.index ? Color.primary : "transparent"
+                        color: root.index === itemList.index ? Colors.primary : "transparent"
                         radius: 10
                     }
                     IconImage {
@@ -251,8 +251,8 @@ Rectangle {
                     clip:true
 
                     color: root.index === itemList.index 
-                    ? Color.on_secondary
-                    : Color.surface_container
+                    ? Colors.on_secondary
+                    : Colors.surface_container
 
                     Behavior on color { CAnim{} }
 
@@ -278,7 +278,7 @@ Rectangle {
                             Layout.alignment:Qt.AlignCenter
                             implicitWidth: 25
                             implicitHeight: root.index === itemList.index ? 3 : 0
-                            color: root.index === itemList.index ? Color.primary : "transparent"
+                            color: root.index === itemList.index ? Colors.primary : "transparent"
                             radius: 10
                         }
                     }

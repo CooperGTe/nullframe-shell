@@ -14,7 +14,7 @@ Rectangle {
     Behavior on implicitHeight {
         NumberAnimation { duration: 400; easing.type: Easing.InOutCirc }
     }
-    color:Color.container
+    color:Colors.container
     radius:15
     ColumnLayout {
         anchors.fill:parent
@@ -30,10 +30,10 @@ Rectangle {
                     implicitWidth:125
                     background: Rectangle {
                         radius:20
-                        color: stack.currentItem.objectName === "cal" ? Color.primary : Color.container_high
+                        color: stack.currentItem.objectName === "cal" ? Colors.primary : Colors.container_high
                     }
                     Text {
-                        color: stack.currentItem.objectName === "cal" ? Color.base: Color.primary
+                        color: stack.currentItem.objectName === "cal" ? Colors.base: Colors.primary
                         text:"Calendar"
                         anchors.centerIn:parent
                         font.bold:true
@@ -49,10 +49,10 @@ Rectangle {
                     implicitWidth:125
                     background: Rectangle {
                         radius:20
-                        color: stack.currentItem.objectName === "nc" ? Color.primary : Color.container_high
+                        color: stack.currentItem.objectName === "nc" ? Colors.primary : Colors.container_high
                     }
                     Text {
-                        color:stack.currentItem.objectName === "nc" ? Color.base : Color.primary
+                        color:stack.currentItem.objectName === "nc" ? Colors.base : Colors.primary
                         text:"Notification Center"
                         anchors.centerIn:parent
                         font.bold:true
@@ -71,10 +71,10 @@ Rectangle {
                     implicitWidth:25
                     background: Rectangle {
                         radius:20
-                        color: Color.container_high
+                        color: Colors.container_high
                     }
                     Text {
-                        color:Color.primary
+                        color:Colors.primary
                         text:"^"
                         anchors.centerIn:parent
                         font.bold:true
@@ -121,7 +121,7 @@ Rectangle {
                     Layout.margins:5
                     Layout.fillHeight:true
                     Layout.fillWidth:true
-                    color:Color.container_high
+                    color:Colors.container_high
                     radius:15
                 }
                 Date{

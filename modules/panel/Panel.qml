@@ -78,7 +78,7 @@ Variants {
 
             function toggleControlPanel(): void {
                 if (scope.modelData.name === Compositor.focusedMonitor)
-                scope.controlPanelVisible = !scope.controlPanelVisible
+                controlpanel.visibility = !controlpanel.visibility
             }
             function togglePowerMenu(): void {
                 if (scope.modelData.name === Compositor.focusedMonitor)
@@ -96,7 +96,6 @@ Variants {
             barRoot: bar
             scope: scope
             screen: scope.modelData
-            controlPanelVisible: scope.controlPanelVisible
         }
         WidgetPanel {
             id: widgetpanel

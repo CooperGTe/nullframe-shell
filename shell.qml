@@ -9,6 +9,7 @@ import qs.modules.desktopWidget
 import qs.modules.notificationPopup
 import qs.modules.lockscreen
 import qs.modules.lyricsEngine
+import qs.setting
 
 ShellRoot {
     Panel {}
@@ -18,6 +19,7 @@ ShellRoot {
     DesktopWidget {}
     Notification{}
     LockScreen{}
+    Setting{}
     //Background{}
     //Overview{}
 }

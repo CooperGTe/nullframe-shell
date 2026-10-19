@@ -59,15 +59,10 @@ Item {
                     Layout.leftMargin: 5
                     Layout.rightMargin: 5 
 
-                    color: Color.container
-                    radius: 20
+                    color: Colors.container
+                    radius: 30
 
                     implicitHeight: musicctl.implicitHeight
-
-                    topLeftRadius: root.roundStart ? 30 : 8
-                    topRightRadius: root.roundStart ? 30 : 8
-                    bottomLeftRadius: root.roundEnd ? 30 : 8
-                    bottomRightRadius: root.roundEnd ? 30 : 8
 
                     ColumnLayout {
                         spacing: 0
@@ -117,7 +112,7 @@ Item {
                 }
                 Rectangle {
                     id:box
-                    color: Color.container
+                    color: Colors.container
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter
                     radius: 20

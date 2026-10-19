@@ -73,7 +73,7 @@ PanelWindow {
     Rectangle {
         id: bar
 
-        color: Color.base
+        color: Colors.base
 
         anchors {
             leftMargin: (Config.bar.position === 0 && root.floating) ? (root.barHug ? 0 : 5) : 0
@@ -211,7 +211,7 @@ PanelWindow {
         // [end]
 
         component BarSeparator: Rectangle {
-            color: Color.container
+            color: Colors.container
             
             implicitWidth: !Config.barOrientation ? 30 : 1
             implicitHeight: Config.barOrientation ? 30 : 1
@@ -277,10 +277,6 @@ PanelWindow {
                     }
 
                     ControlsGroup {}
-
-                    BarSeparator {}
-
-                    BatteryIndicator {}
 
                     Clock {}
                 }
